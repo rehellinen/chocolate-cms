@@ -7,22 +7,22 @@ export default {
   restUrl: PRODUCTION
     ? 'http://test.com'
     : 'http://test.com',
-  CMS: {
-    INDEX: 1,
-    ADD: 2,
-    EDIT: 3
-  },
   STATUS: {
     NORMAL: 1,
     DELETED: -1,
     ABNORMAL: 0
   },
+  CMS: {
+    INDEX: Symbol('index'),
+    ADD: Symbol('add'),
+    EDIT: Symbol('edit')
+  },
   FORM: {
-    INPUT: 1,
-    SELECT: 2,
-    EDITOR: 3,
-    FILE: 4,
-    DISABLED: 5,
-    DATE: 6
+    INPUT: Symbol('input'),
+    SELECT: Symbol('select'),
+    EDITOR: Symbol('editor'),
+    FILE: Symbol('file'),
+    DISABLED: Symbol('disabled'),
+    DATE: Symbol('date')
   }
 }
