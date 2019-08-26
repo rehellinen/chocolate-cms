@@ -5,7 +5,7 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Article from '../components/cms-article/cms-article'
+import Article from '../cms-page/article'
 import Login from '../components/login/login'
 
 Vue.use(Router)
