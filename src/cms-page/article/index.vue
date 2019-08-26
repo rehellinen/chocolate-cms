@@ -56,11 +56,11 @@ export default {
   mixins: [cmsMixin, dialogMixin, pageMixin],
   methods: {
     _initCMS () {
-      this._setModel(new Model())
-      this._setName('新闻')
-      this._setForm(formConf)
-      this._setTable(tableConf)
-      this._setSearch(searchConf)
+      this.setModel(new Model())
+      this.setName('新闻')
+      this.setForm(formConf)
+      this.setTable(tableConf)
+      this.setSearch(searchConf)
     }
   }
 }

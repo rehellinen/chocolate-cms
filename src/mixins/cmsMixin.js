@@ -60,7 +60,12 @@ export const cmsMixin = {
     async checkLogin () {
       const isLogin = await new Token().isLogin()
       if (!isLogin) {
-        this.$router.push('/login')
+        this.openDialog({
+          title: '错误提示',
+          content: '登录已失效',
+          cb: () => this.$router.push('/login'),
+          showCancel: false
+        })
       } else {
         const type = new Token().getTypeFromCache()
         if (type === config.ADMIN_TYPE.TEACHER) {
@@ -71,6 +76,31 @@ export const cmsMixin = {
           if (this.$route.path === '/login') this.$router.push('/')
         }
       }
+    },
+
+    // 配置添加、编辑页面的表单元素
+    setForm (conf) {
+      this.form = conf
+    },
+
+    // 配置表格
+    setTable (conf) {
+      this.table = conf
+    },
+
+    // 配置搜索
+    setSearch (conf) {
+      this.search = conf
+    },
+
+    // 配置Model
+    setModel (model) {
+      this.model = model
+    },
+
+    // 设置中文名称
+    setName (name) {
+      this.name = name
     },
 
     // 跳转到添加页面
@@ -134,6 +164,76 @@ export const cmsMixin = {
       }
     },
 
+    addData (data) {
+      this._requestWithInfo(
+        async () => await this.model.addData(data)
+      )
+    },
+
+    editData (data) {
+      this._requestWithInfo(
+        async () => await this.model.editData(data)
+      )
+    },
+
+    deleteData ({ index }) {
+      const id = this.data[index].id
+      this._requestWithQuery({
+        content: '是否确定删除',
+        request: async () => await this.model.deleteData(id)
+      })
+    },
+
+    /**
+     * 发送HTTP改变状态
+     * @param e 事件对象
+     * @returns {Promise<void>}
+     */
+    async changeStatus (e) {
+      const reqData = this.data[e.index]
+      const status = reqData.status === config.STATUS.NORMAL
+        ? config.STATUS.ABNORMAL : config.STATUS.NORMAL
+      this._requestWithQuery({
+        content: '是否确定更改状态',
+        request: async () => await this.model.changeStatus(reqData.id, status)
+      })
+    },
+
+    /**
+     * 发送HTTP改变排序
+     * @param e 事件对象
+     * @returns {Promise<void>}
+     */
+    async changeOrder (e) {
+      const reqData = this.data[e.index]
+      this._requestWithQuery({
+        content: '是否确定更改排序',
+        request: async () => await this.model.changeOrder(reqData.id, e.order)
+      })
+    },
+
+    /**
+     * 改变页面状态（首页、添加、编辑）
+     * @param type 页面类型（0 - 首页，1 - 添加，2 - 编辑）
+     * @private
+     */
+    _changePageType (type) {
+      this.type = type
+      if (type === config.CMS.INDEX && this.bread.length > 2) this._popBread()
+      else if (type === config.CMS.ADD) this._pushBread('添加')
+      else if (type === config.CMS.EDIT) this._pushBread('修改')
+    },
+
+    // 往面包屑导航栏添加元素
+    _pushBread (name) {
+      this.bread.push(name)
+    },
+
+    // 删除面包屑导航栏的最后一个元素
+    _popBread () {
+      this.bread.pop()
+    },
+
     /**
      * 获取http请求结果之后，弹出dialog来显示信息
      * @param request http请求
@@ -185,91 +285,6 @@ export const cmsMixin = {
         },
         showCancel: true
       })
-    },
-
-    addData (data) {
-      this._requestWithInfo(
-        async () => await this.model.addData(data)
-      )
-    },
-
-    editData (data) {
-      this._requestWithInfo(
-        async () => await this.model.editData(data)
-      )
-    },
-
-    deleteData ({ index }) {
-      const id = this.data[index].id
-      this._requestWithQuery({
-        content: '是否确定删除',
-        request: async () => await this.model.deleteData(id)
-      })
-    },
-
-    async changeStatus (e, action) {
-      const reqData = this.data[e.index]
-      const status = reqData.status === config.STATUS.NORMAL
-        ? config.STATUS.ABNORMAL : config.STATUS.NORMAL
-      this._requestWithQuery({
-        content: '是否确定更改状态',
-        request: async () => await this.model.changeStatus(reqData.id, status)
-      })
-    },
-
-    async changeOrder (e, action) {
-      const reqData = this.data[e.index]
-      this._requestWithQuery({
-        content: '是否确定更改排序',
-        request: async () => await this.model.changeOrder(reqData.id, e.order)
-      })
-    },
-
-    /**
-     * 改变页面状态（首页、添加、编辑）
-     * @param type 页面类型（0 - 首页，1 - 添加，2 - 编辑）
-     * @private
-     */
-    _changePageType (type) {
-      this.type = type
-      if (type === config.CMS.INDEX && this.bread.length > 2) this._popBread()
-      else if (type === config.CMS.ADD) this._pushBread('添加')
-      else if (type === config.CMS.EDIT) this._pushBread('修改')
-    },
-
-    // 往面包屑导航栏添加元素
-    _pushBread (name) {
-      this.bread.push(name)
-    },
-
-    // 删除面包屑导航栏的最后一个元素
-    _popBread () {
-      this.bread.pop()
-    },
-
-    // 配置添加、编辑页面的表单元素
-    _setForm (conf) {
-      this.form = conf
-    },
-
-    // 配置表格
-    _setTable (conf) {
-      this.table = conf
-    },
-
-    // 配置搜索
-    _setSearch (conf) {
-      this.search = conf
-    },
-
-    // 配置Model
-    _setModel (model) {
-      this.model = model
-    },
-
-    // 设置中文名称
-    _setName (name) {
-      this.name = name
     }
   },
   components: {
