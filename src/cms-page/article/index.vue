@@ -48,9 +48,7 @@
 </template>
 
 <script>
-import { cmsMixin } from '../../mixins/cmsMixin'
-import { dialogMixin } from '../../mixins/dialogMixin'
-import { pageMixin } from '../../mixins/pageMixins'
+import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
 import { tableConf, formConf, searchConf } from './config'
 import { ArticleModel as Model } from '../../model/ArticleModel'
 
