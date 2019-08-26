@@ -52,16 +52,13 @@ import { cmsMixin } from '../../mixins/cmsMixin'
 import { dialogMixin } from '../../mixins/dialogMixin'
 import { pageMixin } from '../../mixins/pageMixins'
 import { tableConf, formConf, searchConf } from './config'
-import { ArticleModel } from '../../model/ArticleModel'
-
-
-const article = new ArticleModel()
+import { ArticleModel as Model } from '../../model/ArticleModel'
 
 export default {
   mixins: [cmsMixin, dialogMixin, pageMixin],
   methods: {
     _initCMS () {
-      this._setModel(article)
+      this._setModel(new Model())
       this._setName('新闻')
       this._setForm(formConf)
       this._setTable(tableConf)
