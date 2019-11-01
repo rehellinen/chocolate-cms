@@ -27,7 +27,7 @@ export default {
   },
   async created () {
     // TODO: 此处使用了MOCK
-    this.menu = await new Menu().getMock()
+    this.menu = await new Menu().getLeftMenu()
   }
 }
 </script>

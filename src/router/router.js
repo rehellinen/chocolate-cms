@@ -6,12 +6,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Article from '../cms-page/article'
+import Menu from '../cms-page/menu'
 import Login from '../components/login/login'
 
 Vue.use(Router)
 
 const routes = [
   { path: '/article', component: Article },
+  { path: '/menu', component: Menu },
   { path: '/login', component: Login }
 ]
 

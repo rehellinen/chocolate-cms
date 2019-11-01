@@ -16,4 +16,10 @@ export class Menu extends BaseModel {
       url: 'mock/menu.json'
     })
   }
+
+  getLeftMenu () {
+    return this.request({
+      url: 'mock/left_menu.json'
+    })
+  }
 }
