@@ -1,29 +1,17 @@
 <template lang="pug">
   el-container.wrapper
-    el-header(height="160px")
-      my-header
-
-    el-main(v-if="isLoginPage")
-      router-view
-    el-container(v-else)
-      el-aside(width="250px")
-        left-menu
+    el-aside(width="230px" v-if="!isLoginPage")
+      left-menu
+    el-container
       el-main
         router-view
-
-    el-footer(height="190px")
-      my-footer
 </template>
 
 <script>
-import MyHeader from './components/header/header'
-import MyFooter from './components/footer/footer'
 import LeftMenu from './components/left-menu/left-menu'
 
 export default {
   components: {
-    MyHeader,
-    MyFooter,
     LeftMenu
   },
   data () {
@@ -53,17 +41,22 @@ export default {
 
   .wrapper
     min-height: 100vh
+
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one
+
     .el-main
       background-color: $background-color
       padding: 30px 20px
+
     .el-footer
       padding: 0
+
     p
       font-size: $normal-font-size
       color: $normal-font-color
+
     .line
       height: 1px
       background-color: $border-one
