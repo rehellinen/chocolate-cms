@@ -1,2 +1,2 @@
-export * from './ArticleModel'
-export * from './MenuModel'
+export * from './Article'
+export * from './Menu'

@@ -5,8 +5,8 @@
  */
 export default {
   restUrl: PRODUCTION
-    ? 'http://test.com'
-    : 'http://test.com',
+    ? 'http://127.0.0.1:9527'
+    : 'http://127.0.0.1:9527',
   STATUS: {
     NORMAL: 1,
     DELETED: -1,

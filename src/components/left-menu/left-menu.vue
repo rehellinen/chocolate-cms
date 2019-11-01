@@ -18,8 +18,6 @@
 
 <script>
 import { Menu } from '../../model'
-import { Token } from '../../utils/Token'
-import config from '../../utils/config'
 
 export default {
   data () {
@@ -28,15 +26,8 @@ export default {
     }
   },
   async created () {
-    const menus = await new Menu().getNormal()
-    const type = new Token().getTypeFromCache()
-    if (type === config.TOKEN_TYPE.SUPER) {
-      this.menu = menus
-    } else {
-      // TODO: 权限系统的完善
-      this.menu = menus
-      // this.menu = menus.filter(item => config.ADMIN_PAGE.includes(item.url))
-    }
+    // TODO: 此处使用了MOCK
+    this.menu = await new Menu().getMock()
   }
 }
 </script>

@@ -50,7 +50,7 @@
 <script>
 import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
 import { tableConf, formConf, searchConf } from './config'
-import { ArticleModel as Model } from '../../model/ArticleModel'
+import { Article as Model } from '../../model/Article'
 
 export default {
   mixins: [cmsMixin, dialogMixin, pageMixin],
