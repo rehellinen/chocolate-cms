@@ -74,7 +74,7 @@
             size="mini"
             v-auth="{auth:item.auth ? item.auth : '', type: 'disabled'}"
             @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
-            ){{item.name}}
+            ) {{item.name}}
     el-pagination(
       layout="prev, pager, next, jumper"
       :current-page="pageConf.page"
@@ -150,6 +150,11 @@ export default {
       // 表的高度
       type: Number,
       default: null
+    },
+    operate: {
+      // 自定义按键及绑定方法
+      type: Array,
+      default: () => []
     }
   },
   data () {
