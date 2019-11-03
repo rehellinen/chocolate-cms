@@ -16,7 +16,7 @@
 
     my-table(
       v-if="type === allTypes.INDEX"
-      :config="table"
+      :tableColumn="table"
       :data="data"
       :pageConf="pageConf"
       :searchConf="search"
