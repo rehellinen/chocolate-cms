@@ -32,3 +32,14 @@ export const tableConf = [
     label: 'URL'
   }
 ]
+
+export const operate = [
+  {
+    name: 'name',
+    label: '名称'
+  },
+  {
+    name: 'url',
+    label: 'URL'
+  }
+]

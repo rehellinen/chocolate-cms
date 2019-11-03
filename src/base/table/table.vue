@@ -38,13 +38,13 @@
         template(slot-scope="scope")
           p {{tableValue(item, scope)}}
       // 排序
-      <!--el-table-column(prop="listorder" label="排序" width="70")-->
-        <!--template(slot-scope="scope")-->
-          <!--el-input(-->
-            <!--:placeholder="scope.row.order"-->
-            <!--v-model="listorder[scope.$index]"-->
-            <!--@blur="changeOrder(scope.$index)"-->
-          <!--)-->
+      el-table-column(prop="listorder" label="排序" width="70")
+        template(slot-scope="scope")
+          el-input(
+            :placeholder="scope.row.order"
+            v-model="listorder[scope.$index]"
+            @blur="changeOrder(scope.$index)"
+          )
       // 状态
       el-table-column(prop="status" label="状态" width="90")
         template(slot-scope="scope")
