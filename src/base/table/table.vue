@@ -32,8 +32,8 @@
         v-for="(item, index) in tableColumn"
         :label="item.label"
         :key="index"
-        :fixed="item.fixed ? item.fixed : false"
-        :width="item.width ? item.width : ''"
+        :fixed="item.fixed || false"
+        :width="item.width || ''"
       )
         template(slot-scope="scope")
           p {{tableValue(item, scope)}}
@@ -72,7 +72,6 @@
             plain
             :key="index"
             size="mini"
-            v-auth="{auth:item.auth ? item.auth : '', type: 'disabled'}"
             @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
             ) {{item.name}}
     el-pagination(
