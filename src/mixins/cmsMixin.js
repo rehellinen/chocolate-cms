@@ -32,7 +32,7 @@ export const cmsMixin = {
     }
   },
   async created () {
-    await this.checkLogin()
+    // await this.checkLogin()
   },
   // CMS初始化
   async mounted () {
@@ -47,7 +47,8 @@ export const cmsMixin = {
     // 获取表格数据
     async _getData () {
       this.data = []
-      const res = await this.model.getAll()
+      // TODO: 此处使用了MOCK
+      const res = await this.model.getMock()
       if (res.isError) {
         this.data = []
         return

@@ -8,17 +8,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 
+const { r } = require('./utils')
 const config = require('./config')
 const baseWebpackConf = require('./webpack.base.conf')
 
 const webpackConfig = merge(baseWebpackConf, {
   optimization: {
+    // code splitting
     splitChunks: {
       automaticNameDelimiter: '-',
       cacheGroups: {
+        // split node_modules
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           minChunks: 1,
@@ -27,6 +31,7 @@ const webpackConfig = merge(baseWebpackConf, {
       }
     },
     minimizer: [
+      // uglify / minimize js
       new UglifyJsPlugin({
         parallel: true,
         cache: true,
@@ -36,6 +41,7 @@ const webpackConfig = merge(baseWebpackConf, {
           }
         }
       }),
+      // optimize / minimize css
       new OptimizeCSSAssetsPlugin({})
     ]
   },
@@ -53,7 +59,13 @@ const webpackConfig = merge(baseWebpackConf, {
     new MiniCssExtractPlugin({
       filename: `css/[name].[hash:5].css`,
       chunkFilename: `css/[name].[hash:5].css`
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: r('static'),
+        to: config.PROD.STATIC_ROOT
+      }
+    ])
   ]
 })
 

@@ -1,5 +1,8 @@
 <template lang="pug">
   div.container
+    router-link(to="/" tag="div")
+      .title
+        p rehellinen
     el-menu(
       default-active="0"
       class="el-menu-vertical-demo"
@@ -14,11 +17,7 @@
 </template>
 
 <script>
-// import { MenuModel } from '../../model/MenuModel'
-// import { Token } from '../../utils/Token'
-// import config from '../../utils/config'
-//
-// const menu = new MenuModel()
+import { Menu } from '../../model'
 
 export default {
   data () {
@@ -27,13 +26,8 @@ export default {
     }
   },
   async created () {
-    // const menus = await menu.getNormal()
-    // const type = new Token().getTypeFromCache()
-    // if (type === config.ADMIN_TYPE.TEACHER) {
-    //   this.menu = menus.filter(item => config.TEACHER_PAGE.includes(item.url))
-    // } else {
-    //   this.menu = menus
-    // }
+    // TODO: 此处使用了MOCK
+    this.menu = await new Menu().getLeftMenu()
   }
 }
 </script>
@@ -41,9 +35,20 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base"
   .container
-    height: 100%
     ul
       height: 100%
   .menu-title
-    margin-left: 15px
+    margin-left: 10px
+  .title
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 80px
+    background-color: $theme-color
+    border-bottom: 1px solid $border-one
+    p
+      color: white
+      font-weight: bold
+      font-size: $biggest-font-size
+      letter-spacing: 2px
 </style>

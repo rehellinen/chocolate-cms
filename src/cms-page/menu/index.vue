@@ -50,14 +50,14 @@
 <script>
 import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
 import { tableConf, formConf, searchConf } from './config'
-import { Article as Model } from '../../model/Article'
+import { Menu as Model } from '../../model'
 
 export default {
   mixins: [cmsMixin, dialogMixin, pageMixin],
   methods: {
     _initCMS () {
       this.setModel(new Model())
-      this.setName('新闻')
+      this.setName('菜单')
       this.setForm(formConf)
       this.setTable(tableConf)
       this.setSearch(searchConf)
