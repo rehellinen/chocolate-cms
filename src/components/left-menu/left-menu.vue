@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import { MenuModel } from '../../model/MenuModel'
-import { Token } from '../../utils/Token'
-import config from '../../utils/config'
-
-const menu = new MenuModel()
+// import { MenuModel } from '../../model/MenuModel'
+// import { Token } from '../../utils/Token'
+// import config from '../../utils/config'
+//
+// const menu = new MenuModel()
 
 export default {
   data () {
@@ -27,13 +27,13 @@ export default {
     }
   },
   async created () {
-    const menus = await menu.getNormal()
-    const type = new Token().getTypeFromCache()
-    if (type === config.ADMIN_TYPE.TEACHER) {
-      this.menu = menus.filter(item => config.TEACHER_PAGE.includes(item.url))
-    } else {
-      this.menu = menus
-    }
+    // const menus = await menu.getNormal()
+    // const type = new Token().getTypeFromCache()
+    // if (type === config.ADMIN_TYPE.TEACHER) {
+    //   this.menu = menus.filter(item => config.TEACHER_PAGE.includes(item.url))
+    // } else {
+    //   this.menu = menus
+    // }
   }
 }
 </script>

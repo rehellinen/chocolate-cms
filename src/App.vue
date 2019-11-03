@@ -9,8 +9,7 @@
       el-aside(width="250px")
         left-menu
       el-main
-        router-view
-
+        my-table-view
     el-footer(height="190px")
       my-footer
 </template>
@@ -19,12 +18,14 @@
 import MyHeader from './components/header/header'
 import MyFooter from './components/footer/footer'
 import LeftMenu from './components/left-menu/left-menu'
+import MyTableView from './view/table'
 
 export default {
   components: {
     MyHeader,
     MyFooter,
-    LeftMenu
+    LeftMenu,
+    MyTableView
   },
   data () {
     return {
@@ -41,7 +42,7 @@ export default {
   },
   methods: {
     updateLayout () {
-      this.isLoginPage = this.$route.path === '/login'
+      // this.isLoginPage = this.$route.path === '/login'
     }
   }
 }

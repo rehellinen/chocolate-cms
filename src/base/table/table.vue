@@ -15,39 +15,36 @@
 
     el-table(
       :data="data"
-      border
+      :border="border"
       style="width: 100%"
+      :height="height"
     )
-      // id
-      el-table-column(prop="id" label="ID" fixed width="50")
-      // 其他属性
+      // 多选
+      el-table-column(v-if="type" :type="type" width="55")
+      // 索引
       el-table-column(
-        v-for="(conf, index) in config"
-        :label="conf.label"
+        v-if="index"
+        type="index"
+        :index="currentIndex"
+        width="55")
+      // 内容
+      el-table-column(
+        v-for="(item, index) in tableColumn"
+        :label="item.label"
         :key="index"
-        :width="conf.name === 'redirect' ? 75 : ''"
+        :fixed="item.fixed ? item.fixed : false"
+        :width="item.width ? item.width : ''"
       )
         template(slot-scope="scope")
-          el-button(
-            size="mini"
-            v-if="conf.name === 'redirect'"
-            @click.native.prevent="toEditSection(scope.$index)"
-          ) 编辑
-          a(
-            v-if="conf.name === 'file'"
-            :href="tableValue(conf, scope)"
-            target="_blank"
-          ) {{tableValue(conf, scope)}}
-          p(v-else) {{tableValue(conf, scope)}}
-
+          p {{tableValue(item, scope)}}
       // 排序
-      el-table-column(prop="listorder" label="排序" width="70")
-        template(slot-scope="scope")
-          el-input(
-            :placeholder="scope.row.order"
-            v-model="listorder[scope.$index]"
-            @blur="changeOrder(scope.$index)"
-          )
+      <!--el-table-column(prop="listorder" label="排序" width="70")-->
+        <!--template(slot-scope="scope")-->
+          <!--el-input(-->
+            <!--:placeholder="scope.row.order"-->
+            <!--v-model="listorder[scope.$index]"-->
+            <!--@blur="changeOrder(scope.$index)"-->
+          <!--)-->
       // 状态
       el-table-column(prop="status" label="状态" width="90")
         template(slot-scope="scope")
@@ -66,13 +63,22 @@
           ) 编辑
           el-button(
             type="danger" size="mini"
+            v-if="!disableDelete"
             @click.native.prevent="toDelete(scope.$index)"
           ) 删除
+          el-button(
+            v-for="(item,index) in operate"
+            :type="item.type"
+            plain
+            :key="index"
+            size="mini"
+            v-auth="{auth:item.auth ? item.auth : '', type: 'disabled'}"
+            @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
+            ){{item.name}}
     el-pagination(
       layout="prev, pager, next, jumper"
       :current-page="pageConf.page"
       :page-size="pageConf.pageSize"
-      :page-count="pageConf.totalPage"
       :total="pageConf.totalItem"
       @current-change="changePage"
       background
@@ -89,20 +95,20 @@ export default {
   },
   props: {
     data: {
-      type: Array,
-      default: () => []
-    },
-    config: {
+      // 表格数据
       type: Array,
       default: () => []
     },
     pageConf: {
+      // 分页
       type: Object,
       default: () => ({})
     },
     searchConf: {
+      // 搜索
       type: Array,
-      default: () => []
+      default: () => [{
+        label: '123' }]
     },
     statusConf: {
       type: Array,
@@ -115,33 +121,70 @@ export default {
     disableEdit: {
       type: Boolean,
       default: false
+    },
+    disableDelete: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      // 多选
+      type: String,
+      default: null
+    },
+    index: {
+      // 索引
+      type: String,
+      default: ''
+    },
+    tableColumn: {
+      // 表头
+      type: Array,
+      default: () => []
+    },
+    border: {
+      // 边框
+      type: Boolean,
+      default: false
+    },
+    height: {
+      // 表的高度
+      type: Number,
+      default: null
     }
   },
   data () {
     return {
-      listorder: []
+      listorder: [],
+      currentIndex: 1,
+      column: []
     }
   },
   methods: {
+    // 开发者自定义的函数
+    buttonMethods (func, index, row) {
+      const _this = this
+      const { methods } = this.$options
+      methods[func](_this, index, row)
+    },
     toSearch (e) {
       this.$emit('search', e)
     },
-    tableValue (conf, scope) {
+    tableValue (data, scope) {
       let val = scope.row
-      if (conf.name.match('time')) {
+      if (data.name.match('time')) {
         // 处理时间戳
-        val = this.timestampToDate(scope.row[conf.name])
-      } else if (conf.name.includes('.')) {
+        val = this.timestampToDate(scope.row[data.name])
+      } else if (data.name.includes('.')) {
         // 处理嵌套字段
-        const fields = conf.name.split('.')
+        const fields = data.name.split('.')
         for (let field of fields) {
           val = val[field]
         }
       } else {
         // 一般情况
-        val = scope.row[conf.name]
+        val = scope.row[data.name]
       }
-      return conf.map ? conf.map(val) : val
+      return (data.map && typeof data.map === 'function') ? data.map(val) : val
     },
     timestampToDate (timestamp) {
       const date = new Date(timestamp)
