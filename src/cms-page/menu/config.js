@@ -35,11 +35,9 @@ export const tableConf = [
 
 export const operate = [
   {
-    name: 'name',
-    label: '名称'
-  },
-  {
-    name: 'url',
-    label: 'URL'
+    name: '操作',
+    func: () => {
+      alert('自定义的操作方法')
+    }
   }
 ]

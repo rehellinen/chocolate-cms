@@ -54,7 +54,7 @@
           ) {{statusCN(scope.row.status)}}
 
       // 编辑与删除操作
-      el-table-column(label="操作" fixed="right" :width="disableEdit ? 75 : 145")
+      el-table-column(label="操作" fixed="right")
         template(slot-scope="scope")
           el-button(
             v-if="!disableEdit"
@@ -86,6 +86,7 @@
 
 <script>
 import config from '../../utils/config'
+import { dateFormat } from '../../utils/utils'
 import MySearch from '../../base/search/search'
 
 export default {
@@ -164,11 +165,11 @@ export default {
     }
   },
   methods: {
-    // 开发者自定义的函数
+    // 调用自定义的函数
     buttonMethods (func, index, row) {
-      const _this = this
-      const { methods } = this.$options
-      methods[func](_this, index, row)
+      if (typeof func === 'function') {
+        func(index, row)
+      }
     },
     toSearch (e) {
       this.$emit('search', e)
@@ -177,7 +178,7 @@ export default {
       let val = scope.row
       if (data.name.match('time')) {
         // 处理时间戳
-        val = this.timestampToDate(scope.row[data.name])
+        val = dateFormat(scope.row[data.name])
       } else if (data.name.includes('.')) {
         // 处理嵌套字段
         const fields = data.name.split('.')

@@ -20,6 +20,7 @@
       :data="data"
       :pageConf="pageConf"
       :searchConf="search"
+      :operate="operate"
       @clear="toClear"
       @search="toSearch"
       @changePage="changePage"
@@ -49,7 +50,7 @@
 
 <script>
 import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
-import { tableConf, formConf, searchConf } from './config'
+import { tableConf, formConf, searchConf, operate } from './config'
 import { Menu as Model } from '../../model'
 
 export default {
@@ -61,6 +62,7 @@ export default {
       this.setForm(formConf)
       this.setTable(tableConf)
       this.setSearch(searchConf)
+      this.setOperate(operate)
     }
   }
 }

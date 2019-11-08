@@ -17,6 +17,8 @@ export const cmsMixin = {
       form: [],
       // 表格的配置
       table: [],
+      // 表格的自定义操作
+      operate: [],
       // 搜索的配置
       search: [],
       // 面包屑导航栏
@@ -87,6 +89,11 @@ export const cmsMixin = {
     // 配置表格
     setTable (conf) {
       this.table = conf
+    },
+
+    // 配置表单自定义按钮
+    setOperate (conf) {
+      this.operate = conf
     },
 
     // 配置搜索
