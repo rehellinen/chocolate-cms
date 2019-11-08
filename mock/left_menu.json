@@ -3,6 +3,13 @@
   "message": "获取菜单成功",
   "data": [
     {
+      "id": 3,
+      "name": "首页",
+      "url": "/",
+      "order": 999,
+      "status": 1
+    },
+    {
       "id": 1,
       "name": "菜单管理",
       "url": "/menu",

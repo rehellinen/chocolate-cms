@@ -4,15 +4,18 @@
       left-menu
     el-container
       el-main
-        router-view
+        top-bar
+        router-view.main
 </template>
 
 <script>
 import LeftMenu from './components/left-menu/left-menu'
+import TopBar from './components/top-bar/top-bar'
 
 export default {
   components: {
-    LeftMenu
+    LeftMenu,
+    TopBar
   },
   data () {
     return {
@@ -41,22 +44,19 @@ export default {
 
   .wrapper
     min-height: 100vh
-
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one
-
     .el-main
       background-color: $background-color
-      padding: 30px 20px
-
+      padding: 0
+      .main
+        padding: 20px 30px
     .el-footer
       padding: 0
-
     p
       font-size: $normal-font-size
       color: $normal-font-color
-
     .line
       height: 1px
       background-color: $border-one

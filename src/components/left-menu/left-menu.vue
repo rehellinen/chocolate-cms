@@ -12,7 +12,8 @@
     )
       router-link(v-for="(item, index) in menu" :key="item.id" tag="div" :to="item.url")
         el-menu-item(:index="index.toString()")
-          i.el-icon-menu
+          i.el-icon-odometer(v-if="item.url === '/'")
+          i.el-icon-tickets(v-else)
           span.menu-title(slot="title") {{item.name}}
 </template>
 
@@ -44,7 +45,7 @@ export default {
     justify-content: center
     align-items: center
     height: 80px
-    background-color: $theme-color
+    background: linear-gradient(230deg, rgb(244, 121, 133), #843cf6)
     border-bottom: 1px solid $border-one
     p
       color: white
