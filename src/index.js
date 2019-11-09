@@ -14,7 +14,8 @@ import {
   Table, TableColumn,
   Breadcrumb, BreadcrumbItem,
   Upload, Card,
-  Pagination, DatePicker, Radio
+  Pagination, DatePicker, Radio,
+  Progress
 } from 'element-ui'
 import 'assets/theme/index.css'
 
@@ -26,7 +27,8 @@ import 'assets/theme/index.css'
   Table, TableColumn,
   Breadcrumb, BreadcrumbItem,
   Upload, Card,
-  Pagination, DatePicker, Radio
+  Pagination, DatePicker, Radio,
+  Progress
 ].forEach(item => Vue.use(item))
 
 /* eslint-disable no-new */

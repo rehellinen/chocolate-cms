@@ -13,6 +13,8 @@ export const cmsMixin = {
       allTypes: config.CMS,
       // 页面类型（首页、添加、编辑）
       type: config.CMS.INDEX,
+      // 进度条的数据
+      progress: [],
       // 表单的配置
       form: [],
       // 表格的配置
@@ -46,7 +48,7 @@ export const cmsMixin = {
     // 新组件需覆盖的方法
     _initCMS () {},
 
-    // 获取表格数据
+    // 获取数据
     async _getData () {
       this.data = []
       // TODO: 此处使用了MOCK
@@ -56,7 +58,12 @@ export const cmsMixin = {
         return
       }
       this.data = res.data
-      this.setPageConf(res.page)
+      if (res.page) {
+        this.setPageConf(res.page)
+      }
+      if (res.progress) {
+        this.setProgress(res.progress)
+      }
     },
 
     // 检查是否登录
@@ -89,6 +96,11 @@ export const cmsMixin = {
     // 配置表格
     setTable (conf) {
       this.table = conf
+    },
+
+    // 配置进度条
+    setProgress (conf) {
+      this.progress = conf
     },
 
     // 配置表单自定义按钮

@@ -1,0 +1,50 @@
+{
+  "status": 1,
+  "message": "获取所有首页数据成功",
+  "data": {
+    "data": [
+      {
+        "title": "卡片1",
+        "num": "100",
+        "text": "内容1内容1内容1"
+      },
+      {
+        "title": "卡片2",
+        "num": "100",
+        "text": "内容1内容1内容1"
+      },
+      {
+        "title": "卡片3",
+        "num": "1000",
+        "text": "内容1内容1内容1"
+      },
+      {
+        "title": "卡片4",
+        "num": "10%",
+        "text": "内容1内容1内容1"
+      }
+    ],
+    "progress": [
+      {
+        "percentage": 50,
+        "color": "#759bff"
+      },
+      {
+        "percentage": 50,
+        "color": "#6a8eff"
+      },
+      {
+        "percentage": 50,
+        "color": "#7571f9"
+      },
+      {
+        "percentage": 50,
+        "color": "#843cf6"
+      },
+      {
+        "percentage": 50,
+        "color": "#0e4cfd"
+      }
+    ]
+  }
+}
