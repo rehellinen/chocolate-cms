@@ -186,13 +186,13 @@ export const cmsMixin = {
 
     addData (data) {
       this._requestWithInfo(
-        async () => await this.model.addData(data)
+        async () => this.model.addData(data)
       )
     },
 
     editData (data) {
       this._requestWithInfo(
-        async () => await this.model.editData(data)
+        async () => this.model.editData(data)
       )
     },
 
@@ -200,7 +200,7 @@ export const cmsMixin = {
       const id = this.data[index].id
       this._requestWithQuery({
         content: '是否确定删除',
-        request: async () => await this.model.deleteData(id)
+        request: async () => this.model.deleteData(id)
       })
     },
 
@@ -215,7 +215,7 @@ export const cmsMixin = {
         ? config.STATUS.ABNORMAL : config.STATUS.NORMAL
       this._requestWithQuery({
         content: '是否确定更改状态',
-        request: async () => await this.model.changeStatus(reqData.id, status)
+        request: async () => this.model.changeStatus(reqData.id, status)
       })
     },
 
@@ -228,7 +228,7 @@ export const cmsMixin = {
       const reqData = this.data[e.index]
       this._requestWithQuery({
         content: '是否确定更改排序',
-        request: async () => await this.model.changeOrder(reqData.id, e.order)
+        request: async () => this.model.changeOrder(reqData.id, e.order)
       })
     },
 

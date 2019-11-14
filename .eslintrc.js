@@ -4,8 +4,8 @@ module.exports = {
     'plugin:vue/recommended',
     'standard'
   ],
-  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: 'babel-eslint',
     sourceType: 'module'
   },
   env: {
@@ -16,7 +16,7 @@ module.exports = {
     'vue'
   ],
   rules: {
-    'no-return-await': 0,
+    'generator-star-spacing': 'off',
     'no-multiple-empty-lines': [2, {
       max: 2
     }]

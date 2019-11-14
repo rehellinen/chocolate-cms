@@ -20,7 +20,7 @@ export class Token {
   async isLogin () {
     let token = this.getTokenFromCache()
     if (!token) return false
-    return await this._verifyFromServer(token)
+    return this._verifyFromServer(token)
   }
 
   async _verifyFromServer (token) {

@@ -80,7 +80,7 @@ export class BaseModel {
   }
 
   async addData (reqData) {
-    return await this.request({
+    return this.request({
       url: this.modelName,
       reqData,
       method: 'post',
@@ -89,7 +89,7 @@ export class BaseModel {
   }
 
   async editData (reqData) {
-    return await this.request({
+    return this.request({
       url: this.modelName,
       reqData,
       method: 'put',
@@ -98,7 +98,7 @@ export class BaseModel {
   }
 
   async deleteData (id) {
-    return await this.request({
+    return this.request({
       url: this.modelName,
       method: 'delete',
       reqData: { id },
@@ -107,7 +107,7 @@ export class BaseModel {
   }
 
   async changeStatus (id, status) {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/status`,
       method: 'put',
       reqData: { id, status },
@@ -116,7 +116,7 @@ export class BaseModel {
   }
 
   async changeOrder (id, order) {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/order`,
       method: 'put',
       reqData: { id, order },
@@ -125,7 +125,7 @@ export class BaseModel {
   }
 
   async getById (id) {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/one`,
       method: 'get',
       reqData: { id },
@@ -134,7 +134,7 @@ export class BaseModel {
   }
 
   async getAll (reqData) {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/all`,
       reqData: Object.assign({ isPage: true }, reqData),
       method: 'get',
@@ -143,7 +143,7 @@ export class BaseModel {
   }
 
   async getNormal () {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/normal`,
       method: 'get',
       message: false
@@ -151,7 +151,7 @@ export class BaseModel {
   }
 
   async search (data) {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/search`,
       reqData: data,
       method: 'get',
@@ -160,7 +160,7 @@ export class BaseModel {
   }
 
   async getCount () {
-    return await this.request({
+    return this.request({
       url: `${this.modelName}/count`,
       method: 'get',
       message: false
