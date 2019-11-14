@@ -5,10 +5,10 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '../cms-page/index'
-import Article from '../cms-page/article'
-import Menu from '../cms-page/menu'
-import Login from '../components/login/login'
+const Index = () => import(/* webpackChunkName: "index" */ '../cms-page/index')
+const Article = () => import(/* webpackChunkName: "article" */ '../cms-page/article')
+const Menu = () => import(/* webpackChunkName: "menu" */ '../cms-page/menu')
+const Login = () => import(/* webpackChunkName: "login" */ '../components/login/login')
 
 Vue.use(Router)
 
