@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.card.progress-bar
     el-button.add-button(
       v-if="!disableAdd"
       size="small"
@@ -58,16 +58,20 @@
         template(slot-scope="scope")
           el-button(
             v-if="!disableEdit"
+            style="background:linear-gradient(230deg, #ffc480, #ff763b);color:white;border:none"
             size="mini"
             @click.native.prevent="toEdit(scope.$index)"
           ) 编辑
           el-button(
-            type="danger" size="mini"
+            size="mini"
+            style="background:linear-gradient(230deg, #fc5286, #fbaaa2);color:white;border:none"
             v-if="!disableDelete"
             @click.native.prevent="toDelete(scope.$index)"
           ) 删除
           el-button(
+            v-if="operate"
             v-for="(item,index) in operate"
+            style="background:linear-gradient(230deg, #759bff, #843cf6);color:white;border:none"
             :type="item.type"
             plain
             :key="index"
@@ -243,9 +247,15 @@ export default {
 }
 </script>
 
-<style scoped lang="sass" rel="stylesheet/sass">
+<style scoped lang="sass">
   .add-button
     margin-bottom: 10px
+    background: linear-gradient(230deg, #0e4cfd, #6a8eff)
+    border: none
+    color: white
   .el-pagination
     margin-top: 10px
+    /deep/ .active
+      background: linear-gradient(230deg, #0e4cfd, #6a8eff)
+      color: #fff
 </style>

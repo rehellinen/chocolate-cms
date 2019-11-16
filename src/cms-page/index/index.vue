@@ -1,19 +1,22 @@
 <template lang="pug">
   div
-    .card-list
-      card(v-for="(item, index) in data" :key="index"
-      :title="item.title"
-      :num="item.num"
-      :text="item.text"
-      :icon="iconConf[index]"
-      :bgColor="colorConf[index]")
-    .progress
-      progress-bar(:data="progress")
-      progress-bar(:data="progress" type="circle")
+    el-row(:gutter="20" style="margin-bottom: 30px")
+      el-col(:md="6" :sm="12" v-for="(item, index) in data" :key="index")
+        card(
+        :title="item.title"
+        :num="item.num"
+        :text="item.text"
+        :icon="iconConf[index]"
+        :bgColor="colorConf[index]")
+    el-row.progress(:gutter="20")
+      el-col(:md="12" :sm="24")
+        progress-bar(:data="progress")
+      el-col(:md="12" :sm="24")
+        progress-bar(:data="progress" type="circle")
 </template>
 
 <script>
-import { cmsMixin } from '../../mixins'
+import { cmsMixin, progressMixin } from '../../mixins'
 import Card from '../../base/card/card'
 import ProgressBar from '../../base/progress-bar/progress-bar'
 import { Home as Model } from '../../model/Home'
@@ -24,7 +27,7 @@ export default {
     Card,
     ProgressBar
   },
-  mixins: [cmsMixin],
+  mixins: [cmsMixin, progressMixin],
   data () {
     return {
       colorConf: colorConf,
@@ -40,12 +43,4 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  .card-list
-    display: flex
-    flex-direction: row
-    justify-content: space-around
-  .progress
-    display: flex
-    flex-direction: column
-    width: 60%
 </style>

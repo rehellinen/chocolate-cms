@@ -56,7 +56,9 @@ export default {
 <style lang="sass" scoped>
   @import "~sass/base"
   .card
-    padding: 20px 30px
+    flex-grow: 1
+    flex-shrink: 1
+    flex-basis: auto
     .card-title
       font-size: $big-font-size
       font-weight: bold
@@ -69,7 +71,7 @@ export default {
         flex-direction: column
         margin-right: 20px
         .num
-          font-size: $biggest-font-size
+          font-size: 30px
           margin-bottom: 10px
       .icon-item
         font-size: 3rem

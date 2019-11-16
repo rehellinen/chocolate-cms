@@ -1,10 +1,13 @@
 <template lang="pug">
-  .progress-bar
-    el-progress(v-for="(item, index) in data" :key="index"
-    :percentage="50"
-    :type="type"
-    :stroke-width="15"
-    :color="item.color")
+  .progress-bar(:class="'my-'+type")
+    .progress-items(v-for="(item, index) in data" :key="index")
+      .title {{item.title}}
+      el-progress(
+      :percentage="50"
+      :type="type"
+      :stroke-width="12"
+      :class="'el-progress-'+ index"
+      )
 </template>
 
 <script>
@@ -23,11 +26,32 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  @import "~sass/base"
   .progress-bar
     background-color: white
-    margin: 10px
     border-radius: 10px
     padding: 20px
     .el-progress
       margin: 10px
+    .el-progress-0
+      /deep/ .el-progress-bar__inner
+        background: $blue-purple
+    .el-progress-1
+      /deep/ .el-progress-bar__inner
+        background: $yellow-orange
+    .el-progress-2
+      /deep/ .el-progress-bar__inner
+        background: $blue-mazarine
+    .title
+      margin-left: 10px
+  .my-circle
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    .progress-items
+      display: flex
+      flex-direction: column
+      align-items: center
+    .title
+      margin: 0
 </style>

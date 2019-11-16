@@ -16,8 +16,8 @@
 
     my-table(
       v-if="type === allTypes.INDEX"
-      :tableColumn="table"
-      :data="data"
+      :tableColumn="tableColumn"
+      :data="table"
       :pageConf="pageConf"
       :searchConf="search"
       :operate="operate"
@@ -49,15 +49,15 @@
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
+import { cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin } from '../../mixins'
 import { tableConf, formConf, searchConf, operate } from './config'
 import { Menu as Model } from '../../model'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, pageMixin],
+  mixins: [cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin],
   methods: {
     _initCMS () {
-      this.setModel(new Model())
+      this.setTableModel(new Model())
       this.setName('菜单')
       this.setForm(formConf)
       this.setTable(tableConf)

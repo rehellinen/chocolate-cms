@@ -16,8 +16,8 @@
 
     my-table(
       v-if="type === allTypes.INDEX"
-      :tableColumn="table"
-      :data="data"
+      :tableColumn="tableColumn"
+      :data="table"
       :pageConf="pageConf"
       :searchConf="search"
       @clear="toClear"
@@ -48,15 +48,15 @@
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, pageMixin } from '../../mixins'
+import { cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin } from '../../mixins'
 import { tableConf, formConf, searchConf } from './config'
 import { Article as Model } from '../../model/Article'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, pageMixin],
+  mixins: [cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin],
   methods: {
     _initCMS () {
-      this.setModel(new Model())
+      this.setTableModel(new Model())
       this.setName('新闻')
       this.setForm(formConf)
       this.setTable(tableConf)

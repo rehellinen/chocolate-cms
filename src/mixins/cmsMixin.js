@@ -7,28 +7,12 @@ import { Token } from '../utils/Token'
 export const cmsMixin = {
   data () {
     return {
-      // 表格展示的数据
-      data: [],
       // 所有页面类型
       allTypes: config.CMS,
       // 页面类型（首页、添加、编辑）
       type: config.CMS.INDEX,
-      // 进度条的数据
-      progress: [],
-      // 表单的配置
-      form: [],
-      // 表格的配置
-      table: [],
-      // 表格的自定义操作
-      operate: [],
-      // 搜索的配置
-      search: [],
       // 面包屑导航栏
       bread: ['首页'],
-      // 编辑页面展示的数据
-      formData: {},
-      // 模型
-      model: null,
       // 当前菜单对应的中文名
       name: '',
       // 是否在发送请求
@@ -41,31 +25,9 @@ export const cmsMixin = {
   // CMS初始化
   async mounted () {
     this._initCMS()
-    await this._getData()
     this._pushBread(`${this.name}管理`)
   },
   methods: {
-    // 新组件需覆盖的方法
-    _initCMS () {},
-
-    // 获取数据
-    async _getData () {
-      this.data = []
-      // TODO: 此处使用了MOCK
-      const res = await this.model.getMock()
-      if (res.isError) {
-        this.data = []
-        return
-      }
-      this.data = res.data
-      if (res.page) {
-        this.setPageConf(res.page)
-      }
-      if (res.progress) {
-        this.setProgress(res.progress)
-      }
-    },
-
     // 检查是否登录
     async checkLogin () {
       const isLogin = await new Token().isLogin()
@@ -86,36 +48,6 @@ export const cmsMixin = {
           if (this.$route.path === '/login') this.$router.push('/')
         }
       }
-    },
-
-    // 配置添加、编辑页面的表单元素
-    setForm (conf) {
-      this.form = conf
-    },
-
-    // 配置表格
-    setTable (conf) {
-      this.table = conf
-    },
-
-    // 配置进度条
-    setProgress (conf) {
-      this.progress = conf
-    },
-
-    // 配置表单自定义按钮
-    setOperate (conf) {
-      this.operate = conf
-    },
-
-    // 配置搜索
-    setSearch (conf) {
-      this.search = conf
-    },
-
-    // 配置Model
-    setModel (model) {
-      this.model = model
     },
 
     // 设置中文名称
@@ -145,63 +77,6 @@ export const cmsMixin = {
       this.formData = {}
       this.toIndex()
       this._getData()
-    },
-
-    // 处理搜索事件
-    async toSearch (e) {
-      if (!e.field) {
-        this.openDialog({
-          content: '字段不能为空'
-        })
-        return
-      }
-
-      if (!e.searchStr) {
-        this.openDialog({
-          content: '搜索关键字不能为空'
-        })
-        return
-      }
-
-      const searchRes = await this.model.search(e)
-      if (searchRes.isError) {
-        this.data = []
-        return
-      }
-      this.data = searchRes.data
-      this.setPageConf(searchRes.page)
-    },
-
-    /**
-     * 处理添加、编辑页面中按钮点击后的事件
-     * @param e 按钮点击事件的参数
-     */
-    toSubmit (e) {
-      if (this.type === config.CMS.ADD) {
-        this.addData(e)
-      } else if (this.type === config.CMS.EDIT) {
-        this.editData(e)
-      }
-    },
-
-    addData (data) {
-      this._requestWithInfo(
-        async () => this.model.addData(data)
-      )
-    },
-
-    editData (data) {
-      this._requestWithInfo(
-        async () => this.model.editData(data)
-      )
-    },
-
-    deleteData ({ index }) {
-      const id = this.data[index].id
-      this._requestWithQuery({
-        content: '是否确定删除',
-        request: async () => this.model.deleteData(id)
-      })
     },
 
     /**
