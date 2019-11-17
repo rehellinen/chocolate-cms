@@ -253,6 +253,9 @@ export default {
     background: linear-gradient(230deg, #0e4cfd, #6a8eff)
     border: none
     color: white
+  .el-table__body
+    .el-button
+      margin: 2px 10px 2px 0
   .el-pagination
     margin-top: 10px
     /deep/ .active
