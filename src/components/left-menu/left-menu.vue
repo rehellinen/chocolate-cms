@@ -36,6 +36,8 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base"
   .container
+    .el-menu
+      border: 0
     ul
       height: 100%
   .menu-title

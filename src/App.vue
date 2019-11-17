@@ -44,7 +44,7 @@ export default {
 
   .wrapper
     min-height: 100vh
-    font-family: "Tahoma","Arial","Heiti SC", "Microsoft YaHei",sans-serif
+    font-family: 'PingFang SC','Microsoft YaHei',sans-serif
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one

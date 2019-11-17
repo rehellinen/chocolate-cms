@@ -27,12 +27,20 @@ export default {
 
 <style lang="sass" scoped>
   @import "~sass/base"
+  /* TODO: process-bar样式有没有更好的写法 */
+  /deep/ .el-progress--circle
+    margin: 5px
+    .el-progress__text
+      margin-left: 0!important
   .progress-bar
     background-color: white
     border-radius: 10px
     padding: 20px
     .el-progress
       margin: 10px
+      /deep/ .el-progress__text
+        margin-left: 20px
+        font-size: 14px !important
     .el-progress-0
       /deep/ .el-progress-bar__inner
         background: $blue-purple
