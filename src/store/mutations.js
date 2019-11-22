@@ -6,8 +6,11 @@
 import { types } from './mutation-types'
 
 export const mutations = {
-  // 保存至 store 中的购物车数据
   [types.SAVE_MENUS] (state, data) {
     state.menus = data
+  },
+
+  [types.CHANGE_MENU_COLLAPSE_STATUS] (state) {
+    state.isMenuCollapse = !state.isMenuCollapse
   }
 }

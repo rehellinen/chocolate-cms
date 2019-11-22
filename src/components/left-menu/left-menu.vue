@@ -2,13 +2,15 @@
   div.container
     router-link(to="/" tag="div")
       .title
-        p rehellinen
+        p(v-if="isMenuCollapse") R
+        p(v-else) rehellinen
     el-menu(
       default-active="0"
       class="el-menu-vertical-demo"
       active-text-color="#303133"
       text-color="#909399"
       background-color="#fff"
+      :collapse="isMenuCollapse"
     )
       router-link(v-for="(item, index) in menus" :key="item.id" tag="div" :to="item.url")
         el-menu-item(:index="index.toString()")
@@ -25,7 +27,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['menus'])
+    ...mapState(['menus', 'isMenuCollapse'])
   }
 }
 </script>

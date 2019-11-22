@@ -1,8 +1,11 @@
 <template lang="pug">
   .top-bar
     .operation
-      i.el-icon-s-fold
-      p CMS
+      i(
+        @click="changeMenuCollapseStatus"
+        :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+        )
+      p REHELLINEN
     .history(v-if="history.length > 1")
       router-link(
         v-for="(item, index) in history" :key="item.path"
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   data () {
@@ -32,7 +35,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getMenuByPath'])
+    ...mapGetters(['getMenuByPath']),
+    ...mapState(['isMenuCollapse'])
   },
   watch: {
     $route (newRoute) {
@@ -72,7 +76,8 @@ export default {
         }
       }
       this.history.splice(index, 1)
-    }
+    },
+    ...mapActions(['changeMenuCollapseStatus'])
   }
 }
 </script>
@@ -92,7 +97,7 @@ export default {
     align-items: center
     padding-left: 20px
     i
-      font-size: 25px
+      font-size: 20px
     p
       margin-left: 10px
       letter-spacing: 3px

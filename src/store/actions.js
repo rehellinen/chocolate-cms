@@ -11,6 +11,9 @@ const actions = {
   async getMenus ({ commit, state }) {
     const menus = await new Menu().getLeftMenu()
     commit(types.SAVE_MENUS, menus)
+  },
+  changeMenuCollapseStatus ({ commit }) {
+    commit(types.CHANGE_MENU_COLLAPSE_STATUS)
   }
 }
 

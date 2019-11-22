@@ -1,6 +1,6 @@
 <template lang="pug">
   el-container.wrapper
-    el-aside(width="230px" v-if="!isLoginPage")
+    el-aside(:width="asideWidth" v-if="!isLoginPage")
       left-menu
     el-container
       el-main
@@ -11,7 +11,7 @@
 <script>
 import LeftMenu from './components/left-menu/left-menu'
 import TopBar from './components/top-bar/top-bar'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -22,6 +22,12 @@ export default {
     return {
       isLoginPage: false
     }
+  },
+  computed: {
+    asideWidth () {
+      return this.isMenuCollapse ? '64px' : '230px'
+    },
+    ...mapState(['isMenuCollapse'])
   },
   watch: {
     $route () {
