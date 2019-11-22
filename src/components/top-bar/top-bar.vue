@@ -20,16 +20,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
       history: [
-        { name: '首页', path: '/' },
-        { name: '菜单管理', path: '/menu' },
-        { name: '文章管理', path: '/article' }
-      ], // 有name，path属性
+        { name: '首页', path: '/' }
+      ],
       historyStorageKey: 'history'
+    }
+  },
+  computed: {
+    ...mapGetters(['getMenuByPath'])
+  },
+  watch: {
+    $route (newRoute) {
+      if (this.history.some((item) => item.path === newRoute.path)) {
+        return
+      }
+      const newHistory = this.getMenuByPath(newRoute.path)
+      this.history.push({
+        path: newHistory.url,
+        name: newHistory.name
+      })
     }
   },
   created () {
@@ -86,6 +100,7 @@ export default {
     width: 100%
     height: 30px
     display: flex
+    overflow: hidden
     .tab
       background-color: $gray
       color: $minor-font-color
@@ -96,26 +111,27 @@ export default {
       text-align: center
       position: relative
       border-radius: 5px 5px 0 0
+      flex: none
       .corner
         display: none
-        width: 15px
+        width: 10px
         height: 10px
         position: absolute
         background: $blue
         bottom: 0
         z-index: 10
         .shelter
-          width: 15px
+          width: 10px
           height: 10px
           background-color: $gray
         &.right
           right: 0
-          margin-right: -15px
+          margin-right: -10px
           .shelter
             border-bottom-left-radius: 100%
         &.left
           left: 0
-          margin-left: -15px
+          margin-left: -10px
           .shelter
             border-bottom-right-radius: 100%
       &.active
