@@ -10,7 +10,7 @@
       text-color="#909399"
       background-color="#fff"
     )
-      router-link(v-for="(item, index) in menu" :key="item.id" tag="div" :to="item.url")
+      router-link(v-for="(item, index) in menus" :key="item.id" tag="div" :to="item.url")
         el-menu-item(:index="index.toString()")
           i.el-icon-odometer(v-if="item.url === '/'")
           i.el-icon-tickets(v-else)
@@ -18,17 +18,14 @@
 </template>
 
 <script>
-import { Menu } from '../../model'
+import { mapState } from 'vuex'
 
 export default {
   data () {
-    return {
-      menu: []
-    }
+    return {}
   },
-  async created () {
-    // TODO: 此处使用了MOCK
-    this.menu = await new Menu().getLeftMenu()
+  computed: {
+    ...mapState(['menus'])
   }
 }
 </script>

@@ -11,6 +11,7 @@
 <script>
 import LeftMenu from './components/left-menu/left-menu'
 import TopBar from './components/top-bar/top-bar'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -28,12 +29,14 @@ export default {
     }
   },
   created () {
+    this.getMenus()
     this.updateLayout()
   },
   methods: {
     updateLayout () {
       this.isLoginPage = this.$route.path === '/login'
-    }
+    },
+    ...mapActions(['getMenus'])
   }
 }
 </script>
