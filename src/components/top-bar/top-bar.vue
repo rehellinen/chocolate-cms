@@ -1,7 +1,8 @@
 <template lang="pug">
   .top-bar
     .operation
-      p 顶部栏
+      i.el-icon-s-fold
+      p CMS
     .history(v-if="history.length > 1")
       router-link(
         v-for="(item, index) in history" :key="item.path"
@@ -12,6 +13,10 @@
       )
         span {{item.name}}
         i.el-icon-close(@click.stop="close(index)")
+        .corner.left
+          .shelter
+        .corner.right
+          .shelter
 </template>
 
 <script>
@@ -69,6 +74,14 @@ export default {
     background-color: white
   .operation
     height: 50px
+    display: flex
+    align-items: center
+    padding-left: 20px
+    i
+      font-size: 25px
+    p
+      margin-left: 10px
+      letter-spacing: 3px
   .history
     width: 100%
     height: 30px
@@ -82,9 +95,34 @@ export default {
       line-height: 30px
       text-align: center
       position: relative
+      border-radius: 5px 5px 0 0
+      .corner
+        display: none
+        width: 15px
+        height: 10px
+        position: absolute
+        background: $blue
+        bottom: 0
+        z-index: 10
+        .shelter
+          width: 15px
+          height: 10px
+          background-color: $gray
+        &.right
+          right: 0
+          margin-right: -15px
+          .shelter
+            border-bottom-left-radius: 100%
+        &.left
+          left: 0
+          margin-left: -15px
+          .shelter
+            border-bottom-right-radius: 100%
       &.active
-        background: $blue-purple
+        background: $blue
         color: white
+        .corner
+          display: block
       i
         position: absolute
         top: 3px
