@@ -48,8 +48,9 @@ export default {
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one
+      box-shadow: 10px $gray
     .el-main
-      background-color: $background-color
+      background-color: $gray
       padding: 0
       .main
         padding: 20px 30px

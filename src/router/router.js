@@ -5,9 +5,9 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-const Index = () => import('../cms-page/index')
-const Article = () => import('../cms-page/article')
-const Menu = () => import('../cms-page/menu')
+const Index = () => import('../pages/index')
+const Article = () => import('../pages/article')
+const Menu = () => import('../pages/menu')
 const Login = () => import('../components/login/login')
 
 Vue.use(Router)
