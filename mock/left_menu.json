@@ -5,21 +5,21 @@
     {
       "id": 3,
       "name": "首页",
-      "url": "/",
+      "path": "/",
       "order": 999,
       "status": 1
     },
     {
       "id": 1,
       "name": "菜单管理",
-      "url": "/menu",
+      "path": "/menu",
       "order": 0,
       "status": 1
     },
     {
       "id": 2,
       "name": "文章管理",
-      "url": "/article",
+      "path": "/article",
       "order": 0,
       "status": 1
     }

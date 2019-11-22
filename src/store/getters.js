@@ -5,8 +5,7 @@
  */
 const getters = {
   getMenuByPath: (state) => (path) => {
-    console.log(state)
-    return state.menus.find(item => item.url === path)
+    return state.menus.find(item => item.path === path)
   }
 }
 

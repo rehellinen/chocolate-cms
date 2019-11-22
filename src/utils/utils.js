@@ -29,3 +29,15 @@ export const dateFormat = (thisDate, fmt = 'YYYY-MM-dd hh:mm:ss') => {
   }
   return fmt
 }
+
+export const getRandChars = (length = 16) => {
+  let str = ''
+  let strPol = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let max = strPol.length - 1
+
+  for (let i = 0; i < length; i++) {
+    str += strPol[Math.floor(Math.random() * max)]
+  }
+
+  return str
+}

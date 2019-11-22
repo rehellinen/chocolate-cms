@@ -6,7 +6,7 @@
         :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
         )
       p REHELLINEN
-    .history(v-if="history.length > 1")
+    .history(v-if="history.length > 1 && menus.length > 0")
       router-link(
         v-for="(item, index) in history" :key="item.path"
         class="tab"
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getMenuByPath']),
-    ...mapState(['isMenuCollapse'])
+    ...mapState(['isMenuCollapse', 'menus'])
   },
   watch: {
     $route (newRoute) {
@@ -45,7 +45,7 @@ export default {
       }
       const newHistory = this.getMenuByPath(newRoute.path)
       this.history.push({
-        path: newHistory.url,
+        path: newHistory.path,
         name: newHistory.name
       })
     }

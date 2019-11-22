@@ -28,8 +28,8 @@ export const tableConf = [
     label: '名称'
   },
   {
-    name: 'url',
-    label: 'URL'
+    name: 'path',
+    label: 'PATH'
   }
 ]
 

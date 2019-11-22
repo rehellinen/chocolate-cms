@@ -5,29 +5,49 @@
         p(v-if="isMenuCollapse") R
         p(v-else) rehellinen
     el-menu(
-      default-active="0"
       class="el-menu-vertical-demo"
       active-text-color="#303133"
       text-color="#909399"
       background-color="#fff"
       :collapse="isMenuCollapse"
+      :default-active="defaultActive"
     )
-      router-link(v-for="(item, index) in menus" :key="item.id" tag="div" :to="item.url")
-        el-menu-item(:index="index.toString()")
-          i.el-icon-odometer(v-if="item.url === '/'")
+      router-link(v-for="(item, index) in menus" :key="item.id" tag="div" :to="item.path")
+        el-menu-item(:index="indexMap.get(item.path)")
+          i.el-icon-odometer(v-if="item.path === '/'")
           i.el-icon-tickets(v-else)
           span.menu-title(slot="title") {{item.name}}
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { getRandChars } from '../../utils/utils'
 
 export default {
   data () {
     return {}
   },
   computed: {
+    defaultActive () {
+      return this.indexMap.get(this.$route.path) || ''
+    },
+    indexMap () {
+      const map = new Map()
+      if (this.menus.length === 0) {
+        return map
+      }
+      for (let menu of this.menus) {
+        map.set(menu.path, getRandChars())
+      }
+      return map
+    },
     ...mapState(['menus', 'isMenuCollapse'])
+  },
+  mounted () {
+    this.getMenus()
+  },
+  methods: {
+    ...mapActions(['getMenus'])
   }
 }
 </script>
