@@ -71,6 +71,7 @@
     "store": "^2.0.12",
     "vue": "^2.5.17",
     "vue-quill-editor": "^3.0.6",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.2"
   }
 }
