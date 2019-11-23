@@ -5,10 +5,10 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-const Index = () => import('../pages/index')
-const Article = () => import('../pages/article')
-const Menu = () => import('../pages/menu')
-const Login = () => import('../components/login/login')
+const Index = () => import(/* webpackChunkName: "index" */ '../pages/index')
+const Article = () => import(/* webpackChunkName: "article" */ '../pages/article')
+const Menu = () => import(/* webpackChunkName: "menu" */ '../pages/menu')
+const Login = () => import(/* webpackChunkName: "login" */ '../components/login/login')
 
 Vue.use(Router)
 
