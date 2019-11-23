@@ -28,9 +28,7 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 export default {
   data () {
     return {
-      history: [
-        { name: '首页', path: '/' }
-      ],
+      history: [],
       historyStorageKey: 'history'
     }
   },
@@ -44,6 +42,9 @@ export default {
         return
       }
       const newHistory = this.getMenuByPath(newRoute.path)
+      if (!newHistory) {
+        return
+      }
       this.history.push({
         path: newHistory.path,
         name: newHistory.name
