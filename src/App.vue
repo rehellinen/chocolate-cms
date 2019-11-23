@@ -5,7 +5,8 @@
     el-container
       el-main
         top-bar
-        router-view.main
+        transition(name="fade" mode="out-in")
+          router-view.main
 </template>
 
 <script>
@@ -48,6 +49,11 @@ export default {
 <style lang="sass" rel="stylesheet/sass">
   @import "~sass/reset"
   @import "~sass/base"
+  .fade-enter-active, .fade-leave-active
+    transition: opacity .2s ease-in-out
+  .fade-enter, .fade-leave-to
+    opacity: 0
+
   .wrapper
     min-height: 100vh
     font-family: 'PingFang SC','Microsoft YaHei',sans-serif
