@@ -52,6 +52,8 @@ export default {
   .wrapper
     min-height: 100vh
     font-family: 'PingFang SC','Microsoft YaHei',sans-serif
+    .el-aside
+      transition: width 0.3s ease-in-out
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one
