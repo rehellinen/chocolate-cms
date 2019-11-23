@@ -18,7 +18,7 @@ import {
   Pagination, DatePicker, Radio,
   Progress
 } from 'element-ui'
-import 'assets/theme/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
 
 [
   Header, Container, Aside, Main, Footer,

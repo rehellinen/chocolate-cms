@@ -25,12 +25,11 @@ import { getRandChars } from '../../utils/utils'
 
 export default {
   data () {
-    return {}
+    return {
+      defaultActive: ''
+    }
   },
   computed: {
-    defaultActive () {
-      return this.indexMap.get(this.$route.path) || ''
-    },
     indexMap () {
       const map = new Map()
       if (this.menus.length === 0) {
@@ -43,8 +42,16 @@ export default {
     },
     ...mapState(['menus', 'isMenuCollapse'])
   },
-  mounted () {
-    this.getMenus()
+  watch: {
+    $route (newRoute) {
+      if (this.defaultActive) {
+        return
+      }
+      this.defaultActive = this.indexMap.get(this.$route.path) || ''
+    }
+  },
+  async mounted () {
+    await this.getMenus()
   },
   methods: {
     ...mapActions(['getMenus'])
