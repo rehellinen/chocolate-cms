@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     asideWidth () {
-      return this.isMenuCollapse ? '64px' : '230px'
+      return this.isMenuCollapse ? '64px' : '215px'
     },
     ...mapState(['isMenuCollapse'])
   },
@@ -48,10 +48,12 @@ export default {
 <style lang="sass" rel="stylesheet/sass">
   @import "~sass/reset"
   @import "~sass/base"
-
   .wrapper
     min-height: 100vh
     font-family: 'PingFang SC','Microsoft YaHei',sans-serif
+    // 解决表格线条对不齐的问题
+    .el-table th.gutter
+      display: table-cell!important
     .el-aside
       transition: width 0.3s ease-in-out
     .el-header

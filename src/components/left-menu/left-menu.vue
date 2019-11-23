@@ -1,7 +1,9 @@
 <template lang="pug">
   div.container
     .title
-      router-link(to="/" tag="p") {{isMenuCollapse ? 'R' : 'rehellinen'}}
+      transition(name="fade" mode="out-in")
+        p(v-if="isMenuCollapse" :key="'R'") R
+        p(v-else :key="'rehellinen'") rehellinen
     el-menu(
       class="el-menu-vertical-demo"
       active-text-color="#303133"
@@ -56,6 +58,10 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base"
+  .fade-enter-active, .fade-leave-active
+    transition: opacity 0.3s
+  .fade-enter, .fade-leave-to
+    opacity: 0
   .container
     .el-menu
       border: 0
