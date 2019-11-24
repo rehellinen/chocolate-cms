@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getAllConfig } from './utils'
+import { getAllConfig, processConfig } from './utils'
 
 Vue.use(Router)
 
 const routes = [
-  ...getAllConfig(),
+  ...processConfig(getAllConfig()),
   { path: '*', redirect: '/404' }
 ]
 

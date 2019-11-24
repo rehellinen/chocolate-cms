@@ -12,15 +12,40 @@
       :collapse="isMenuCollapse"
       :default-active="defaultActive"
     )
-      router-link(v-for="(item, index) in menus" :key="item.id" tag="div" :to="item.path")
-        el-menu-item(:index="indexMap.get(item.path)")
-          i.el-icon-odometer(v-if="item.path === '/'")
-          i.el-icon-tickets(v-else)
-          span.menu-title(slot="title") {{item.name}}
+      template(v-for="menu in menus")
+        // 二级菜单的情况
+        el-submenu(
+          v-if="menu.children && menu.children.length > 0"
+          :index="indexMap.get(menu.path)"
+          :key="menu.id"
+        )
+          template(slot="title")
+            i(:class="menu.icon")
+            span.menu-title(slot="title") {{menu.title}}
+
+          router-link(
+            tag="div"
+            v-for="submenu in menu.children"
+            :key="indexMap.get(submenu.path)"
+            :to="submenu.path"
+          )
+            el-menu-item(:index="indexMap.get(submenu.path)")
+              i(:class="submenu.icon")
+              span.menu-title(slot="title") {{submenu.title}}
+
+        // 只有一级菜单的情况
+        router-link(
+          tag="div"
+          :to="menu.path"
+          v-else
+        )
+          el-menu-item(:index="indexMap.get(menu.path)")
+            i(:class="menu.icon")
+            span.menu-title(slot="title") {{menu.title}}
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { getRandChars } from 'utils/utils'
 
 export default {
@@ -35,23 +60,18 @@ export default {
       if (this.menus.length === 0) {
         return map
       }
-      for (let menu of this.menus) {
+      for (let menu of this.plainMenus) {
         map.set(menu.path, getRandChars())
       }
       return map
     },
+    ...mapGetters(['plainMenus']),
     ...mapState(['menus', 'isMenuCollapse'])
   },
   watch: {
     $route (newRoute) {
       this.defaultActive = this.indexMap.get(this.$route.path) || ''
     }
-  },
-  async mounted () {
-    await this.getMenus()
-  },
-  methods: {
-    ...mapActions(['getMenus'])
   }
 }
 </script>

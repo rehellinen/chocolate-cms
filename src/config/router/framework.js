@@ -23,7 +23,7 @@ export default [
   },
   {
     show: true,
-    title: '找不到页面',
+    title: '错误页',
     icon: 'el-icon-circle-close',
     name: '404',
     path: '/404',
