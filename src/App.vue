@@ -5,13 +5,13 @@
     el-container
       el-main
         top-bar
-        transition(name="fade" mode="out-in")
+        transition(name="router-view" mode="out-in")
           router-view.main
 </template>
 
 <script>
-import LeftMenu from './components/left-menu/left-menu'
-import TopBar from './components/top-bar/top-bar'
+import LeftMenu from 'libs/components/left-menu/left-menu'
+import TopBar from 'libs/components/top-bar/top-bar'
 import { mapState } from 'vuex'
 
 export default {
@@ -47,11 +47,11 @@ export default {
 </script>
 
 <style lang="sass" rel="stylesheet/sass">
-  @import "~sass/reset"
   @import "~sass/base"
-  .fade-enter-active, .fade-leave-active
+
+  .router-view-enter-active, .router-view-leave-active
     transition: opacity .2s ease-in-out
-  .fade-enter, .fade-leave-to
+  .router-view-enter, .router-view-leave-to
     opacity: 0
 
   .wrapper

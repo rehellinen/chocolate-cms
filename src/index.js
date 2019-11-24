@@ -8,8 +8,9 @@ import ElementUI from 'element-ui'
 
 import App from './App'
 import store from './store'
-import { router } from './router/router'
+import { router } from './libs'
 
+import 'sass/reset.sass'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
