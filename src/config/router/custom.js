@@ -36,5 +36,14 @@ export default [
     path: '/article',
     component: 'article',
     order: 0
+  },
+  {
+    show: true,
+    title: '上传管理',
+    icon: 'el-icon-tickets',
+    name: 'upload',
+    path: '/upload',
+    component: 'upload',
+    order: 0
   }
 ]

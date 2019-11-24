@@ -27,15 +27,18 @@
     "progress": [
       {
         "percentage": 50,
-        "title": "进度条1"
+        "title": "进度条1",
+        "color": "purple"
       },
       {
         "percentage": 50,
-        "title": "进度条2"
+        "title": "进度条2",
+        "color": "orange"
       },
       {
         "percentage": 50,
-        "title": "进度条3"
+        "title": "进度条3",
+        "color": "blue"
       }
     ]
   }
