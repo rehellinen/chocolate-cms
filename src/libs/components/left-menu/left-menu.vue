@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getRandChars } from 'utils/utils'
 
 export default {
@@ -65,8 +65,7 @@ export default {
       }
       return map
     },
-    ...mapGetters(['plainMenus']),
-    ...mapState(['menus', 'isMenuCollapse'])
+    ...mapGetters(['plainMenus', 'menus', 'isMenuCollapse'])
   },
   watch: {
     $route (newRoute) {

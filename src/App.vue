@@ -12,7 +12,7 @@
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -28,7 +28,7 @@ export default {
     asideWidth () {
       return this.isMenuCollapse ? '64px' : '215px'
     },
-    ...mapState(['isMenuCollapse'])
+    ...mapGetters(['isMenuCollapse'])
   },
   watch: {
     $route () {

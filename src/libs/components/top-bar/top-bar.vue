@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -33,8 +33,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getMenuByPath']),
-    ...mapState(['isMenuCollapse', 'menus'])
+    ...mapGetters(['getMenuByPath', 'isMenuCollapse', 'menus'])
   },
   watch: {
     $route (newRoute) {

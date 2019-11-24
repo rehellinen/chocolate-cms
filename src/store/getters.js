@@ -6,6 +6,8 @@
 import { deepTraversalAll } from 'libs/router/utils'
 
 const getters = {
+  menus: (state) => state.menus,
+  isMenuCollapse: (state) => state.isMenuCollapse,
   plainMenus: (state) => {
     const menus = []
     deepTraversalAll(state.menus, (config) => {
