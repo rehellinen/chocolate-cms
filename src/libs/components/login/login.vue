@@ -18,10 +18,9 @@
 </template>
 
 <script>
-import { dialogMixin } from '../../mixins/dialogMixin'
-import { cmsMixin } from '../../mixins/cmsMixin'
-import { Token } from '../../utils/Token'
-import config from '../../utils/config'
+import { dialogMixin, cmsMixin } from 'mixins'
+import { Token } from 'libs/class/Token'
+import config from 'config/config'
 
 export default {
   mixins: [dialogMixin, cmsMixin],
@@ -61,7 +60,7 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~sass/base"
+  @import "~sass/base.sass"
   .container
     padding: 0 10%
     .el-form

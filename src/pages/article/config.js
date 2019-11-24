@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2019/5/21 10:36
  */
-import config from '../../utils/config'
+import config from 'config/config'
 
 export const searchConf = [
   {

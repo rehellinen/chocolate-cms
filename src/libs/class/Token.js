@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2019/3/4 22:37
  */
-import config from './config'
+import config from 'config/config'
 import axios from 'axios'
 import store from 'store'
 

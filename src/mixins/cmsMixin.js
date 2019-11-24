@@ -1,8 +1,8 @@
-import config from '../utils/config'
-import MyForm from '../base/form/form'
-import MyTable from '../base/table/table'
-import MyBread from '../base/bread-crumb/bread-crumb'
-import { Token } from '../utils/Token'
+import config from 'config/config'
+import MyForm from 'base/form/form'
+import MyTable from 'base/table/table'
+import MyBread from 'base/bread-crumb/bread-crumb'
+import { Token } from 'libs/class/Token'
 
 export const cmsMixin = {
   data () {

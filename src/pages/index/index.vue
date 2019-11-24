@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import { cmsMixin, progressMixin } from '../../mixins'
-import Card from '../../base/card/card'
-import ProgressBar from '../../base/progress-bar/progress-bar'
-import { Home as Model } from '../../model/Home'
+import { cmsMixin, progressMixin } from 'mixins'
+import Card from 'base/card/card'
+import ProgressBar from 'base/progress-bar/progress-bar'
+import { Home as Model } from 'model/Home'
 import { colorConf, iconConf } from './config'
 
 export default {
