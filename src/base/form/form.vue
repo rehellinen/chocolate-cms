@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import config from '../../utils/config'
-import MyEditor from '../editor/editor'
-import MyFileUploader from '../file-uploader/file-uploader'
+import config from 'config/config'
+import MyEditor from 'base/editor/editor'
+import MyFileUploader from 'base/file-uploader/file-uploader'
 
 export default {
   components: {

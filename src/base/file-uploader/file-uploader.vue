@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import config from '../../utils/config'
-import { Token } from '../../utils/Token'
+import config from 'config/config'
+import { Token } from 'libs/class/Token'
 
 export default {
   data () {

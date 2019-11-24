@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2019/3/5 15:34
  */
-import MyDialog from '../base/dialog/dialog'
+import MyDialog from 'base/dialog/dialog'
 
 export const dialogMixin = {
   data () {

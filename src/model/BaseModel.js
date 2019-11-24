@@ -3,9 +3,9 @@
  *  Create By rehellinen
  *  Create On 2019/3/4 11:34
  */
-import config from '../utils/config'
 import axios from 'axios'
-import { Token } from '../utils/Token'
+import config from 'config/config'
+import { Token } from 'libs/class/Token'
 
 export class BaseModel {
   constructor (modelName) {

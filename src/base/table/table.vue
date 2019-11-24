@@ -89,9 +89,9 @@
 </template>
 
 <script>
-import config from '../../utils/config'
-import { dateFormat } from '../../utils/utils'
-import MySearch from '../../base/search/search'
+import config from 'config/config'
+import { dateFormat } from 'utils/utils'
+import MySearch from 'base/search/search'
 
 export default {
   components: {

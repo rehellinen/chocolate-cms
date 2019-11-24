@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getAllConfig } from 'libs/router/utils'
+import { getAllConfig } from './utils'
 
 Vue.use(Router)
 

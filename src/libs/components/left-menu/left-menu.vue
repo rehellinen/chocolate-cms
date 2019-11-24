@@ -21,7 +21,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { getRandChars } from '../../utils/utils'
+import { getRandChars } from 'utils/utils'
 
 export default {
   data () {
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~sass/base"
+  @import "~sass/base.sass"
   .fade-enter-active, .fade-leave-active
     transition: opacity 0.3s
   .fade-enter, .fade-leave-to

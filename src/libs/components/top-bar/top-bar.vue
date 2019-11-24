@@ -56,6 +56,7 @@ export default {
     window.addEventListener('beforeunload', () => {
       localStorage.setItem(this.historyStorageKey, JSON.stringify(this.history))
     })
+    this.init()
   },
   methods: {
     init () {
@@ -84,7 +85,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "~sass/base"
+  @import "~sass/base.sass"
 
   .top-bar
     height: 80px
