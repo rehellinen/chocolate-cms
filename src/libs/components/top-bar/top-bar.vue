@@ -109,7 +109,7 @@ export default {
     display: flex
     overflow: hidden
     .tab
-      background-color: $gray
+      background-color: white
       color: $minor-font-color
       margin-right: 3px
       cursor: pointer
@@ -124,13 +124,13 @@ export default {
         width: 10px
         height: 10px
         position: absolute
-        background: $blue
+        background: $gray
         bottom: 0
         z-index: 10
         .shelter
           width: 10px
           height: 10px
-          background-color: $gray
+          background-color: white
         &.right
           right: 0
           margin-right: -10px
@@ -142,8 +142,7 @@ export default {
           .shelter
             border-bottom-right-radius: 100%
       &.active
-        background: $blue
-        color: white
+        background: $gray
         .corner
           display: block
       i
