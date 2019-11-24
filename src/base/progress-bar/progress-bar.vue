@@ -6,7 +6,7 @@
       :percentage="50"
       :type="type"
       :stroke-width="12"
-      :class="'el-progress-'+ index"
+      :class="'el-progress-'+ item.color"
       )
 </template>
 
@@ -27,7 +27,6 @@ export default {
 
 <style lang="sass" scoped>
   @import "~sass/base"
-  /* TODO: process-bar样式有没有更好的写法 */
   /deep/ .el-progress--circle
     margin: 5px
     .el-progress__text
@@ -41,13 +40,13 @@ export default {
       /deep/ .el-progress__text
         margin-left: 20px
         font-size: 14px !important
-    .el-progress-0
+    .el-progress-purple
       /deep/ .el-progress-bar__inner
         background: $blue-purple
-    .el-progress-1
+    .el-progress-orange
       /deep/ .el-progress-bar__inner
         background: $yellow-orange
-    .el-progress-2
+    .el-progress-blue
       /deep/ .el-progress-bar__inner
         background: $blue-mazarine
     .title
