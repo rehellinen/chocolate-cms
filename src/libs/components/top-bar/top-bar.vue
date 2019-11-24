@@ -14,7 +14,7 @@
         :to="item.path"
         tag="div"
       )
-        span {{item.name}}
+        span {{item.title}}
         i.el-icon-close(@click.stop="close(index)")
         .corner.left
           .shelter
@@ -47,7 +47,7 @@ export default {
       }
       this.history.push({
         path: newHistory.path,
-        name: newHistory.name
+        title: newHistory.title
       })
     }
   },

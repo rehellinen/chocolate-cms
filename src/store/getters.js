@@ -13,8 +13,8 @@ const getters = {
     })
     return menus
   },
-  getMenuByPath: (state) => (path) => {
-    return state.menus.find(item => item.path === path)
+  getMenuByPath: (state, getter) => (path) => {
+    return getter.plainMenus.find(item => item.path === path)
   }
 }
 
