@@ -30,8 +30,6 @@ export default {
   },
   data () {
     return {
-      clientWidth: 0,
-      clientHeight: 0,
       isLoginPage: false
     }
   },
@@ -46,6 +44,9 @@ export default {
   watch: {
     $route () {
       this.updateLayout()
+      if (this.isPhone && !this.isMenuCollapse) {
+        this.changeMenuCollapseStatus()
+      }
     }
   },
   created () {
@@ -58,14 +59,10 @@ export default {
       this.isLoginPage = this.$route.path === '/login'
     },
     setEvent () {
-      window.addEventListener('resize', (event) => {
-        this.setSize()
-      })
+      window.addEventListener('resize', (event) => this.setSize())
     },
     setSize () {
-      this.clientWidth = document.body.clientWidth
-      this.clientHeight = document.body.clientHeight
-      if (this.clientWidth < 800) {
+      if (document.body.clientWidth < 700) {
         this.setPhoneStatus(true)
       } else {
         this.setPhoneStatus(false)
