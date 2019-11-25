@@ -7,7 +7,8 @@ div
   :file-list="fileList"
   :disabled="disabled"
   :limit="limit"
-  :on-exceed="exceed"
+  :on-change="handleChange"
+  :on-exceed="handleExceed"
   :class="{'disabled': disabled}")
     i(slot="default" class="el-icon-plus")
     div(slot="file" slot-scope="{file}")
@@ -59,6 +60,7 @@ export default {
   methods: {
     handleRemove (file) {
       let index = this.fileList.indexOf(file)
+      console.log(this.fileList)
       this.fileList.splice(index, index + 1)
     },
     handlePictureCardPreview (file) {
@@ -68,8 +70,11 @@ export default {
     handleEdit (file) {
       console.log(file)
     },
-    exceed (file, fileList) {
+    handleExceed (file, fileList) {
       this.handleRemove(file)
+    },
+    handleChange (file, fileList) {
+      this.fileList.push(file)
     }
   }
 }
