@@ -1,7 +1,11 @@
 <template lang="pug">
   div.left-menu
-    .title
-      transition(name="fade" mode="out-in")
+    router-link.title(tag="div", to="/")
+      transition(
+        name="fade"
+        mode="out-in"
+        :duration="300"
+        )
         p(v-if="!isPhone && isMenuCollapse" :key="'R'") R
         p(v-else :key="'rehellinen'") rehellinen
     el-menu(
@@ -77,13 +81,13 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base.sass"
-  .fade-enter-active, .fade-leave-active
-    transition: opacity 0.3s
   .fade-enter, .fade-leave-to
     opacity: 0
+
   .left-menu
     height: 100%
     background-color: white
+    overflow-x: hidden
     .el-menu
       border: 0
   .menu-title
@@ -95,8 +99,7 @@ export default {
     height: 80px
     background: linear-gradient(230deg, rgb(244, 121, 133), #843cf6)
     border-bottom: 1px solid $border-one
-    p
-      cursor: pointer
+    cursor: pointer
     p
       color: white
       font-weight: bold
