@@ -1,18 +1,22 @@
 <template lang="pug">
-  div.container
-    .title
-      transition(name="fade" mode="out-in")
-        p(v-if="isMenuCollapse" :key="'R'") R
+  div.left-menu
+    router-link.title(tag="div", to="/")
+      transition(
+        name="fade"
+        mode="out-in"
+        :duration="300"
+        )
+        p(v-if="!isPhone && isMenuCollapse" :key="'R'") R
         p(v-else :key="'rehellinen'") rehellinen
     el-menu(
       class="el-menu-vertical-demo"
       active-text-color="#303133"
       text-color="#909399"
       background-color="#fff"
-      :collapse="isMenuCollapse"
+      :collapse="!isPhone && isMenuCollapse"
       :default-active="defaultActive"
     )
-      template(v-for="menu in menus")
+      template(v-for="menu in leftMenus")
         // 二级菜单的情况
         el-submenu(
           v-if="menu.children && menu.children.length > 0"
@@ -45,7 +49,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getRandChars } from 'utils/utils'
 
 export default {
@@ -57,7 +61,7 @@ export default {
   computed: {
     indexMap () {
       const map = new Map()
-      if (this.menus.length === 0) {
+      if (this.plainMenus.length === 0) {
         return map
       }
       for (let menu of this.plainMenus) {
@@ -65,8 +69,7 @@ export default {
       }
       return map
     },
-    ...mapGetters(['plainMenus']),
-    ...mapState(['menus', 'isMenuCollapse'])
+    ...mapGetters(['plainMenus', 'isMenuCollapse', 'leftMenus', 'isPhone'])
   },
   watch: {
     $route (newRoute) {
@@ -78,15 +81,15 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base.sass"
-  .fade-enter-active, .fade-leave-active
-    transition: opacity 0.3s
   .fade-enter, .fade-leave-to
     opacity: 0
-  .container
+
+  .left-menu
+    height: 100%
+    background-color: white
+    overflow-x: hidden
     .el-menu
       border: 0
-    ul
-      height: 100%
   .menu-title
     margin-left: 10px
   .title
@@ -96,8 +99,7 @@ export default {
     height: 80px
     background: linear-gradient(230deg, rgb(244, 121, 133), #843cf6)
     border-bottom: 1px solid $border-one
-    p
-      cursor: pointer
+    cursor: pointer
     p
       color: white
       font-weight: bold

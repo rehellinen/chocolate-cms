@@ -5,39 +5,19 @@
  */
 
 export const searchConf = [
-  {
-    field: 'name',
-    label: '名称'
-  }
+  { field: 'name', label: '名称' }
 ]
 
 export const formConf = [
-  {
-    name: 'name',
-    label: '名称'
-  },
-  {
-    name: 'url',
-    label: 'URL'
-  }
+  { name: 'name', label: '名称' },
+  { name: 'url', label: 'URL' }
 ]
 
 export const tableConf = [
-  {
-    name: 'name',
-    label: '名称'
-  },
-  {
-    name: 'path',
-    label: 'PATH'
-  }
+  { name: 'name', label: '名称' },
+  { name: 'path', label: 'PATH' }
 ]
 
 export const operate = [
-  {
-    name: '操作',
-    func: () => {
-      alert('自定义的操作方法')
-    }
-  }
+  { name: '操作', func: () => alert('自定义的操作方法') }
 ]
