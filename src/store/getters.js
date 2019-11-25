@@ -8,6 +8,7 @@ import { deepTraversalAll } from 'libs/router/utils'
 const getters = {
   menus: (state) => state.menus,
   isMenuCollapse: (state) => state.isMenuCollapse,
+  isPhone: (state) => state.isPhone,
   leftMenus: (state) => {
     const deep = (config) => {
       if (Array.isArray(config)) {
@@ -41,7 +42,6 @@ const getters = {
         menus.push(config)
       }
     })
-    console.log(menus)
     return menus
   },
   getMenuByPath: (state, getter) => (path) => {

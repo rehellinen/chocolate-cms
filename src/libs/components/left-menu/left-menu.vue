@@ -1,15 +1,15 @@
 <template lang="pug">
-  div.container
+  div.left-menu
     .title
       transition(name="fade" mode="out-in")
-        p(v-if="isMenuCollapse" :key="'R'") R
+        p(v-if="!isPhone && isMenuCollapse" :key="'R'") R
         p(v-else :key="'rehellinen'") rehellinen
     el-menu(
       class="el-menu-vertical-demo"
       active-text-color="#303133"
       text-color="#909399"
       background-color="#fff"
-      :collapse="isMenuCollapse"
+      :collapse="!isPhone && isMenuCollapse"
       :default-active="defaultActive"
     )
       template(v-for="menu in leftMenus")
@@ -65,7 +65,7 @@ export default {
       }
       return map
     },
-    ...mapGetters(['plainMenus', 'isMenuCollapse', 'leftMenus'])
+    ...mapGetters(['plainMenus', 'isMenuCollapse', 'leftMenus', 'isPhone'])
   },
   watch: {
     $route (newRoute) {
@@ -81,11 +81,11 @@ export default {
     transition: opacity 0.3s
   .fade-enter, .fade-leave-to
     opacity: 0
-  .container
+  .left-menu
+    height: 100%
+    background-color: white
     .el-menu
       border: 0
-    ul
-      height: 100%
   .menu-title
     margin-left: 10px
   .title

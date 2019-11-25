@@ -1,18 +1,27 @@
 <template lang="pug">
   el-container.wrapper
-    el-aside(:width="asideWidth" v-if="!isLoginPage")
+    el-aside(
+      :width="asideWidth"
+      :class="{ phone: isPhone, show: isPhone && !isMenuCollapse }"
+      v-if="!isLoginPage"
+      )
       left-menu
-    el-container
+    el-container.main
+      top-bar
       el-main
-        top-bar
         transition(name="router-view" mode="out-in")
           router-view.main
+    transition(name="mask")
+      .mask(
+        @click="collapsePhoneMenu"
+        v-if="isPhone && !isMenuCollapse"
+        )
 </template>
 
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -21,14 +30,18 @@ export default {
   },
   data () {
     return {
+      clientWidth: 0,
+      clientHeight: 0,
       isLoginPage: false
     }
   },
   computed: {
     asideWidth () {
-      return this.isMenuCollapse ? '64px' : '215px'
+      return !this.isPhone && this.isMenuCollapse
+        ? '64px'
+        : '215px'
     },
-    ...mapGetters(['isMenuCollapse'])
+    ...mapGetters(['isMenuCollapse', 'isPhone'])
   },
   watch: {
     $route () {
@@ -37,11 +50,31 @@ export default {
   },
   created () {
     this.updateLayout()
+    this.setSize()
+    this.setEvent()
   },
   methods: {
     updateLayout () {
       this.isLoginPage = this.$route.path === '/login'
-    }
+    },
+    setEvent () {
+      window.addEventListener('resize', (event) => {
+        this.setSize()
+      })
+    },
+    setSize () {
+      this.clientWidth = document.body.clientWidth
+      this.clientHeight = document.body.clientHeight
+      if (this.clientWidth < 800) {
+        this.setPhoneStatus(true)
+      } else {
+        this.setPhoneStatus(false)
+      }
+    },
+    collapsePhoneMenu () {
+      this.changeMenuCollapseStatus()
+    },
+    ...mapActions(['changeMenuCollapseStatus', 'setPhoneStatus'])
   }
 }
 </script>
@@ -54,14 +87,29 @@ export default {
   .router-view-enter, .router-view-leave-to
     opacity: 0
 
+  .mask-enter-active, .mask-leave-active
+    transition: opacity .2s ease-in-out
+  .mask-enter, .mask-leave-to
+    opacity: 0
+
   .wrapper
-    min-height: 100vh
+    height: 100vh
     font-family: 'PingFang SC','Microsoft YaHei',sans-serif
     // 解决表格线条对不齐的问题
     .el-table th.gutter
       display: table-cell!important
     .el-aside
-      transition: width 0.3s ease-in-out
+      transition: all 0.3s ease-in-out
+      &.phone
+        position: absolute
+        z-index: 999
+        height: 100vh
+        transform: translateX(-215px)
+      &.show
+        transform: translateX(0)
+    .main
+      display: flex
+      flex-direction: column
     .el-header
       padding: 0
       border-bottom: 1px solid $border-one
@@ -69,6 +117,7 @@ export default {
     .el-main
       background-color: $gray
       padding: 0
+      overflow-y: auto
       .main
         padding: 20px 30px
     .el-footer
@@ -81,4 +130,12 @@ export default {
       background-color: $border-one
       width: 100%
       margin: 20px 0
+  .mask
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background-color: rgba(0, 0, 0, .3)
+    z-index: 100
 </style>

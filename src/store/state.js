@@ -9,7 +9,9 @@ const state = {
   // 最原始的菜单配置
   menus: getAllConfig(),
   // 左侧菜单展开 / 收缩状态
-  isMenuCollapse: false
+  isMenuCollapse: false,
+  // 是否为手机
+  isPhone: false
 }
 
 export { state }

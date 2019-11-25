@@ -10,7 +10,11 @@ export const mutations = {
     state.menus = data
   },
 
-  [types.CHANGE_MENU_COLLAPSE_STATUS] (state) {
-    state.isMenuCollapse = !state.isMenuCollapse
+  [types.CHANGE_MENU_COLLAPSE_STATUS] (state, status) {
+    state.isMenuCollapse = status
+  },
+
+  [types.CHANGE_PHONE_STATUS] (state, status) {
+    state.isPhone = status
   }
 }
