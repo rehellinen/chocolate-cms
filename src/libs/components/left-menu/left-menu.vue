@@ -12,7 +12,7 @@
       :collapse="isMenuCollapse"
       :default-active="defaultActive"
     )
-      template(v-for="menu in menus")
+      template(v-for="menu in leftMenus")
         // 二级菜单的情况
         el-submenu(
           v-if="menu.children && menu.children.length > 0"
@@ -57,7 +57,7 @@ export default {
   computed: {
     indexMap () {
       const map = new Map()
-      if (this.menus.length === 0) {
+      if (this.plainMenus.length === 0) {
         return map
       }
       for (let menu of this.plainMenus) {
@@ -65,7 +65,7 @@ export default {
       }
       return map
     },
-    ...mapGetters(['plainMenus', 'menus', 'isMenuCollapse'])
+    ...mapGetters(['plainMenus', 'isMenuCollapse', 'leftMenus'])
   },
   watch: {
     $route (newRoute) {

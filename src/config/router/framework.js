@@ -17,7 +17,7 @@ export default [
     // vue-router的其他配置项都写在里面
     others: {},
     // 数值越大，越在前面显示
-    order: 0,
+    order: 9999,
     // 子菜单
     children: []
   },
