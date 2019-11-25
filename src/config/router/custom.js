@@ -42,8 +42,8 @@ export default [
     title: '上传管理',
     icon: 'el-icon-tickets',
     name: 'upload',
-    path: '/upload',
-    component: 'upload',
+    path: '/upload-file',
+    component: 'upload-file',
     order: 0
   }
 ]
