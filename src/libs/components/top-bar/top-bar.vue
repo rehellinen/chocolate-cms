@@ -5,7 +5,7 @@
         @click="changeMenuCollapseStatus"
         :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
         )
-      p REHELLINEN
+      p CHOCOLATE
     .history(v-if="history.length > 1 && plainMenus.length > 0")
       router-link(
         v-for="(item, index) in history" :key="item.path"

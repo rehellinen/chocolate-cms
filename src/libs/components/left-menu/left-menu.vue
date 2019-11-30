@@ -6,8 +6,8 @@
         mode="out-in"
         :duration="300"
         )
-        p(v-if="!isPhone && isMenuCollapse" :key="'R'") R
-        p(v-else :key="'rehellinen'") rehellinen
+        p(v-if="!isPhone && isMenuCollapse" :key="'C'") C
+        p(v-else :key="'chocolate'") chocolate
     el-menu(
       class="el-menu-vertical-demo"
       active-text-color="#303133"
