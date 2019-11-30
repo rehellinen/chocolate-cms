@@ -1,10 +1,8 @@
-export const progressMixin = {
+export const uploadMixin = {
   data () {
     return {
       // 展示的数据
       data: [],
-      // 进度条的数据
-      progress: [],
       // 模型
       model: null
     }
@@ -31,14 +29,6 @@ export const progressMixin = {
         return
       }
       this.data = res.data
-      if (res.progress) {
-        this.setProgress(res.progress)
-      }
-    },
-
-    // 配置进度条
-    setProgress (conf) {
-      this.progress = conf
     },
 
     // 配置Model
