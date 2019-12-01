@@ -20,7 +20,7 @@
           .shelter
         .corner.right
           .shelter
-    .placeholder
+    .placeholder(v-if="history.length > 1 && plainMenus.length > 0")
 </template>
 
 <script>
