@@ -122,6 +122,7 @@ export default {
       overflow-y: auto
       .main
         padding: 20px 30px
+        box-sizing: border-box
     .el-footer
       padding: 0
     p
