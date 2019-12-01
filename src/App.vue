@@ -11,22 +11,27 @@
       el-main
         transition(name="router-view" mode="out-in")
           router-view.main
+    // 手机端侧边栏遮罩
     transition(name="mask")
       .mask(
         @click="collapsePhoneMenu"
         v-if="isPhone && !isMenuCollapse"
         )
+    // 返回顶部按钮
+    scroll-top
 </template>
 
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
+import ScrollTop from 'libs/components/scroll-top/scroll-top'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     LeftMenu,
-    TopBar
+    TopBar,
+    ScrollTop
   },
   data () {
     return {
