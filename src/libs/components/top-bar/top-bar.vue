@@ -20,6 +20,7 @@
           .shelter
         .corner.right
           .shelter
+    .placeholder
 </template>
 
 <script>
@@ -149,5 +150,8 @@ export default {
         position: absolute
         top: 3px
         right: 3px
+  .placeholder
+    height: 5px
+    background-color: $gray
   .de
 </style>
