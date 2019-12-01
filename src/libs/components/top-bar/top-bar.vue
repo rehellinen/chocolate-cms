@@ -124,7 +124,7 @@ export default {
         width: 8px
         height: 8px
         position: absolute
-        background: $gray
+        background: $background-color
         bottom: 0
         z-index: 10
         .shelter
@@ -142,7 +142,7 @@ export default {
           .shelter
             border-bottom-right-radius: 100%
       &.active
-        background: $gray
+        background: $background-color
         color: $minor-font-color
         .corner
           display: block
@@ -152,6 +152,6 @@ export default {
         right: 3px
   .placeholder
     height: 5px
-    background-color: $gray
+    background-color: $background-color
   .de
 </style>

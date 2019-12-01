@@ -117,7 +117,7 @@ export default {
       border-bottom: 1px solid $border-one
       box-shadow: 10px $gray
     .el-main
-      background-color: $gray
+      background-color: $background-color
       padding: 0
       overflow-y: auto
       .main
