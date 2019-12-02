@@ -1,11 +1,5 @@
 <template lang="pug">
   div.card.progress-bar
-    el-button.add-button(
-      v-if="!disableAdd"
-      size="small"
-      @click="toAdd"
-    ) 添加
-
     my-search(
       v-if="searchConf.length > 0"
       :searchConf="searchConf"
@@ -37,21 +31,6 @@
       )
         template(slot-scope="scope")
           p {{tableValue(item, scope)}}
-      // 排序
-      el-table-column(prop="listorder" label="排序" width="70")
-        template(slot-scope="scope")
-          el-input(
-            :placeholder="scope.row.order"
-            v-model="listorder[scope.$index]"
-            @blur="changeOrder(scope.$index)"
-          )
-      // 状态
-      el-table-column(prop="status" label="状态" width="90")
-        template(slot-scope="scope")
-          el-button(
-            size="mini"
-            @click.native.prevent="changeStatus(scope.$index)"
-          ) {{statusCN(scope.row.status)}}
 
       // 编辑与删除操作
       el-table-column(label="操作" fixed="right")
@@ -89,7 +68,6 @@
 </template>
 
 <script>
-import config from 'config/config'
 import { dateFormat } from 'utils/utils'
 import MySearch from 'base/search/search'
 
@@ -113,14 +91,6 @@ export default {
       type: Array,
       default: () => [{
         label: '123' }]
-    },
-    statusConf: {
-      type: Array,
-      default: () => []
-    },
-    disableAdd: {
-      type: Boolean,
-      default: false
     },
     disableEdit: {
       type: Boolean,
@@ -163,9 +133,7 @@ export default {
   },
   data () {
     return {
-      listorder: [],
-      currentIndex: 1,
-      column: []
+      currentIndex: 1
     }
   },
   methods: {
@@ -195,53 +163,17 @@ export default {
       }
       return (data.map && typeof data.map === 'function') ? data.map(val) : val
     },
-    timestampToDate (timestamp) {
-      const date = new Date(timestamp)
-      const year = date.getFullYear()
-      const month = date.getMonth() + 1
-      const day = date.getDate()
-      const hour = date.getHours()
-      const minute = date.getMinutes()
-      const second = date.getSeconds()
-
-      return `${year}-${month}-${day} ${hour}:${minute}:${second}`
-    },
     changePage (page) {
       this.$emit('changePage', { page })
     },
     toClear () {
       this.$emit('clear')
     },
-    toAdd () {
-      this.$emit('add')
-    },
-    toEditSection (index) {
-      this.$emit('editSection', { index })
-    },
     toEdit (index) {
       this.$emit('edit', { index })
     },
     toDelete (index) {
       this.$emit('delete', { index })
-    },
-    changeStatus (index) {
-      this.$emit('status', { index })
-    },
-    changeOrder (index) {
-      if (!this.listorder[index]) return
-      this.$emit('order', {
-        index,
-        order: this.listorder[index]
-      })
-      this.listorder = []
-    },
-    statusCN (status) {
-      if (this.statusConf.length > 0) {
-        if (status === config.STATUS.NORMAL) return this.statusConf[0]
-        else return this.statusConf[1]
-      }
-      if (status === config.STATUS.NORMAL) return '正常'
-      else return '错误'
     }
   }
 }
