@@ -1,28 +1,16 @@
 export const progressMixin = {
   data () {
     return {
-      // 展示的数据
-      data: [],
       // 进度条的数据
-      progress: [],
-      // 模型
-      model: null
+      progress: []
     }
   },
-  async created () {
-    // await this.checkLogin()
-  },
-  // CMS初始化
   async mounted () {
-    this._initCMS()
-    await this._getData()
+    await this.getProgress()
   },
   methods: {
-    // 新组件需覆盖的方法
-    _initCMS () {},
-
-    // 获取数据
-    async _getData () {
+    // 获取进度条数据
+    async getProgress () {
       this.data = []
       // TODO: 此处使用了MOCK
       const res = await this.model.getMock()
@@ -39,11 +27,6 @@ export const progressMixin = {
     // 配置进度条
     setProgress (conf) {
       this.progress = conf
-    },
-
-    // 配置Model
-    setModel (model) {
-      this.model = model
     }
   }
 }
