@@ -20,7 +20,7 @@
         // 二级菜单的情况
         el-submenu(
           v-if="menu.children && menu.children.length > 0"
-          :index="indexMap.get(menu.path)"
+          :index="indexMap.get(menu.name)"
           :key="menu.id"
         )
           template(slot="title")
@@ -30,10 +30,10 @@
           router-link(
             tag="div"
             v-for="submenu in menu.children"
-            :key="indexMap.get(submenu.path)"
+            :key="indexMap.get(submenu.name)"
             :to="submenu.path"
           )
-            el-menu-item(:index="indexMap.get(submenu.path)")
+            el-menu-item(:index="indexMap.get(submenu.name)")
               i(:class="submenu.icon")
               span.menu-title(slot="title") {{submenu.title}}
 
@@ -43,7 +43,7 @@
           :to="menu.path"
           v-else
         )
-          el-menu-item(:index="indexMap.get(menu.path)")
+          el-menu-item(:index="indexMap.get(menu.name)")
             i(:class="menu.icon")
             span.menu-title(slot="title") {{menu.title}}
 </template>
@@ -65,7 +65,7 @@ export default {
         return map
       }
       for (let menu of this.plainMenus) {
-        map.set(menu.path, getRandChars())
+        map.set(menu.name, getRandChars())
       }
       return map
     },
@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     $route (newRoute) {
-      this.defaultActive = this.indexMap.get(this.$route.path) || ''
+      this.defaultActive = this.indexMap.get(this.$route.name) || ''
     }
   }
 }
