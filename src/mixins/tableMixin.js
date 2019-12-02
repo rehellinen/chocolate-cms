@@ -1,5 +1,3 @@
-import config from 'config/config'
-
 export const tableMixin = {
   data () {
     return {
@@ -10,23 +8,15 @@ export const tableMixin = {
       // 表格的自定义操作
       operate: [],
       // 搜索的配置
-      search: [],
-      // 模型
-      model: null,
-      // 是否在发送请求
-      isPending: false
+      search: []
     }
   },
-  async created () {
-    // await this.checkLogin()
-  },
-  // CMS初始化
-  async mounted () {
-    await this._getData()
+  mounted () {
+    this.getTable()
   },
   methods: {
-    // 获取数据
-    async _getData () {
+    // 获取表格数据，用户需覆盖此方法以获取数据
+    async getTable () {
       this.table = []
       // TODO: 此处使用了MOCK
       const res = await this.model.getMock()
@@ -53,21 +43,6 @@ export const tableMixin = {
       this.search = conf
     },
 
-    // 配置Model
-    setTableModel (model) {
-      this.model = model
-    },
-
-    // 跳转到添加页面
-    toAdd (e) {
-      this._changePageType(config.CMS.ADD)
-    },
-
-    // 跳转到编辑页面
-    toEdit (e) {
-      this._changePageType(config.CMS.EDIT)
-    },
-
     // 清除搜索结果
     toClear () {
       this.toIndex()
@@ -77,16 +52,12 @@ export const tableMixin = {
     // 处理搜索事件
     async toSearch (e) {
       if (!e.field) {
-        this.openDialog({
-          content: '字段不能为空'
-        })
+        this.openDialog({ content: '字段不能为空' })
         return
       }
 
       if (!e.searchStr) {
-        this.openDialog({
-          content: '搜索关键字不能为空'
-        })
+        this.openDialog({ content: '搜索关键字不能为空' })
         return
       }
 
@@ -99,32 +70,8 @@ export const tableMixin = {
       this.setPageConf(searchRes.page)
     },
 
-    /**
-     * 处理添加、编辑页面中按钮点击后的事件
-     * @param e 按钮点击事件的参数
-     */
-    toSubmit (e) {
-      if (this.type === config.CMS.ADD) {
-        this.addData(e)
-      } else if (this.type === config.CMS.EDIT) {
-        this.editData(e)
-      }
-    },
-
-    addData (data) {
-      this._requestWithInfo(
-        async () => this.model.addData(data)
-      )
-    },
-
-    editData (data) {
-      this._requestWithInfo(
-        async () => this.model.editData(data)
-      )
-    },
-
     deleteData ({ index }) {
-      const id = this.data[index].id
+      const id = this.table[index].id
       this._requestWithQuery({
         content: '是否确定删除',
         request: async () => this.model.deleteData(id)
