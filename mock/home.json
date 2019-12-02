@@ -4,40 +4,40 @@
   "data": {
     "data": [
       {
-        "title": "卡片1",
-        "num": "100",
-        "text": "内容1内容1"
+        "title": "课程",
+        "num": "152",
+        "text": "上线的课程"
       },
       {
-        "title": "卡片2",
-        "num": "100",
-        "text": "内容1内容1"
+        "title": "学生",
+        "num": "874",
+        "text": "已认证的学生"
       },
       {
-        "title": "卡片3",
-        "num": "1000",
-        "text": "内容1内容1"
+        "title": "任务",
+        "num": "452",
+        "text": "打卡任务"
       },
       {
-        "title": "卡片4",
-        "num": "10%",
-        "text": "内容1内容1"
+        "title": "新闻",
+        "num": "98",
+        "text": "相关新闻"
       }
     ],
     "progress": [
       {
         "percentage": 50,
-        "title": "进度条1",
+        "title": "课程完成率",
         "color": "purple"
       },
       {
-        "percentage": 50,
-        "title": "进度条2",
+        "percentage": 70,
+        "title": "学生活跃率",
         "color": "orange"
       },
       {
-        "percentage": 50,
-        "title": "进度条3",
+        "percentage": 30,
+        "title": "完成任务率",
         "color": "blue"
       }
     ]
