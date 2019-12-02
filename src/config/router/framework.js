@@ -8,7 +8,7 @@ export default [
     title: '首页',
     // 左侧菜单栏icon，支持class
     icon: 'el-icon-odometer',
-    // vue-router的name配置项，同时会作为webpackChunkName魔法注释的值
+    // vue-router的name配置项，同时也参与左侧菜单index生成
     name: 'index',
     // vue-router的path配置项
     path: '/',

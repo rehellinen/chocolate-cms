@@ -1,45 +1,36 @@
 export default [
   {
     show: true,
-    title: '菜单管理',
+    title: '文章管理',
     icon: 'el-icon-tickets',
-    name: 'menu',
-    path: '/menu',
-    component: 'menu',
+    name: 'article',
+    path: '/article',
+    component: 'article',
     order: 0,
     children: [
       {
         show: true,
-        title: '文章管理1',
+        title: '所有',
         icon: 'el-icon-tickets',
-        name: 'article1',
-        path: '/article1',
+        name: 'article',
+        path: '/article',
         component: 'article',
         order: 0
       },
       {
         show: true,
-        title: '文章管理2',
+        title: '添加',
         icon: 'el-icon-tickets',
-        name: 'article2',
-        path: '/article2',
-        component: 'article',
+        name: 'article-add',
+        path: '/article/add',
+        component: 'article/add',
         order: 0
       }
     ]
   },
   {
     show: true,
-    title: '文章管理',
-    icon: 'el-icon-tickets',
-    name: 'article',
-    path: '/article',
-    component: 'article',
-    order: 0
-  },
-  {
-    show: true,
-    title: '上传管理',
+    title: '上传组件',
     icon: 'el-icon-tickets',
     name: 'upload',
     path: '/upload-file',
