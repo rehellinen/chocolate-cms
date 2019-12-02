@@ -36,7 +36,7 @@ export default {
       fileName: '',
       customFileUrl: '',
       // 服务器上传API
-      uploadUrl: config.restUrl + '/file',
+      uploadUrl: config.REST_URL + '/file',
       // http请求发送的额外头信息
       header: {
         token: new Token().getTokenFromCache()

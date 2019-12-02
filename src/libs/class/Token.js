@@ -11,8 +11,8 @@ export class Token {
   constructor (name, password) {
     this.name = name
     this.password = password
-    this.tokenUrl = config.restUrl + '/token/super'
-    this.verifyUrl = config.restUrl + '/token/check'
+    this.tokenUrl = config.REST_URL + '/token/super'
+    this.verifyUrl = config.REST_URL + '/token/check'
     this.tokenKey = 'token'
     this.tokenTypeKey = 'tokenType'
   }
