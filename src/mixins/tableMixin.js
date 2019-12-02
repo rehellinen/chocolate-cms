@@ -8,7 +8,9 @@ export const tableMixin = {
       // 表格的自定义操作
       operate: [],
       // 搜索的配置
-      search: []
+      search: [],
+      // 分页配置
+      pageConf: {}
     }
   },
   mounted () {
@@ -41,6 +43,15 @@ export const tableMixin = {
     // 配置搜索
     setSearch (conf) {
       this.search = conf
+    },
+
+    setPageConf (conf) {
+      this.pageConf = {
+        page: conf.page,
+        pageSize: conf.pageSize,
+        totalPage: conf.pageCount,
+        totalItem: conf.rowCount
+      }
     },
 
     // 清除搜索结果
@@ -76,6 +87,12 @@ export const tableMixin = {
         content: '是否确定删除',
         request: async () => this.model.deleteData(id)
       })
+    },
+
+    async changePage ({ page }) {
+      const res = await this.model.getAll({ page })
+      this.data = res.data
+      this.setPageConf(res.page)
     }
   }
 }
