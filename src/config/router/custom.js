@@ -10,7 +10,7 @@ export default [
     children: [
       {
         show: true,
-        title: '所有',
+        title: '所有文章',
         icon: 'el-icon-tickets',
         name: 'article',
         path: '/article',
@@ -19,7 +19,7 @@ export default [
       },
       {
         show: true,
-        title: '添加',
+        title: '添加文章',
         icon: 'el-icon-tickets',
         name: 'article-add',
         path: '/article/add',

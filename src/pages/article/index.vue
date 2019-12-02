@@ -23,19 +23,8 @@
       @clear="toClear"
       @search="toSearch"
       @changePage="changePage"
-      @add="toAdd"
       @edit="toEdit",
       @delete="deleteData"
-      @order="changeOrder"
-      @status="changeStatus"
-    )
-
-    my-form(
-      v-else-if="type === allTypes.ADD"
-      :title="'添加' + name"
-      :config="form",
-      :form-data="formData"
-      @submit="toSubmit"
     )
 
     my-form(
@@ -48,16 +37,16 @@
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin } from 'mixins'
+import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
 import { tableConf, formConf, searchConf } from './config'
 import { Article as Model } from 'model/Article'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, pageMixin, tableMixin, formMixin],
+  mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
   methods: {
     _initCMS () {
-      this.setTableModel(new Model())
-      this.setName('新闻')
+      this.setModel(new Model())
+      this.setName('文章')
       this.setForm(formConf)
       this.setTable(tableConf)
       this.setSearch(searchConf)
