@@ -12,6 +12,16 @@
           .desc
             p.title 诚实
             p.auth 超级管理员
+        ul.actions
+          li(@click="editPwd")
+            i.el-icon-edit
+            p 修改密码
+          li(@click="lock")
+            i.el-icon-lock
+            p 锁定
+          li(@click="logout")
+            i.el-icon-user
+            p 退出账户
 </template>
 
 <script>
@@ -21,6 +31,14 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  methods: {
+    editPwd () {
+    },
+    lock () {
+    },
+    logout () {
+    }
   }
 }
 </script>
@@ -28,8 +46,6 @@ export default {
 <style lang="sass" scoped>
   @import "~sass/base"
 
-  .personal
-    padding-right: 20px
   .portrait
     box-sizing: border-box
     height: 40px
@@ -37,13 +53,15 @@ export default {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
     border: 3px solid #fff
     border-radius: 50%
+    margin-right: 4px
     &.big
+      margin-right: 10px
       width: 50px
       height: 50px
       border: 4px solid #fff
   .user-dropdown
     width: 300px
-    height: 200px
+    height: 190px
     padding: 0
     margin: 0 !important
     border-radius: 5px
@@ -54,17 +72,15 @@ export default {
       height: 100px
       display: flex
       align-items: center
-      background-size: cover
-      background-image: url("../../../assets/images/user@bg.jpg")
+      background: $red-pink
       img
         width: 60px
         height: 60px
-        margin-left: 10px
+        margin: 0 15px
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
         border: 3px solid #fff
         border-radius: 50%
       .desc
-        margin-left: 15px
         margin-top: -10px
         p
           color: white
@@ -84,5 +100,19 @@ export default {
         font-weight: bold
         color: white
         font-size: $big-font-size
+    .actions
+      height: 90px
+      display: flex
+      justify-content: space-around
+      align-items: center
+      li
+        display: flex
+        flex-direction: column
+        align-items: center
+        color: $normal-font-color
+        cursor: pointer
+      i
+        font-size: 20px
+        margin-bottom: 10px
   .de
 </style>
