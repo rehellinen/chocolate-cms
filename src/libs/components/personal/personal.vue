@@ -10,8 +10,16 @@
         .user
           img(src="../../../assets/images/user@portrait.jpg")
           .desc
-            p.title 诚实
-            p.auth 超级管理员
+            p.title(@click="editName" v-show="!isEditingName") 诚实
+            el-input(
+              @blur="nameBlur"
+              placeholder="请输入用户名"
+              size="small"
+              ref="input"
+              v-model="username"
+              v-show="isEditingName"
+            )
+            span.auth 超级管理员
         ul.actions
           li(@click="editPwd")
             i.el-icon-edit
@@ -32,12 +40,25 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      username: '诚实',
+      isEditingName: false
+    }
+  },
   methods: {
     editPwd () {
     },
     lock () {
     },
     logout () {
+    },
+    editName () {
+      this.isEditingName = true
+      this.$nextTick(() => this.$refs.input.focus())
+    },
+    nameBlur () {
+      this.isEditingName = false
     }
   }
 }
@@ -82,24 +103,30 @@ export default {
         border-radius: 50%
       .desc
         margin-top: -10px
-        p
+        margin-right: 15px
+        p, span
           color: white
         .title
           font-size: $big-font-size
           font-weight: bold
           letter-spacing: 1px
+          height: 25px
+          margin-bottom: 3px
+        .el-input
+          height: 25px
+          line-height: 25px
+          margin-bottom: 3px
+          /deep/ .el-input__inner
+            height: 25px
+            padding: 0 5px
+            &:hover, &:focus
+              border-color: #DCDFE6
         .auth
           font-size: $smaller-font-size
-          margin-top: 5px
           border: 1px solid $gray
-          padding: 0 5px
-          border-radius: 10px
+          padding: 1px 7px
+          border-radius: 15px
           background-color: rgba(0, 0, 0, 0.1)
-      span
-        margin-left: 25px
-        font-weight: bold
-        color: white
-        font-size: $big-font-size
     .actions
       height: 90px
       display: flex
