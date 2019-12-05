@@ -2,7 +2,7 @@ export default [
   {
     show: true,
     title: '文章管理',
-    icon: 'el-icon-tickets',
+    icon: 'el-icon-s-operation',
     name: 'article',
     path: '/article',
     component: 'article',
@@ -20,7 +20,7 @@ export default [
       {
         show: true,
         title: '添加文章',
-        icon: 'el-icon-tickets',
+        icon: 'el-icon-circle-plus-outline',
         name: 'article-add',
         path: '/article/add',
         component: 'article/add',
@@ -31,7 +31,7 @@ export default [
   {
     show: true,
     title: '上传组件',
-    icon: 'el-icon-tickets',
+    icon: 'el-icon-s-operation',
     name: 'upload',
     path: '/upload-file',
     component: 'upload-file',
