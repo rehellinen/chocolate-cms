@@ -9,7 +9,9 @@
       el-dropdown-menu.user-dropdown(slot="dropdown")
         .user
           img(src="../../../assets/images/user@portrait.jpg")
-          span 诚实
+          .desc
+            p.title 诚实
+            p.auth 超级管理员
 </template>
 
 <script>
@@ -50,18 +52,33 @@ export default {
       display: none
     .user
       height: 100px
-      line-height: 100px
-      vertical-align: middle
+      display: flex
+      align-items: center
       background-size: cover
       background-image: url("../../../assets/images/user@bg.jpg")
       img
-        width: 70px
-        height: 70px
+        width: 60px
+        height: 60px
         margin-left: 10px
-        vertical-align: middle
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
-        border: 5px solid #fff
+        border: 3px solid #fff
         border-radius: 50%
+      .desc
+        margin-left: 15px
+        margin-top: -10px
+        p
+          color: white
+        .title
+          font-size: $big-font-size
+          font-weight: bold
+          letter-spacing: 1px
+        .auth
+          font-size: $smaller-font-size
+          margin-top: 5px
+          border: 1px solid $gray
+          padding: 0 5px
+          border-radius: 10px
+          background-color: rgba(0, 0, 0, 0.1)
       span
         margin-left: 25px
         font-weight: bold
