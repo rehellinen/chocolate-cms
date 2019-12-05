@@ -10,8 +10,8 @@
         p(v-else :key="'chocolate'") chocolate
     el-menu(
       class="el-menu-vertical-demo"
-      active-text-color="#303133"
-      text-color="#909399"
+      active-text-color="#606266"
+      text-color="#606266"
       background-color="#fff"
       :collapse="!isPhone && isMenuCollapse"
       :default-active="defaultActive"
@@ -88,8 +88,26 @@ export default {
     height: 100%
     background-color: white
     overflow-x: hidden
-    .el-menu
-      border: 0
+
+  .el-menu
+    border: 0
+    i
+      color: $normal-font-color !important
+    .is-active
+      background-color: $background-color !important
+    .el-menu-item
+      height: 50px
+      line-height: 50px
+    .el-menu-item, .el-submenu
+      &:hover
+        background-color: $background-color !important
+    /deep/ .el-submenu__title
+      height: 50px
+      line-height: 50px
+      &:hover
+        background-color: $background-color !important
+
+
   .menu-title
     margin-left: 10px
   .title
