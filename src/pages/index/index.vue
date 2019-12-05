@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { cmsMixin, progressMixin } from 'mixins'
+import { cmsMixin } from 'mixins'
 import Card from 'base/card/card'
 import ProgressBar from 'base/progress-bar/progress-bar'
 import { Home as Model } from 'model/Home'
@@ -28,15 +28,21 @@ export default {
     Card,
     ProgressBar
   },
-  mixins: [cmsMixin, progressMixin],
+  mixins: [cmsMixin],
   data () {
     return {
-      cardConf: cardConf
+      cardConf: cardConf,
+      data: [],
+      progress: []
     }
   },
   methods: {
     _initCMS () {
       this.setModel(new Model())
+      this.model.getMock().then(res => {
+        this.data = res.data
+        this.progress = res.progress
+      })
     }
   }
 }

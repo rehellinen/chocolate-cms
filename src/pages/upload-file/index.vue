@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { cmsMixin, uploadMixin } from 'mixins'
+import { cmsMixin } from 'mixins'
 import UploadImg from 'base/upload-file/upload-file'
 import { Upload as Model } from 'model'
 
@@ -39,10 +39,18 @@ export default {
   components: {
     UploadImg
   },
-  mixins: [ cmsMixin, uploadMixin ],
+  mixins: [ cmsMixin ],
+  data () {
+    return {
+      data: []
+    }
+  },
   methods: {
     _initCMS () {
       this.setModel(new Model())
+      this.model.getMock().then(res => {
+        this.data = res.data
+      })
     },
     forbidAnimated () {
       alert('禁止上传动图')
