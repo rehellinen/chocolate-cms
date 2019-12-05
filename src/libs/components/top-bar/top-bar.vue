@@ -1,11 +1,13 @@
 <template lang="pug">
   .top-bar
     .operation
-      i(
-        @click="changeMenuCollapseStatus"
-        :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
-        )
-      p CHOCOLATE
+      .left
+        i(
+          @click="changeMenuCollapseStatus"
+          :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+          )
+        span CHOCOLATE
+      personal(:big="!(history.length > 1 && plainMenus.length > 0)")
     .history(v-if="history.length > 1 && plainMenus.length > 0")
       router-link(
         v-for="(item, index) in history" :key="item.path"
@@ -20,13 +22,16 @@
           .shelter
         .corner.right
           .shelter
-    .placeholder(v-if="history.length > 1 && plainMenus.length > 0")
 </template>
 
 <script>
+import Personal from '../personal/personal'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  components: {
+    Personal
+  },
   data () {
     return {
       history: [],
@@ -97,12 +102,18 @@ export default {
     height: 50px
     display: flex
     align-items: center
+    justify-content: space-between
     padding-left: 20px
-    i
-      font-size: 20px
-    p
-      margin-left: 10px
-      letter-spacing: 3px
+    .left
+      display: flex
+      align-items: center
+      i
+        font-size: 20px
+        cursor: pointer
+      span
+        font-size: $normal-font-size
+        margin-left: 10px
+        letter-spacing: 3px
   .history
     width: 100%
     height: 30px
@@ -150,8 +161,5 @@ export default {
         position: absolute
         top: 3px
         right: 3px
-  .placeholder
-    height: 5px
-    background-color: $background-color
   .de
 </style>
