@@ -91,6 +91,8 @@ export default {
 
   .el-menu
     border: 0
+    .menu-title
+      margin-left: 10px
     i
       color: $normal-font-color !important
     .is-active
@@ -107,9 +109,6 @@ export default {
       &:hover
         background-color: $background-color !important
 
-
-  .menu-title
-    margin-left: 10px
   .title
     display: flex
     justify-content: center
