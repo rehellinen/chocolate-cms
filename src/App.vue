@@ -6,8 +6,9 @@
       v-if="!isLoginPage"
       )
       left-menu
-    el-container.main
-      top-bar
+    el-container
+      el-header(height="80px")
+        top-bar
       el-main
         transition(name="router-view" mode="out-in")
           router-view.main
@@ -100,6 +101,7 @@ export default {
     // 解决表格线条对不齐的问题
     .el-table th.gutter
       display: table-cell!important
+    // 侧边栏样式
     .el-aside
       transition: all 0.3s ease-in-out
       &.phone
@@ -109,13 +111,10 @@ export default {
         transform: translateX(-215px)
       &.show
         transform: translateX(0)
-    .main
-      display: flex
-      flex-direction: column
+    // 顶部栏样式
     .el-header
       padding: 0
-      border-bottom: 1px solid $border-one
-      box-shadow: 10px $gray
+    // 主内容样式
     .el-main
       background-color: $background-color
       padding: 0
@@ -123,16 +122,11 @@ export default {
       .main
         padding: 20px 30px
         box-sizing: border-box
-    .el-footer
-      padding: 0
+    // 默认字体格式
     p
       font-size: $normal-font-size
       color: $normal-font-color
-    .line
-      height: 1px
-      background-color: $border-one
-      width: 100%
-      margin: 20px 0
+  // 手机端侧边栏遮罩
   .mask
     position: absolute
     top: 0
