@@ -20,10 +20,11 @@
       :data="table"
       :pageConf="pageConf"
       :searchConf="search"
+      :loading="loading"
       @clear="toClear"
       @search="toSearch"
       @changePage="changePage"
-      @edit="toEdit",
+      @edit="toEdit"
       @delete="deleteData"
     )
 
@@ -43,6 +44,14 @@ import { Article as Model } from 'model/Article'
 
 export default {
   mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  data () {
+    return {
+      pageConf: {
+        pageSize: 1,
+        total: 3
+      }
+    }
+  },
   methods: {
     _initCMS () {
       this.setModel(new Model())

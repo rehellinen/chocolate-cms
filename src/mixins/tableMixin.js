@@ -10,7 +10,8 @@ export const tableMixin = {
       // 搜索的配置
       search: [],
       // 分页配置
-      pageConf: {}
+      pageConf: {},
+      loading: true
     }
   },
   mounted () {
@@ -28,6 +29,7 @@ export const tableMixin = {
       }
       this.table = res.data
       this.setPageConf(res.page)
+      this.loading = false
     },
 
     // 配置表格
@@ -90,9 +92,11 @@ export const tableMixin = {
     },
 
     async changePage ({ page }) {
+      this.loading = true
       const res = await this.model.getAll({ page })
       this.data = res.data
       this.setPageConf(res.page)
+      this.loading = false
     }
   }
 }

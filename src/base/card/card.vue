@@ -1,52 +1,26 @@
 <template lang="pug">
-  .card(:style="{background: bgColor,color: color}")
-    .card-title {{ title }}
-    .card-content
-      .text-content
-        .num {{ num }}
-        .text {{ text }}
-      img(:src="url" v-if="!icon" :style="{width: width, height: height || width}")
-      .icon-item
-        i(:class="icon")
+el-row(:gutter="20" style="margin-bottom: 30px")
+  el-col(:md="6" :sm="12" v-for="(item, index) in data" :key="index")
+    .card(:style="{background: cardConf[index].color, color: 'white'}")
+      .card-title {{ item.title }}
+      .card-content
+        .text-content
+          .num {{ item.num }}
+          .text {{ item.text }}
+        img(:src="item.url" v-if="!item.icon" :style="{width: item.width, height: item.height || item.width}")
+        .icon-item
+          i(:class="cardConf[index].icon")
 </template>
 
 <script>
 export default {
   props: {
-    bgColor: { // 背景色
-      type: String,
-      default: '#ccc'
-    },
-    color: { // 文字颜色
-      type: String,
-      default: 'white'
-    },
-    title: { // 卡片标题内容
-      type: String,
+    data: {
+      type: Array,
       default: null
     },
-    num: { // 卡片数字内容
-      type: String,
-      default: null
-    },
-    text: { // 卡片文字内容
-      type: String,
-      default: null
-    },
-    url: { // 图片
-      type: String,
-      default: null
-    },
-    icon: { // 图标
-      type: String,
-      default: null
-    },
-    width: { // 图片宽度
-      type: String,
-      default: null
-    },
-    height: { // 图片
-      type: String,
+    cardConf: {
+      type: Array,
       default: null
     }
   }

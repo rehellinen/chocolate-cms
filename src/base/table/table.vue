@@ -8,6 +8,7 @@
     )
 
     el-table(
+      v-loading="loading"
       :data="data"
       :border="border"
       style="width: 100%"
@@ -61,7 +62,7 @@
       layout="prev, pager, next, jumper"
       :current-page="pageConf.page"
       :page-size="pageConf.pageSize"
-      :total="pageConf.totalItem"
+      :total="pageConf.totalItem || null"
       @current-change="changePage"
       background
     )
@@ -84,7 +85,9 @@ export default {
     pageConf: {
       // 分页
       type: Object,
-      default: () => ({})
+      default: () => [{
+        pageSize: 10
+      }]
     },
     searchConf: {
       // 搜索
@@ -109,6 +112,10 @@ export default {
       // 索引
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: null
     },
     tableColumn: {
       // 表头

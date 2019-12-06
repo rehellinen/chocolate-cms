@@ -32,9 +32,6 @@ export default {
     .el-progress__text
       margin-left: 0!important
   .progress-bar
-    background-color: white
-    border-radius: 10px
-    padding: 20px
     .el-progress
       margin: 10px
       /deep/ .el-progress__text

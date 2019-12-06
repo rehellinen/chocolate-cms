@@ -13,9 +13,7 @@ export const cmsMixin = {
       // 当前菜单对应的中文名
       name: '',
       // 是否在发送请求
-      isPending: false,
-      // 当前页面的数据
-      data: []
+      isPending: false
     }
   },
   async created () {
