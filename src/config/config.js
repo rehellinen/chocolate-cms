@@ -21,7 +21,6 @@ export default {
     DISABLED: Symbol('disabled'),
     DATE: Symbol('date'),
     SWITCH: Symbol('switch'),
-    SLIDER: Symbol('slider'),
-    RADIO: Symbol('radio')
+    SLIDER: Symbol('slider')
   }
 }
