@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2019/3/4 22:37
  */
-import config from 'config/config'
+import config from 'config'
 import axios from 'axios'
 import store from 'store'
 
@@ -11,8 +11,8 @@ export class Token {
   constructor (name, password) {
     this.name = name
     this.password = password
-    this.tokenUrl = config.REST_URL + '/token/super'
-    this.verifyUrl = config.REST_URL + '/token/check'
+    this.tokenUrl = config.BASE_URL + '/token/super'
+    this.verifyUrl = config.BASE_URL + '/token/check'
     this.tokenKey = 'token'
     this.tokenTypeKey = 'tokenType'
   }

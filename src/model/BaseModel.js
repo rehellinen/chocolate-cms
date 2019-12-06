@@ -4,13 +4,13 @@
  *  Create On 2019/3/4 11:34
  */
 import axios from 'axios'
-import config from 'config/config'
+import config from 'config'
 import { Token } from 'libs/class/Token'
 
 export class BaseModel {
   constructor (modelName) {
     this.modelName = modelName
-    this.baseUrl = config.REST_URL
+    this.baseUrl = config.BASE_URL
   }
 
   /**

@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2019/5/21 10:36
  */
-import config from 'config/config'
+import config from 'config'
 
 export const searchConf = [
   { field: 'title', label: '标题' },

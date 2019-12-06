@@ -1,4 +1,4 @@
-import config from 'config/config'
+import config from 'config'
 import MyForm from 'base/form/form'
 import MyTable from 'base/table/table'
 import { Token } from 'libs/class/Token'
