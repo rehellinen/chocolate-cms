@@ -8,14 +8,18 @@
         )
       el-dropdown-menu.user-dropdown(slot="dropdown")
         .user
-          img(src="../../../assets/images/user@portrait.jpg")
+          .image
+            img(src="../../../assets/images/user@portrait.jpg")
+            label
+              i.el-icon-edit
+              input(@change="uploadFile" accept="image/*" type="file" ref="imageInput")
           .desc
             p.title(@click="editName" v-show="!isEditingName") 诚实
             el-input(
               @blur="nameBlur"
               placeholder="请输入用户名"
               size="small"
-              ref="input"
+              ref="nameInput"
               v-model="username"
               v-show="isEditingName"
             )
@@ -55,10 +59,12 @@ export default {
     },
     editName () {
       this.isEditingName = true
-      this.$nextTick(() => this.$refs.input.focus())
+      this.$nextTick(() => this.$refs.nameInput.focus())
     },
     nameBlur () {
       this.isEditingName = false
+    },
+    uploadFile () {
     }
   }
 }
@@ -71,12 +77,13 @@ export default {
     box-sizing: border-box
     height: 40px
     width: 40px
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.10)
     border: 3px solid #fff
     border-radius: 50%
-    margin-right: 4px
+    margin-right: 10px
+    margin-top: 10px
     &.big
-      margin-right: 10px
+      margin-top: 0
       width: 50px
       height: 50px
       border: 4px solid #fff
@@ -94,13 +101,34 @@ export default {
       display: flex
       align-items: center
       background: $red-pink
-      img
-        width: 60px
-        height: 60px
-        margin: 0 15px
-        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
-        border: 3px solid #fff
-        border-radius: 50%
+      .image
+        img
+          vertical-align: bottom
+          width: 60px
+          height: 60px
+          margin: 0 15px
+          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
+          border: 3px solid #fff
+          border-radius: 50%
+        label
+          opacity: 0
+          background: rgba(0, 0, 0, .3)
+          transition: all .5s
+          width: 60px
+          height: 60px
+          position: absolute
+          left: 18px
+          top: 20px
+          display: flex
+          justify-content: center
+          align-items: center
+          color: white
+          border-radius: 50%
+          cursor: pointer
+          input
+            display: none
+          &:hover
+            opacity: 1
       .desc
         margin-top: -10px
         margin-right: 15px
