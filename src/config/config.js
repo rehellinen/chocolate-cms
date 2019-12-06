@@ -19,6 +19,9 @@ export default {
     EDITOR: Symbol('editor'),
     FILE: Symbol('file'),
     DISABLED: Symbol('disabled'),
-    DATE: Symbol('date')
+    DATE: Symbol('date'),
+    SWITCH: Symbol('switch'),
+    SLIDER: Symbol('slider'),
+    RADIO: Symbol('radio')
   }
 }

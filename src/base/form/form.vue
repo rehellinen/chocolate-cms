@@ -12,6 +12,19 @@
           v-model="formData[conf.name]"
         )
 
+        el-switch(
+          v-if="conf.type === inputType.SWITCH"
+          v-model="conf.value"
+          active-color="#66b1ff"
+          inactive-color="#ccc"
+        )
+
+        el-slider(
+          v-if="conf.type === inputType.SLIDER"
+          v-model="conf.value"
+          :show-tooltip="conf.tooltip || true"
+        )
+
         el-select(
           v-if="conf.type === inputType.SELECT"
           v-model="formData[conf.name]"
