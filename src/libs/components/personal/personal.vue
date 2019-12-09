@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { User } from 'model/User'
+import { User } from 'libs/model/User'
 
 export default {
   props: {
@@ -74,7 +74,7 @@ export default {
         this.clearFile(this.$refs.imageInput)
         return
       }
-      new User().editPortrait()
+      User.editPortrait()
     },
     // 清空input中的file
     clearFile (ele) {
