@@ -22,6 +22,10 @@ http.interceptors.request.use(config => {
   return config
 })
 
+http.interceptors.response.use(res => {
+  return res.data.data
+})
+
 export const request = (url, method, data, otherConfig) => {
   return http({
     url,
