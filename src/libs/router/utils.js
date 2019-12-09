@@ -1,4 +1,4 @@
-import config from 'config/config'
+import config from 'config'
 
 export const deepTraversalAll = (config, cb) => {
   if (Array.isArray(config)) {
@@ -46,4 +46,7 @@ export const getAllConfig = () => {
     allConfig.push(...config)
   })
   return allConfig
+}
+
+export const beforeEach = (to, from, next) => {
 }
