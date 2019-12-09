@@ -1,14 +1,8 @@
-import { BaseModel } from './BaseModel'
+import { get } from 'libs/utils/http'
 
-export class Home extends BaseModel {
-  constructor () {
-    super('home')
-  }
-
+export class Home {
   // TODO: MOCK
-  getMock () {
-    return this.request({
-      url: 'mock/home.json'
-    })
+  static getMock () {
+    return get('mock/home.json')
   }
 }
