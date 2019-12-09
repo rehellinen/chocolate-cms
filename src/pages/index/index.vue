@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     _initCMS () {
-      this.setModel(new Model())
+      this.setModel(Model)
       this.model.getMock().then(res => {
         this.data = res.data
         this.progress = res.progress

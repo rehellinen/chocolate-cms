@@ -20,7 +20,7 @@
 <script>
 import { dialogMixin, cmsMixin } from 'mixins'
 import { Token } from 'libs/class/Token'
-import config from 'config/config'
+import config from 'config'
 
 export default {
   mixins: [dialogMixin, cmsMixin],

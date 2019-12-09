@@ -3,17 +3,12 @@
  *  Create By rehellinen
  *  Create On 2019/3/4 11:34
  */
-import { BaseModel } from './BaseModel'
+import { get } from 'libs/utils/http'
+import { BaseModel } from 'libs/model/BaseModel'
 
 export class Article extends BaseModel {
-  constructor () {
-    super('article')
-  }
-
   // TODO: MOCK
-  getMock () {
-    return this.request({
-      url: 'mock/article.json'
-    })
+  static getMock () {
+    return get('mock/article.json')
   }
 }

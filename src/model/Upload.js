@@ -1,14 +1,8 @@
-import { BaseModel } from './BaseModel'
+import { get } from 'libs/utils/http'
 
-export class Upload extends BaseModel {
-  constructor () {
-    super('upload')
-  }
-
+export class Upload {
   // TODO: MOCK
-  getMock () {
-    return this.request({
-      url: 'mock/upload.json'
-    })
+  static getMock () {
+    return get('mock/upload.json')
   }
 }

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     _initCMS () {
-      this.setModel(new Model())
+      this.setModel(Model)
       this.setName('文章')
       this.setForm(formConf)
       this.setTable(tableConf)

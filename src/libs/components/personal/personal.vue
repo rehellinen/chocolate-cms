@@ -12,7 +12,7 @@
             img(src="../../../assets/images/user@portrait.jpg")
             label
               i.el-icon-edit
-              input(@change="uploadFile" accept="image/*" type="file" ref="imageInput")
+              input(@change="uploadImage" accept="image/*" type="file" ref="imageInput")
           .desc
             p.title(@click="editName" v-show="!isEditingName") 诚实
             el-input(
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { User } from 'libs/model/User'
+
 export default {
   props: {
     big: {
@@ -64,7 +66,19 @@ export default {
     nameBlur () {
       this.isEditingName = false
     },
-    uploadFile () {
+    uploadImage (event) {
+      const file = event.target.files[0]
+      // 限制文件大小为2M
+      if (file.size > 2 * 1024 * 1024) {
+        this.$message.error('图片大小超过2M')
+        this.clearFile(this.$refs.imageInput)
+        return
+      }
+      User.editPortrait()
+    },
+    // 清空input中的file
+    clearFile (ele) {
+      ele.value = ''
     }
   }
 }

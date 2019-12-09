@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import config from 'config/config'
+import config from 'config'
 import MyEditor from 'base/editor/editor'
 import MyFileUploader from 'base/file-uploader/file-uploader'
 
