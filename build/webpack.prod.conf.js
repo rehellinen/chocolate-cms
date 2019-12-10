@@ -49,6 +49,7 @@ const webpackConfig = merge(baseWebpackConf, {
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: 'index.html',
+      favicon: r('static/favicon.ico'),
       inject: true,
       minify: {
         removeComments: true,
