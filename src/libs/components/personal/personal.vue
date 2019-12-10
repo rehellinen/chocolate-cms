@@ -95,9 +95,7 @@ export default {
     border: 3px solid #fff
     border-radius: 50%
     margin-right: 10px
-    margin-top: 10px
     &.big
-      margin-top: 0
       width: 50px
       height: 50px
       border: 4px solid #fff

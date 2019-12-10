@@ -7,7 +7,9 @@
           :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
           )
         span CHOCOLATE
-      personal(:big="!(history.length > 1 && plainMenus.length > 0)")
+      .right
+        message
+        personal(:big="!(history.length > 1 && plainMenus.length > 0)")
     .history(v-if="history.length > 1 && plainMenus.length > 0")
       router-link(
         v-for="(item, index) in history" :key="item.path"
@@ -26,11 +28,13 @@
 
 <script>
 import Personal from '../personal/personal'
+import Message from '../message/message'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
-    Personal
+    Personal,
+    Message
   },
   data () {
     return {
@@ -114,6 +118,9 @@ export default {
         font-size: $normal-font-size
         margin-left: 10px
         letter-spacing: 3px
+    .right
+      display: flex
+      align-items: center
   .history
     width: 100%
     height: 30px
