@@ -19,20 +19,18 @@
         v-if="isPhone && !isMenuCollapse"
         )
     // 返回顶部按钮
-    scroll-top
+    el-backtop(target=".el-main" :right="30" :bottom="30")
 </template>
 
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
-import ScrollTop from 'libs/components/scroll-top/scroll-top'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     LeftMenu,
-    TopBar,
-    ScrollTop
+    TopBar
   },
   data () {
     return {

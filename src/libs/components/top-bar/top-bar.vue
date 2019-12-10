@@ -1,14 +1,15 @@
 <template lang="pug">
   .top-bar
+    .logo
+      i(
+        @click="changeMenuCollapseStatus"
+        :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+      )
+      span CHOCOLATE
     .operation
-      .left
-        i(
-          @click="changeMenuCollapseStatus"
-          :class="isMenuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
-          )
-        span CHOCOLATE
-      personal(:big="!(history.length > 1 && plainMenus.length > 0)")
-    .history(v-if="history.length > 1 && plainMenus.length > 0")
+      message
+      personal
+    .history(v-if="showHistory")
       router-link(
         v-for="(item, index) in history" :key="item.path"
         class="tab"
@@ -26,11 +27,13 @@
 
 <script>
 import Personal from '../personal/personal'
+import Message from '../message/message'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
-    Personal
+    Personal,
+    Message
   },
   data () {
     return {
@@ -39,6 +42,9 @@ export default {
     }
   },
   computed: {
+    showHistory () {
+      return this.history.length > 1 && this.plainMenus.length > 0
+    },
     ...mapGetters(['getMenuByPath', 'isMenuCollapse', 'plainMenus'])
   },
   watch: {
@@ -98,22 +104,29 @@ export default {
     flex-direction: column
     justify-content: center
     background-color: white
-  .operation
+  .logo
+    margin-left: 20px
     height: 50px
     display: flex
     align-items: center
-    justify-content: space-between
-    padding-left: 20px
-    .left
-      display: flex
-      align-items: center
-      i
-        font-size: 20px
-        cursor: pointer
-      span
-        font-size: $normal-font-size
-        margin-left: 10px
-        letter-spacing: 3px
+    i
+      font-size: 20px
+      cursor: pointer
+    span
+      font-size: $normal-font-size
+      margin-left: 10px
+      letter-spacing: 3px
+  .operation
+    margin-right: 20px
+    margin-top: 7px
+    position: absolute
+    right: 0
+    top: 0
+    height: 50px
+    align-self: flex-start
+    display: flex
+    align-items: center
+
   .history
     width: 100%
     height: 30px

@@ -9,6 +9,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = require('./config')
+const { r } = require('./utils')
 const baseWebpackConf = require('./webpack.base.conf')
 portFinder.basePort = process.env.PORT || config.DEV.PORT
 
@@ -29,7 +30,8 @@ const devWebpackConf = merge(baseWebpackConf, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: './index.html',
+      favicon: r('static/favicon.ico')
     })
   ]
 })
