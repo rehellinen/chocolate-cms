@@ -2,7 +2,8 @@
   .message
     el-dropdown(trigger="click")
       span.el-dropdown-link
-        i.el-icon-bell
+        el-badge.pointer(:value="5" :max="99")
+          i.el-icon-bell
       el-dropdown-menu.messages(slot="dropdown")
         .notify
           span 2 New Notifications
@@ -33,13 +34,17 @@ export default {}
 
   .message
     padding: 0
-    margin-right: 20px
+    margin-right: 25px
     .el-icon-bell
-      font-size: 17px
+      font-size: 18px
       font-weight: bold
       color: $grey
+  .pointer
+    cursor: pointer
 
   .messages
+    padding: 0
+
     /deep/ .popper__arrow
       display: none
 
@@ -49,7 +54,7 @@ export default {}
       display: flex
       align-items: center
       justify-content: space-between
-      padding: 0 10px 0 15px
+      padding: 0 10px 0 20px
       span
         font-size: $normal-font-size
         color: $dark
@@ -61,7 +66,7 @@ export default {}
       padding: 15px 0
       width: 280px
       border-bottom: 1px solid $border-one
-      &:last-child
+      &:nth-last-child(2)
         border-bottom: none
       .el-button
         margin-right: 15px

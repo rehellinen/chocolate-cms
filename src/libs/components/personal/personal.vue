@@ -2,10 +2,7 @@
   .personal
     el-dropdown(trigger="click")
       span.el-dropdown-link
-        img.portrait(
-          src="../../../assets/images/user@portrait.jpg"
-          :class="{ big }"
-        )
+        img.portrait(src="../../../assets/images/user@portrait.jpg")
       el-dropdown-menu.user-dropdown(slot="dropdown")
         .user
           .image
@@ -40,12 +37,6 @@
 import { User } from 'libs/model/User'
 
 export default {
-  props: {
-    big: {
-      type: Boolean,
-      default: false
-    }
-  },
   data () {
     return {
       username: '诚实',
@@ -94,11 +85,6 @@ export default {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.10)
     border: 3px solid #fff
     border-radius: 50%
-    margin-right: 10px
-    &.big
-      width: 50px
-      height: 50px
-      border: 4px solid #fff
   .user-dropdown
     width: 300px
     height: 190px
