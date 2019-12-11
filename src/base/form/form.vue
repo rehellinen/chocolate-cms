@@ -98,7 +98,8 @@ export default {
   },
   data () {
     return {
-      inputType: config.FORM
+      inputType: config.FORM,
+      checkIndex: 0
     }
   },
   mounted () {
@@ -114,6 +115,8 @@ export default {
   },
   methods: {
     onSubmit () {
+      this.uploadImg()
+      console.log(this.formData['content'])
       this.$emit('submit', this.formData)
     },
     editorChange (e) {
@@ -123,6 +126,25 @@ export default {
     imageUploaded (e) {
       const name = this.$refs.image[0].$attrs['data-name']
       this.formData[name] = e.path
+    },
+    uploadImg () {
+      let content = this.formData['content']
+      while (this.checkIndex !== -1) {
+        let imgIndex = content.indexOf('<img', this.checkIndex)
+        if (imgIndex !== -1) {
+          let srcIndex = content.indexOf('src', imgIndex)
+          let srcBegin = content.indexOf('"', srcIndex) + 1
+          let srcEnd = content.indexOf('"', srcBegin)
+          // 这里进行上传操作 返回url
+          // this.uploadUrl = 'https://m3.biz.itc.cn/pic/new/t/02/29/Img3162902_t.jpg'
+          this.uploadUrl = 'https://m3.biz.itc.cn/pic/new/t/02/29/Img3162902_t.jpg'
+          this.checkIndex = srcBegin + this.uploadUrl.length
+          content = content.substring(0, srcBegin) + this.uploadUrl + content.substring(srcEnd, content.length)
+        } else {
+          this.checkIndex = -1
+        }
+      }
+      this.formData['content'] = content
     }
   }
 }

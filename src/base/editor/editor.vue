@@ -1,6 +1,7 @@
 <template lang="pug">
   quill-editor.ql-editor-class(
     v-model="content"
+    :options="editorOption"
     ref="myQuillEditor"
     @change="onEditorChange($event)"
   )
