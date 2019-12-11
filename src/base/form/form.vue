@@ -131,7 +131,6 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base"
   .form-container
-    max-width: 500px
     .title
       color: $main-font-color
       font-size: $vast-font-size
@@ -140,7 +139,9 @@ export default {
     .el-select
       width: 100%
     .editor
-      width: 550px
+      width: 500px
     .el-date-picker
       width: 100%
+    .el-input
+      width: 400px
 </style>

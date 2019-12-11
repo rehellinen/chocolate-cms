@@ -1,8 +1,7 @@
 <template lang="pug">
-  quill-editor(
+  quill-editor.ql-editor-class(
     v-model="content"
     ref="myQuillEditor"
-    :options="editorOption"
     @change="onEditorChange($event)"
   )
 </template>
@@ -36,5 +35,8 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-
+  .quill-editor
+    line-height: 1.42
+    /deep/ .ql-editor
+      min-height: 100px
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  my-form(
+  my-form.card(
     v-else-if="type === allTypes.ADD"
     :title="name"
     :config="form",
