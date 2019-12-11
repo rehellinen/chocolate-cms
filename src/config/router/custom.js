@@ -31,10 +31,19 @@ export default [
   {
     show: true,
     title: '上传组件',
-    icon: 'el-icon-s-operation',
+    icon: 'el-icon-upload',
     name: 'upload',
     path: '/upload-file',
     component: 'upload-file',
+    order: 0
+  },
+  {
+    show: true,
+    title: '表单组件',
+    icon: 'el-icon-document',
+    name: 'form',
+    path: '/form',
+    component: 'form',
     order: 0
   }
 ]

@@ -144,4 +144,6 @@ export default {
       width: 100%
     .el-input
       width: 400px
+    .el-slider
+      width: 500px
 </style>
