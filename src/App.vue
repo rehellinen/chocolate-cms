@@ -11,7 +11,7 @@
         top-bar
       el-main
         transition(name="router-view" mode="out-in")
-          router-view.main
+          router-view
     // 手机端侧边栏遮罩
     transition(name="mask")
       .mask(
@@ -115,11 +115,10 @@ export default {
     // 主内容样式
     .el-main
       background-color: $background-color
-      padding: 0
       overflow-y: auto
-      .main
-        padding: 20px 30px
-        box-sizing: border-box
+      padding: 20px 30px
+      box-sizing: border-box
+
     // 默认字体格式
     p
       font-size: $normal-font-size
