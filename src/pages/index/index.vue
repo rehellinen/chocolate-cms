@@ -2,10 +2,10 @@
   div
     card(:data="data" :cardConf="cardConf")
     el-row(:gutter="20")
-      el-col.card(:md="11" :sm="24")
-        progress-bar(:data="progress")
-      el-col.card(:md="12" :sm="24")
-        progress-bar(:data="progress" type="circle")
+      el-col(:md="12" :sm="24")
+        progress-bar.card(:data="progress")
+      el-col(:md="12" :sm="24")
+        progress-bar.card(:data="progress" type="circle")
 </template>
 
 <script>
@@ -41,4 +41,8 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
+  @import "~sass/base"
+
+  .card
+    @include card(15px, 10px)
 </style>

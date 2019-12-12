@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card
+  .upload-file
     el-row
       el-col(:span="3") 普通示例
       el-col(:span="21")
@@ -60,8 +60,10 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  .el-row
+  @import "~sass/base"
+
+  .upload-file
+    @include card(20px, 25px)
+  .el-row:not(:last-child)
     margin-bottom: 20px
-  .card
-    margin: 20px
 </style>

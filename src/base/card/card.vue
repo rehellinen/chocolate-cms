@@ -29,7 +29,9 @@ export default {
 
 <style lang="sass" scoped>
   @import "~sass/base"
+
   .card
+    @include card(20px, 25px)
     flex-grow: 1
     flex-shrink: 1
     flex-basis: auto

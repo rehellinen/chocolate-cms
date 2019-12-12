@@ -1,11 +1,11 @@
 <template lang="pug">
-  my-form.card(
-    v-else-if="type === allTypes.ADD"
-    :title="name"
-    :config="form",
-    :form-data="formData"
-    @submit="toSubmit"
-  )
+  .add
+    my-form(
+      :title="name"
+      :config="form",
+      :form-data="formData"
+      @submit="toSubmit"
+    )
 </template>
 
 <script>
@@ -26,5 +26,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  @import "~sass/base"
 
+  .add
+    @include card(10px, 10px)
 </style>

@@ -152,6 +152,7 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base"
+
   .form-container
     .title
       color: $main-font-color

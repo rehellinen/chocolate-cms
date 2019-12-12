@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.card.progress-bar
+  div.progress-bar
     my-search(
       v-if="searchConf.length > 0"
       :searchConf="searchConf"

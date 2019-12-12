@@ -13,28 +13,28 @@
       @table="toIndex"
       :data="bread"
     )
+    div(:class="type === allTypes.INDEX ? 'table-card' : 'form-card'")
+      my-table(
+        v-if="type === allTypes.INDEX"
+        :tableColumn="tableColumn"
+        :data="table"
+        :pageConf="pageConf"
+        :searchConf="search"
+        :loading="loading"
+        @clear="toClear"
+        @search="toSearch"
+        @changePage="changePage"
+        @edit="toEdit"
+        @delete="deleteData"
+      )
 
-    my-table(
-      v-if="type === allTypes.INDEX"
-      :tableColumn="tableColumn"
-      :data="table"
-      :pageConf="pageConf"
-      :searchConf="search"
-      :loading="loading"
-      @clear="toClear"
-      @search="toSearch"
-      @changePage="changePage"
-      @edit="toEdit"
-      @delete="deleteData"
-    )
-
-    my-form(
-      :title="'编辑' + name",
-      :config="form"
-      :form-data="formData"
-      @submit="toSubmit"
-      v-else
-    )
+      my-form(
+        :title="'编辑' + name",
+        :config="form"
+        :form-data="formData"
+        @submit="toSubmit"
+        v-else
+      )
 </template>
 
 <script>
@@ -65,4 +65,10 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
+  @import "~sass/base"
+
+  .table-card
+    @include card(25px, 25px)
+  .form-card
+    @include card(10px, 10px)
 </style>
