@@ -16,7 +16,6 @@ export default {}
 
 <style lang="sass" scoped>
   @import "~sass/base"
-
   .not-found
     height: 100%
     width: 100%
@@ -24,6 +23,8 @@ export default {}
     justify-content: center
     align-items: center
     .card
+      @include card(30px, 10px)
+      margin-top: 50px
       text-align: center
       .title
         display: inline-block
