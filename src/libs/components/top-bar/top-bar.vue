@@ -132,6 +132,7 @@ export default {
     height: 30px
     display: flex
     overflow: hidden
+    border-bottom: 2px solid $background-color
     .tab
       background-color: white
       color: $minor-font-color
