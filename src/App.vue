@@ -1,5 +1,6 @@
 <template lang="pug">
   el-container.wrapper
+    <!--Login-->
     el-aside(
       :width="asideWidth"
       :class="{ phone: isPhone, show: isPhone && !isMenuCollapse }"
@@ -25,12 +26,14 @@
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
+import Login from 'libs/components/login/login'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     LeftMenu,
-    TopBar
+    TopBar,
+    Login
   },
   data () {
     return {

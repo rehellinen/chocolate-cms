@@ -6,15 +6,10 @@
     :cb="cb"
     @close="closeDialog")
     el-form(ref="form" :model="form" label-width="80px")
-      p.title 管理员登录
-      el-form-item(label="账号：")
-        el-input(v-model="form.name")
-
-      el-form-item(label="密码：")
-        el-input(v-model="form.password" show-password)
-
-      el-form-item
-        el-button(@click="onSubmit") 登录
+      p.title Chocolate Disco
+      el-input(v-model="form.name" placeholder="请输入用户名")
+      el-input(v-model="form.password" placeholder="请输入密码" show-password)
+      el-button(@click="onSubmit") 登录
 </template>
 
 <script>
@@ -62,13 +57,32 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~sass/base.sass"
   .container
-    padding: 0 10%
+    height: 100%
+    width: 100%
+    background-color: $background-color
+    display: flex
+    align-items: center
+    justify-content: center
     .el-form
-      max-width: 500px
-    .title
-      color: $main-font-color
-      font-size: $vast-font-size
-      font-weight: bold
-      margin-bottom: 15px
-      margin-left: 80px
+      @include card
+      width: 30%
+      height: 50%
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: space-around
+      padding-bottom: 20px
+      .title
+        color: $main-font-color
+        font-size: $vast-font-size
+        font-weight: bold
+        margin-bottom: 15px
+      .el-input
+        /deep/ input
+          border: none
+          border-bottom: 1px solid $background-color
+      .el-button
+        color: white
+        background: $primary
+        font-size: $big-font-size
 </style>
