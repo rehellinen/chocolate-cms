@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { base64ToBlob } from 'utils/utils'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -30,6 +31,15 @@ export default {
     },
     setContent (newContent) {
       this.content = newContent
+    },
+    uploadImg () {
+      return this.content.replace(/<img(.*?)>/g, function (img) {
+        return img.replace(/src="(.*?)"/g, function (src) {
+          src = src.substring(5, src.length - 1)
+          // 在此处上传base64ToBlob(match1)，返回url
+          return base64ToBlob(src) + '123'
+        })
+      })
     }
   }
 }

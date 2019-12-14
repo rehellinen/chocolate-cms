@@ -13,8 +13,7 @@ export const searchConf = [
 export const formConf = [
   { name: 'title', label: '标题' },
   { name: 'subtitle', label: '副标题' },
-  { name: 'file', label: '图片', type: config.FORM.FILE },
-  { name: 'content', label: '内容', type: config.FORM.EDITOR }
+  { name: 'file', label: '图片', type: config.FORM.FILE }
 ]
 
 export const tableConf = [
