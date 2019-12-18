@@ -85,7 +85,10 @@ module.exports = {
         use: [
           isProduction
             // extract css in production environment
-            ? MiniCssExtractPlugin.loader
+            ? {
+              loader: MiniCssExtractPlugin.loader,
+              options: { publicPath: '../' }
+            }
             : 'vue-style-loader',
           'css-loader'
         ]
@@ -95,7 +98,8 @@ module.exports = {
         // convert to base64
         loader: 'url-loader',
         options: {
-          limit: 15000
+          limit: 15000,
+          outputPath: 'font'
         }
       },
       {
@@ -105,7 +109,8 @@ module.exports = {
             // convert to base64
             loader: 'url-loader',
             options: {
-              limit: 10000
+              limit: 10000,
+              outputPath: 'images'
             }
           },
           // compress photos
