@@ -1,39 +1,41 @@
 <template lang="pug">
   el-container.wrapper
-    <!--Login-->
-    el-aside(
-      :width="asideWidth"
-      :class="{ phone: isPhone, show: isPhone && !isMenuCollapse }"
-      v-if="!isLoginPage"
-      )
-      left-menu
-    el-container
-      el-header(height="80px")
-        top-bar
+    template(v-if="isLoginPage")
       el-main
         transition(name="router-view" mode="out-in")
           router-view
-    // 手机端侧边栏遮罩
-    transition(name="mask")
-      .mask(
-        @click="collapsePhoneMenu"
-        v-if="isPhone && !isMenuCollapse"
+    template(v-else)
+      el-aside(
+        :width="asideWidth"
+        :class="{ phone: isPhone, show: isPhone && !isMenuCollapse }"
+        v-if="!isLoginPage"
         )
-    // 返回顶部按钮
-    el-backtop(target=".el-main" :right="30" :bottom="30")
+        left-menu
+      el-container
+        el-header(height="80px" v-if="!isLoginPage")
+          top-bar
+        el-main
+          transition(name="router-view" mode="out-in")
+            router-view
+      // 手机端侧边栏遮罩
+      transition(name="mask" v-if="!isLoginPage")
+        .mask(
+          @click="collapsePhoneMenu"
+          v-if="isPhone && !isMenuCollapse"
+          )
+      // 返回顶部按钮
+      el-backtop(target=".el-main" :right="30" :bottom="30" v-if="!isLoginPage")
 </template>
 
 <script>
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
-import Login from 'libs/components/login/login'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     LeftMenu,
-    TopBar,
-    Login
+    TopBar
   },
   data () {
     return {
