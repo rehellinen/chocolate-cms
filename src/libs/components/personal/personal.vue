@@ -98,7 +98,7 @@ export default {
       height: 100px
       display: flex
       align-items: center
-      background: url("/src/assets/images/user@bg.jpg")
+      background: url("../../../assets/images/user@bg.jpg")
       .image
         img
           vertical-align: bottom

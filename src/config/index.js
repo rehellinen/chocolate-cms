@@ -5,7 +5,7 @@
  */
 export default {
   BASE_URL: PRODUCTION
-    ? 'http://127.0.0.1:9527'
+    ? 'http://cms.bar.rehellinen.cn'
     : 'http://127.0.0.1:9527',
   // 需要导入的路由配置文件名称（放置目录为src/config/router）
   ROUTER_CONF_FILES: ['framework', 'custom'],

@@ -1,6 +1,6 @@
 <template lang="pug">
   .not-found
-    .card.el-col-xl-13.el-col-lg-14.el-col-md-16.el-col-sm-18.el-col-xs-24
+    .card.el-col-22.el-col-xs-24
       p.title 404
       .desc
         i.el-icon-circle-close
@@ -17,14 +17,11 @@ export default {}
 <style lang="sass" scoped>
   @import "~sass/base"
   .not-found
-    height: 100%
     width: 100%
     display: flex
     justify-content: center
-    align-items: center
     .card
-      @include card(30px, 10px)
-      margin-top: 50px
+      @include card(50px, 0)
       text-align: center
       .title
         display: inline-block
