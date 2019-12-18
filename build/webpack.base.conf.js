@@ -71,7 +71,10 @@ module.exports = {
         use: [
           isProduction
             // extract css in production environment
-            ? MiniCssExtractPlugin.loader
+            ? {
+              loader: MiniCssExtractPlugin.loader,
+              options: { publicPath: '../' }
+            }
             : 'vue-style-loader',
           'css-loader',
           {
