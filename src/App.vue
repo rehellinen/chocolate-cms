@@ -8,23 +8,22 @@
       el-aside(
         :width="asideWidth"
         :class="{ phone: isPhone, show: isPhone && !isMenuCollapse }"
-        v-if="!isLoginPage"
-        )
+      )
         left-menu
       el-container
-        el-header(height="80px" v-if="!isLoginPage")
+        el-header(height="80px")
           top-bar
         el-main
           transition(name="router-view" mode="out-in")
             router-view
       // 手机端侧边栏遮罩
-      transition(name="mask" v-if="!isLoginPage")
+      transition(name="mask")
         .mask(
           @click="collapsePhoneMenu"
           v-if="isPhone && !isMenuCollapse"
-          )
+        )
       // 返回顶部按钮
-      el-backtop(target=".el-main" :right="30" :bottom="30" v-if="!isLoginPage")
+      el-backtop(target=".el-main" :right="30" :bottom="30")
 </template>
 
 <script>
