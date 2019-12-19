@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import { dialogMixin, cmsMixin } from 'mixins'
+import { dialogMixin } from 'mixins'
 import { Token } from 'libs/class/Token'
 import config from 'config'
 
 export default {
-  mixins: [dialogMixin, cmsMixin],
+  mixins: [dialogMixin],
   data () {
     return {
       form: {
@@ -65,8 +65,10 @@ export default {
     justify-content: center
     .el-form
       @include card
-      width: 30%
-      height: 50%
+      box-shadow: 6px 11px 41px -28px #a99de7
+      width: 80%
+      max-width: 540px
+      height: 300px
       display: flex
       flex-direction: column
       align-items: center
@@ -79,9 +81,12 @@ export default {
         margin-bottom: 15px
       .el-input
         /deep/ input
+          height: 50px
           border: none
           border-bottom: 1px solid $background-color
       .el-button
+        width: 100%
+        height: 50px
         color: white
         background: $primary
         font-size: $big-font-size
