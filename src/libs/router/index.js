@@ -6,6 +6,7 @@ Vue.use(Router)
 
 const routes = [
   ...processConfig(getAllConfig()),
+  { path: '/login', component: () => import('libs/components/login/login') },
   { path: '*', redirect: '/404' }
 ]
 
