@@ -141,14 +141,12 @@ export default {
       font-size: $vast-font-size
       font-weight: bold
       margin: 20px 0 20px 80px
-    .el-select
-      width: 100%
     .editor
-      width: 500px
+      max-width: 500px
     .el-date-picker
-      width: 100%
+      max-width: 100%
     .el-input
-      width: 400px
+      max-width: 400px
     .el-slider
-      width: 500px
+      max-width: 500px
 </style>

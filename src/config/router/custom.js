@@ -45,5 +45,43 @@ export default [
     path: '/form',
     component: 'form',
     order: 0
+  },
+  {
+    show: true,
+    title: '权限管理',
+    icon: 'el-icon-s-operation',
+    name: 'authority',
+    path: '/authority',
+    component: 'article',
+    order: 0,
+    children: [
+      {
+        show: true,
+        title: '用户列表',
+        icon: 'el-icon-tickets',
+        name: 'authority',
+        path: '/authority',
+        component: 'authority',
+        order: 0
+      },
+      {
+        show: true,
+        title: '添加用户',
+        icon: 'el-icon-circle-plus-outline',
+        name: 'authority-add',
+        path: '/authority/add',
+        component: 'authority/add',
+        order: 0
+      },
+      {
+        show: true,
+        title: '分组管理',
+        icon: 'el-icon-circle-plus-outline',
+        name: 'authority-manage',
+        path: '/authority/manage',
+        component: 'authority/manage',
+        order: 0
+      }
+    ]
   }
 ]

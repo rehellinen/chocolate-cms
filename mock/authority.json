@@ -1,0 +1,28 @@
+{
+  "status": 1,
+  "message": "获取所有分组信息成功",
+  "data": {
+    "data": [
+      {
+        "id": 1,
+        "authority": "test1",
+        "describe": "test1分组",
+        "order": 2,
+        "status": 1
+      },
+      {
+        "id": 2,
+        "authority": "test2",
+        "describe": "test2分组",
+        "order": 2,
+        "status": 1
+      }
+    ],
+    "page": {
+      "page": 1,
+      "pageSize": 12,
+      "rowCount": 3,
+      "pageCount": 1
+    }
+  }
+}

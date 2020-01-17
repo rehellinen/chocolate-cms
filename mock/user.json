@@ -1,0 +1,28 @@
+{
+  "status": 1,
+  "message": "获取所有用户成功",
+  "data": {
+    "data": [
+      {
+        "id": 32,
+        "name": "user1",
+        "authority": "test1",
+        "order": 2,
+        "status": 1
+      },
+      {
+        "id": 33,
+        "name": "user2",
+        "authority": "test2",
+        "order": 2,
+        "status": 1
+      }
+    ],
+    "page": {
+      "page": 1,
+      "pageSize": 12,
+      "rowCount": 3,
+      "pageCount": 1
+    }
+  }
+}
