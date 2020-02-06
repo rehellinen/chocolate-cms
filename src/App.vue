@@ -38,7 +38,7 @@ export default {
   },
   data () {
     return {
-      isLoginPage: false
+      isLoginPage: true
     }
   },
   computed: {

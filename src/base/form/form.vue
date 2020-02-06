@@ -116,7 +116,7 @@ export default {
     onSubmit () {
       if (this.$refs.editor) {
         const name = this.$refs.editor[0].$attrs['data-name']
-        this.formData[name] = this.$refs.editor[0].uploadImg()
+        this.formData[name] = this.$refs.editor[0].getContent()
       }
       this.$emit('submit', this.formData)
     },

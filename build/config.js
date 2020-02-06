@@ -14,7 +14,14 @@ module.exports = {
     USE_ESLINT: true,
     DEV_TOOL: 'cheap-module-eval-source-map',
     PUBLIC_PATH: '/',
-    PROXY: {}
+    PROXY: {
+      '/api': {
+        target: 'http://127.0.0.1:3000/',
+        secure: false,
+        changOrigin: true,
+        pathRewrite: { '^/api': '/' }
+      }
+    }
   },
 
   // production environment config
@@ -26,4 +33,3 @@ module.exports = {
     BUNDLE_ANALYZER: process.env.npm_config_report
   }
 }
-

@@ -17,6 +17,11 @@ const http = axios.create({
 http.interceptors.request.use(config => {
   // 增加容错率
   processConfig(config)
+  // 处理跨域的api，http://127.0.0.1:3000/
+  if (config.url.indexOf('mock') === -1) {
+    console.log(123)
+    config.baseURL += '/api/'
+  }
   // 处理data字段
   config.data = precessData(config.data)
   return config
@@ -49,4 +54,15 @@ export const put = (url, data, otherConfig) => {
 
 export const del = (url, data, otherConfig) => {
   return request(url, 'delete', data, otherConfig)
+}
+
+export const uploadImg = (url, data) => {
+  let config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }
+  return axios.post('files/image', data, config).then(res => {
+    return res.data.data
+  })
 }

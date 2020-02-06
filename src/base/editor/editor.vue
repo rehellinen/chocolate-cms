@@ -8,11 +8,12 @@
 </template>
 
 <script>
-import { base64ToBlob } from 'utils/utils'
+import { base64ToFile } from 'utils/utils'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+import { uploadImg } from 'libs/utils/http'
 
 export default {
   components: {
@@ -32,14 +33,23 @@ export default {
     setContent (newContent) {
       this.content = newContent
     },
-    uploadImg () {
+    getContent () {
+      let self = this
       return this.content.replace(/<img(.*?)>/g, function (img) {
         return img.replace(/src="(.*?)"/g, function (src) {
           src = src.substring(5, src.length - 1)
-          // 在此处上传base64ToBlob(match1)，返回url
-          return base64ToBlob(src) + '123'
+          return self.uploadImg(src)
         })
       })
+    },
+    uploadImg (src) {
+      let file = base64ToFile(src, (new Date()).getTime() + '.jpeg')
+      let formData = new FormData()
+      formData.append('file', file)
+      uploadImg(formData).then(res => {
+        console.log(res)
+      })
+      return '123'
     }
   }
 }

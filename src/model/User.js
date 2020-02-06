@@ -4,6 +4,6 @@ import { BaseModel } from 'libs/model/BaseModel'
 export class User extends BaseModel {
   // TODO: MOCK
   static getMock () {
-    return get('mock/user.json')
+    return get('user/all')
   }
 }
