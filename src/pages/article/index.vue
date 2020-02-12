@@ -23,7 +23,6 @@
         :loading="loading"
         @clear="toClear"
         @search="toSearch"
-        @changePage="changePage"
         @edit="toEdit"
         @delete="deleteData"
       )
@@ -47,8 +46,7 @@ export default {
   data () {
     return {
       pageConf: {
-        pageSize: 1,
-        total: 3
+        pageSize: 5
       }
     }
   },

@@ -27,6 +27,8 @@
 </template>
 
 <script>
+/* eslint-disable no-new */
+
 import LeftMenu from 'libs/components/left-menu/left-menu'
 import TopBar from 'libs/components/top-bar/top-bar'
 import { mapGetters, mapActions } from 'vuex'
@@ -38,7 +40,7 @@ export default {
   },
   data () {
     return {
-      isLoginPage: true
+      isLoginPage: false
     }
   },
   computed: {

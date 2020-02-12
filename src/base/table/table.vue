@@ -9,7 +9,7 @@
 
     el-table(
       v-loading="loading"
-      :data="data"
+      :data="tableData"
       :border="border"
       style="width: 100%"
       :height="height"
@@ -62,7 +62,7 @@
       layout="prev, pager, next, jumper"
       :current-page="pageConf.page"
       :page-size="pageConf.pageSize"
-      :total="pageConf.totalItem || null"
+      :total="data.length || null"
       @current-change="changePage"
       background
     )
@@ -85,9 +85,9 @@ export default {
     pageConf: {
       // 分页
       type: Object,
-      default: () => [{
-        pageSize: 10
-      }]
+      default: () => {
+        return { 'pageSize': 5 }
+      }
     },
     searchConf: {
       // 搜索
@@ -143,6 +143,15 @@ export default {
       currentIndex: 1
     }
   },
+  computed: {
+    tableData () {
+      let begin = (this.currentIndex - 1) * this.pageConf.pageSize
+      let end = begin + this.pageConf.pageSize
+      console.log(this.pageConf)
+      end = end > this.data.length ? this.data.length : end
+      return this.data.slice(begin, end)
+    }
+  },
   methods: {
     // 调用自定义的函数
     buttonMethods (func, index, row) {
@@ -171,7 +180,7 @@ export default {
       return (data.map && typeof data.map === 'function') ? data.map(val) : val
     },
     changePage (page) {
-      this.$emit('changePage', { page })
+      this.currentIndex = page
     },
     toClear () {
       this.$emit('clear')

@@ -18,12 +18,10 @@
         v-if="type === allTypes.INDEX"
         :tableColumn="tableColumn"
         :data="table"
-        :pageConf="pageConf"
         :searchConf="search"
         :loading="loading"
         @clear="toClear"
         @search="toSearch"
-        @changePage="changePage"
         @edit="toEdit"
         @delete="deleteData"
       )
@@ -44,14 +42,6 @@ import { Authority as Model } from 'model/Authority'
 
 export default {
   mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
-  data () {
-    return {
-      pageConf: {
-        pageSize: 1,
-        total: 3
-      }
-    }
-  },
   methods: {
     _initCMS () {
       this.setModel(Model)

@@ -1,8 +1,7 @@
 {
   "status": 1,
   "message": "获取所有用户成功",
-  "data": {
-    "data": [
+  "data": [
       {
         "id": 32,
         "name": "user1",
@@ -17,12 +16,5 @@
         "order": 2,
         "status": 1
       }
-    ],
-    "page": {
-      "page": 1,
-      "pageSize": 12,
-      "rowCount": 3,
-      "pageCount": 1
-    }
-  }
+    ]
 }

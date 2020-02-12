@@ -19,7 +19,6 @@ http.interceptors.request.use(config => {
   processConfig(config)
   // 处理跨域的api，http://127.0.0.1:3000/
   if (config.url.indexOf('mock') === -1) {
-    console.log(123)
     config.baseURL += '/api/'
   }
   // 处理data字段

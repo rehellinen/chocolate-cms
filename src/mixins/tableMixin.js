@@ -9,8 +9,6 @@ export const tableMixin = {
       operate: [],
       // 搜索的配置
       search: [],
-      // 分页配置
-      pageConf: {},
       loading: true
     }
   },
@@ -27,8 +25,7 @@ export const tableMixin = {
         this.table = []
         return
       }
-      this.table = res.data
-      this.setPageConf(res.page)
+      this.table = res
       this.loading = false
     },
 
@@ -45,15 +42,6 @@ export const tableMixin = {
     // 配置搜索
     setSearch (conf) {
       this.search = conf
-    },
-
-    setPageConf (conf) {
-      this.pageConf = {
-        page: conf.page,
-        pageSize: conf.pageSize,
-        totalPage: conf.pageCount,
-        totalItem: conf.rowCount
-      }
     },
 
     // 清除搜索结果
@@ -80,7 +68,6 @@ export const tableMixin = {
         return
       }
       this.table = searchRes.data
-      this.setPageConf(searchRes.page)
     },
 
     deleteData ({ index }) {
@@ -89,14 +76,6 @@ export const tableMixin = {
         content: '是否确定删除',
         request: async () => this.model.deleteData(id)
       })
-    },
-
-    async changePage ({ page }) {
-      this.loading = true
-      const res = await this.model.getAll({ page })
-      this.data = res.data
-      this.setPageConf(res.page)
-      this.loading = false
     }
   }
 }
