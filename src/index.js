@@ -11,7 +11,7 @@ import store from './store'
 import { router } from './libs'
 
 import 'sass/reset.sass'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'theme/element-variables.scss'
 
 Vue.use(ElementUI)
 

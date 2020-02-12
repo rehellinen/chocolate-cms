@@ -28,6 +28,7 @@ module.exports = {
     alias: {
       '@': r('./src'),
       sass: r(`./src/assets/sass`),
+      theme: r(`./src/assets/theme`),
       assets: r(`./src/assets`),
       base: r(`./src/base`),
       config: r(`./src/config`),
@@ -43,15 +44,15 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [r('src')],
-        options: {
-          formatter: require('eslint-friendly-formatter')
-        }
-      },
+      // {
+      //   test: /\.(js|vue)$/,
+      //   loader: 'eslint-loader',
+      //   enforce: 'pre',
+      //   include: [r('src')],
+      //   options: {
+      //     formatter: require('eslint-friendly-formatter')
+      //   }
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader'
@@ -68,6 +69,23 @@ module.exports = {
       },
       {
         test: /\.sass$/,
+        use: [
+          isProduction
+            // extract css in production environment
+            ? {
+              loader: MiniCssExtractPlugin.loader,
+              options: { publicPath: '../' }
+            }
+            : 'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: { indentedSyntax: true }
+          }
+        ]
+      },
+      {
+        test: /\.scss$/,
         use: [
           isProduction
             // extract css in production environment
