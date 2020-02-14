@@ -1,2 +1,3 @@
 export * from './router'
-export * from './class'
+export * from './model'
+export * from './utils'
