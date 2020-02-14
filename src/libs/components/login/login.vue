@@ -7,48 +7,37 @@
     @close="closeDialog")
     el-form(ref="form" :model="form" label-width="80px")
       p.title Chocolate Disco
-      el-input(v-model="form.name" placeholder="请输入用户名")
-      el-input(v-model="form.password" placeholder="请输入密码" show-password)
-      el-button(@click="onSubmit") 登录
+      el-input(v-model="form.account" placeholder="请输入用户名")
+      el-input(v-model="form.pwd" placeholder="请输入密码" show-password)
+      el-button(@click="login") 登录
 </template>
 
 <script>
 import { dialogMixin } from 'mixins'
-import { Token } from 'libs/class/Token'
-import config from 'config'
+import { User } from 'libs/model/User'
 
 export default {
   mixins: [dialogMixin],
   data () {
     return {
       form: {
-        name: '',
-        password: ''
+        account: '',
+        pwd: ''
       }
     }
   },
+  created () {
+    console.log(this.form)
+  },
   methods: {
-    _getData () {},
-    async onSubmit (e) {
-      const token = new Token(this.form.name, this.form.password)
-      const res = await token.getTokenFromServer()
-      this.openDialog({
-        title: '提示',
-        content: res.message,
-        cb: () => {
-          if (res.status === 1) {
-            const type = token.getTypeFromCache()
-            if (type === config.ADMIN_TYPE.TEACHER) {
-              this.$router.push('/user_event')
-            } else {
-              this.$router.push('/')
-            }
-          } else {
-            this.closeDialog()
-          }
-        },
-        showCancel: true
-      })
+    async login (e) {
+      const { account, pwd } = this.form
+      try {
+        await User.getToken(account, pwd)
+        this.$router.push('/')
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
