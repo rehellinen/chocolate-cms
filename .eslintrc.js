@@ -16,6 +16,7 @@ module.exports = {
     'vue'
   ],
   rules: {
+    'no-debugger': 'off',
     'generator-star-spacing': 'off',
     'no-multiple-empty-lines': [2, {
       max: 2
