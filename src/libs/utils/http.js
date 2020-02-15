@@ -1,29 +1,117 @@
 import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
-import { getAccessToken, getRefreshToken } from 'libs/utils/token'
+import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
 
-const processConfig = (config) => {
-  // 删除axios不需要的配置项
-  delete config.getAllResponse
-}
+const REFRESH_URL = 'user/refresh'
+const TOTAL_REFRESH_URL = config.BASE_URL.endsWith('/')
+  ? config.BASE_URL + REFRESH_URL
+  : `${config.BASE_URL}/${REFRESH_URL}`
 
-const precessData = (config) => {
-  const data = config.data
-  return data
-}
-
-const processAuth = (config) => {
+const processConfig = (reqConfig) => {
+  // 默认使用get请求
+  if (!reqConfig.method) {
+    reqConfig.method = 'GET'
+  }
+  reqConfig.method = reqConfig.method.toUpperCase()
+  // headers默认值
+  if (!reqConfig.headers) {
+    reqConfig.headers = {}
+  }
+  if (!reqConfig.headers['Content-Type']) {
+    reqConfig.headers['Content-Type'] = 'application/json'
+  }
+  // GET方法下，data转为params
+  if (reqConfig.method === 'GET') {
+    if (!reqConfig.params) {
+      reqConfig.params = reqConfig.data
+    }
+  }
+  // 增加权限相关header字段
   const getAuthHeader = (token) => `Bearer ${token}`
-  if (config.url === 'user/refresh') {
+  if (reqConfig.url === REFRESH_URL) {
     const refreshToken = getRefreshToken()
     if (refreshToken) {
-      config.headers.Authorization = getAuthHeader(refreshToken)
+      reqConfig.headers.Authorization = getAuthHeader(refreshToken)
     }
   } else {
     const accessToken = getAccessToken()
     if (accessToken) {
-      config.headers.Authorization = getAuthHeader(accessToken)
+      reqConfig.headers.Authorization = getAuthHeader(accessToken)
+    }
+  }
+}
+
+const processResponse = async (res, allReqConfig) => {
+  const { status, data } = res
+  const { otherConfig } = allReqConfig
+
+  // 处理成功的情况
+  if (status >= 200 && status < 300) {
+    return res
+  }
+  processParamsError(res)
+  processRefreshTokenError(res)
+  const newRes = await processAccessTokenError(res, allReqConfig)
+  res = newRes || res
+
+  return otherConfig.getAllResponse ? data : data.data
+}
+
+const processParamsError = ({ status, data }) => {
+  // 处理参数错误的情况
+  if (status === 400) {
+    for (const [key, val] of Object.entries(data.data)) {
+      for (let msg of val) {
+        if (process.env.NODE_ENV !== 'production') {
+          msg = `${key} - ${msg}`
+        }
+        Vue.prototype.$message({
+          message: msg,
+          type: 'error'
+        })
+      }
+    }
+    throw new Error(data.message)
+  }
+}
+
+const processRefreshTokenError = (response) => {
+  const { status, data } = response
+  if (response.config.url === TOTAL_REFRESH_URL) {
+    // 令牌类型错误 / Token过期
+    if (status === 20101 || status === 20102) {
+      Vue.prototype.$message({
+        message: data.message,
+        type: 'error'
+      })
+      // TODO: 退出登录
+      window.location.href = window.location.origin + '/#/login'
+      throw new Error(data.message)
+    }
+  }
+}
+
+const processAccessTokenError = async ({ status, data }, allReqConfig) => {
+  // 令牌类型错误 / Token过期
+  if (status === 20101 || status === 20102) {
+    Vue.prototype.$message({
+      message: data.message,
+      type: 'error'
+    })
+    // 刷新access_token
+    const res = await post(REFRESH_URL)
+    saveTokens(res.data.accessToken, res.data.refreshToken)
+
+    // 重发请求
+    const reFetch = allReqConfig.otherConfig.reFetch !== false
+    if (reFetch) {
+      allReqConfig.otherConfig.refetch = false
+      return request(allReqConfig.url,
+        allReqConfig.method,
+        allReqConfig.data,
+        allReqConfig.otherConfig
+      )
     }
   }
 }
@@ -35,54 +123,16 @@ const http = axios.create({
   validateStatus: (status) => status >= 200 && status < 510
 })
 
-http.interceptors.request.use(config => {
-  // 增加容错率
-  processConfig(config)
-  // 处理data字段
-  precessData(config)
-  // 处理跨域的api，http://127.0.0.1:3000/
-  if (config.url.indexOf('mock') === -1) {
-    config.baseURL += '/api/'
-  }
-  processAuth(config)
-  return config
-})
-
-http.interceptors.response.use(res => {
-  const { status, data } = res
-  const error = (msg) => {
-    Vue.prototype.$message({
-      message: msg,
-      type: 'error'
-    })
-  }
-
-  // 处理参数错误的情况
-  if (status === 400) {
-    for (const [key, val] of Object.entries(data.data)) {
-      for (let msg of val) {
-        if (process.env.NODE_ENV !== 'production') {
-          msg = `${key} - ${msg}`
-        }
-        error(msg)
-      }
-    }
-    throw new Error(data.message)
-  }
-
-  return res
-})
-
-export const request = async (url, method, data, config = {}) => {
-  // 该配置项表示是否返回所有的数据，为false时只返回res.data
-  const getAllResponse = config.getAllResponse
-  const res = await http({
+export const request = async (url, method, data, otherConfig = {}) => {
+  const allReqConfig = {
     url,
     method,
     data,
-    ...config
-  })
-  return getAllResponse ? res.data : res.data.data
+    ...otherConfig
+  }
+  processConfig(allReqConfig)
+  let response = await http(allReqConfig)
+  return processResponse(response, { url, method, data, otherConfig })
 }
 
 export const get = (url, data, otherConfig) => {
