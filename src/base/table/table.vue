@@ -38,13 +38,13 @@
         template(slot-scope="scope")
           el-button(
             v-if="!disableEdit"
-            style="background:linear-gradient(230deg, #ffc480, #ff763b);color:white;border:none"
+            type="warning"
             size="mini"
             @click.native.prevent="toEdit(scope.$index)"
           ) 编辑
           el-button(
             size="mini"
-            style="background:linear-gradient(230deg, #fc5286, #fbaaa2);color:white;border:none"
+            type="danger"
             v-if="!disableDelete"
             @click.native.prevent="toDelete(scope.$index)"
           ) 删除

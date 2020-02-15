@@ -68,24 +68,7 @@ module.exports = {
         loader: 'pug-plain-loader'
       },
       {
-        test: /\.sass$/,
-        use: [
-          isProduction
-            // extract css in production environment
-            ? {
-              loader: MiniCssExtractPlugin.loader,
-              options: { publicPath: '../' }
-            }
-            : 'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: { indentedSyntax: true }
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
+        test: /\.(sass|scss)$/,
         use: [
           isProduction
             // extract css in production environment
