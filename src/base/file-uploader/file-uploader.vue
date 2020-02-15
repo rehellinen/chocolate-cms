@@ -26,7 +26,6 @@
 
 <script>
 import config from 'config'
-import { Token } from 'libs/class/Token'
 
 export default {
   data () {
@@ -39,7 +38,7 @@ export default {
       uploadUrl: config.BASE_URL + '/file',
       // http请求发送的额外头信息
       header: {
-        token: new Token().getTokenFromCache()
+        token: ''
       }
     }
   },

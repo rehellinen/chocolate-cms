@@ -1,7 +1,6 @@
 import config from 'config'
 import MyForm from 'base/form/form'
 import MyTable from 'base/table/table'
-import { Token } from 'libs/class/Token'
 
 export const cmsMixin = {
   data () {
@@ -75,16 +74,6 @@ export const cmsMixin = {
         content: res.message,
         cb: () => {
           this.isPending = false
-          if (res.isExpired) {
-            const type = new Token().getTypeFromCache()
-            if (type === config.ADMIN_TYPE.TEACHER && new Token().isLogin()) {
-              return
-            }
-            this.$router.push('/login')
-          }
-          if (res.isError) {
-            return
-          }
           this.formData = {}
           this.toIndex()
           this._getData()
