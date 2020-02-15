@@ -43,19 +43,20 @@ const processConfig = (reqConfig) => {
 }
 
 const processResponse = async (res, allReqConfig) => {
-  const { status, data } = res
+  const { status } = res
   const { otherConfig } = allReqConfig
+  const getResponseData = (response) => {
+    return otherConfig.getAllResponse ? response.data : response.data.data
+  }
 
   // 处理成功的情况
   if (status >= 200 && status < 300) {
-    return res
+    return getResponseData(res)
   }
   processParamsError(res)
   processRefreshTokenError(res)
   const newRes = await processAccessTokenError(res, allReqConfig)
-  res = newRes || res
-
-  return otherConfig.getAllResponse ? data : data.data
+  return getResponseData(newRes || res)
 }
 
 const processParamsError = ({ status, data }) => {
@@ -131,7 +132,7 @@ export const request = async (url, method, data, otherConfig = {}) => {
     ...otherConfig
   }
   processConfig(allReqConfig)
-  let response = await http(allReqConfig)
+  const response = await http(allReqConfig)
   return processResponse(response, { url, method, data, otherConfig })
 }
 
