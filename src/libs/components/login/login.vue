@@ -26,9 +26,6 @@ export default {
       }
     }
   },
-  created () {
-    console.log(this.form)
-  },
   methods: {
     async login (e) {
       const { account, pwd } = this.form
