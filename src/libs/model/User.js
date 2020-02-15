@@ -18,10 +18,8 @@ export class User extends BaseModel {
       account,
       password
     }
-    const res = await post('/user/login', data, {
-      getAllResponse: true
-    })
-    saveTokens(res.data.accessToken, res.data.refreshToken)
+    const res = await post('/user/login', data)
+    saveTokens(res.accessToken, res.refreshToken)
     return res
   }
 }
