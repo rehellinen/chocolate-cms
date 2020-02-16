@@ -113,10 +113,10 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
       if (this.$refs.editor) {
         const name = this.$refs.editor[0].$attrs['data-name']
-        this.formData[name] = this.$refs.editor[0].getContent()
+        this.formData[name] = await this.$refs.editor[0].getContent()
       }
       this.$emit('submit', this.formData)
     },
