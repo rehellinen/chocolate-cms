@@ -3,9 +3,35 @@ import { BaseModel } from 'libs/model/BaseModel'
 import { saveTokens } from 'libs/utils/token'
 
 export class User extends BaseModel {
-  // TODO: MOCK
-  static getMock () {
-    return get('user/all')
+  id
+
+  name
+
+  account
+
+  password
+
+  avatar
+
+  groupId
+
+  status
+
+  order
+
+
+  constructor (data) {
+    super()
+    this.setData(data, [
+      'id',
+      'name',
+      'account',
+      'password',
+      'avatar',
+      'groupId',
+      'status',
+      'order'
+    ])
   }
 
   /**
@@ -21,5 +47,13 @@ export class User extends BaseModel {
     const res = await post('/user/login', data)
     saveTokens(res.accessToken, res.refreshToken)
     return res
+  }
+
+  /**
+   * 获取已登录的账户信息
+   */
+  static async getUser () {
+    const user = await get('user/self')
+    return new User(user)
   }
 }

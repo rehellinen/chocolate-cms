@@ -16,5 +16,17 @@ export const mutations = {
 
   [types.CHANGE_PHONE_STATUS] (state, status) {
     state.isPhone = status
+  },
+
+  [types.SET_LOGIN] (state, login) {
+    state.isLogin = login
+  },
+
+  [types.SET_USER] (state, user) {
+    state.user = user
+  },
+
+  [types.SET_AUTH] (state, auth) {
+    state.auth = auth
   }
 }
