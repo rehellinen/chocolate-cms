@@ -38,7 +38,7 @@
 <script>
 import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
 import { manageTableConf, manageFormConf, searchConf } from './config'
-import { Authority as Model } from 'model/Authority'
+import { Auth as Model } from 'libs/model/Auth'
 
 export default {
   mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
