@@ -37,7 +37,7 @@ export const getRandChars = (length = 16) => {
   return str
 }
 
-export const base64ToFile = (urlData, fileName) => {
+export const base64ToFile = (urlData, postfix) => {
   let arr = urlData.split(',')
   let mime = arr[0].match(/:(.*?);/)[1] || ''
   // 转换为byte
@@ -50,6 +50,6 @@ export const base64ToFile = (urlData, fileName) => {
     ia[i] = bytes.charCodeAt(i)
   }
   // 转换成文件，添加文件的type，name属性
-  return new File([ia], fileName, { type: mime })
+  return new File([ia], (new Date()).getTime() + '.' + postfix, { type: mime })
 }
 
