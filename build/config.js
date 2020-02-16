@@ -14,14 +14,7 @@ module.exports = {
     USE_ESLINT: true,
     DEV_TOOL: 'cheap-module-eval-source-map',
     PUBLIC_PATH: '/',
-    PROXY: {
-      '/api': {
-        target: 'http://127.0.0.1:3000/',
-        secure: false,
-        changOrigin: true,
-        pathRewrite: { '^/api': '/' }
-      }
-    }
+    PROXY: {}
   },
 
   // production environment config
