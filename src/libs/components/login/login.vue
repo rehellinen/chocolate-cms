@@ -15,6 +15,7 @@
 <script>
 import { dialogMixin } from 'mixins'
 import { User } from 'libs/model/User'
+import { mapActions } from 'vuex'
 
 export default {
   mixins: [dialogMixin],
@@ -31,11 +32,17 @@ export default {
       const { account, pwd } = this.form
       try {
         await User.getToken(account, pwd)
+        const user = await User.getUser()
+        // const auth = await User.getAuth()
+        this.setUser(user)
+        // this.setAuth(auth)
+        this.$message.success('登陆成功')
         this.$router.push('/')
       } catch (e) {
         console.log(e)
       }
-    }
+    },
+    ...mapActions(['setUser', 'setAuth'])
   }
 }
 </script>
