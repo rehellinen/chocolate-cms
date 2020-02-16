@@ -152,13 +152,12 @@ export const del = (url, data, otherConfig) => {
   return request(url, 'delete', data, otherConfig)
 }
 
-export const uploadImg = (url, data) => {
-  let config = {
+export const uploadFile = (data, type) => {
+  let configs = {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   }
-  return axios.post('files/image', data, config).then(res => {
-    return res.data.data
-  })
+  let url = 'files/' + type
+  return post(url, data, configs)
 }
