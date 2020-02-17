@@ -22,6 +22,7 @@ export default {
       this.setForm(formConf)
     },
     submit () {
+      this.$message.success('提交成功')
     }
   }
 }
