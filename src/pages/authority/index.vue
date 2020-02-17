@@ -49,6 +49,11 @@ export default {
       this.setForm(userFormConf)
       this.setTable(userTableConf)
       this.setSearch(searchConf)
+    },
+    getTable () {
+      this.model.getUser().then(res => {
+        console.log(res)
+      })
     }
   }
 }
