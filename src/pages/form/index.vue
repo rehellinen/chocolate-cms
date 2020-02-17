@@ -4,7 +4,7 @@
       :title="name"
       :config="form"
       :form-data="formData"
-      @submit="toSubmit"
+      @submit="submit"
     )
 </template>
 
@@ -20,6 +20,8 @@ export default {
       this.setModel(new Article())
       this.setName('form表单')
       this.setForm(formConf)
+    },
+    submit () {
     }
   }
 }
