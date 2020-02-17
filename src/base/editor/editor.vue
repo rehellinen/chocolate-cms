@@ -66,6 +66,14 @@ export default {
       isVideo: true
     }
   },
+  watch: {
+    content (newVal, oldVal) {
+      if (newVal.includes('undefined')) {
+        this.$refs.myQuillEditor.quill.scrollingContainer.innerHTML = oldVal
+        this.content = oldVal
+      }
+    }
+  },
   mounted () {
     this.initMediaButton() // 初始化图标，这样才能显示
     this.registerVideo()
@@ -93,10 +101,12 @@ export default {
       // 音频视频url替换
       this.content = this.content.replace(/<video(.*?)>|<audio(.*?)>/g, (video) => {
         return video.replace(/src="(.*?)"/g, (src) => {
+          if (src.includes('http://') || src.includes('https://')) {
+            return src
+          }
           return 'src="' + self.mediaUrls[++i] + '"'
         })
       })
-      console.log(this.content)
       return this.content
     },
     async uploadImg () {
@@ -107,6 +117,9 @@ export default {
       })
       for (let i of Object.keys(this.imgUrls)) {
         let file = base64ToFile(this.imgUrls[i], 'jpg')
+        if (!file) {
+          continue
+        }
         let formData = new FormData()
         formData.append('file', file)
         const { path } = await uploadFile(formData, 'image')

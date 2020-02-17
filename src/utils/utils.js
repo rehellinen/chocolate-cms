@@ -39,7 +39,13 @@ export const getRandChars = (length = 16) => {
 
 export const base64ToFile = (urlData, postfix) => {
   let arr = urlData.split(',')
-  let mime = arr[0].match(/:(.*?);/)[1] || ''
+  let mime = arr[0].match(/:(.*?);/)
+
+  if (!mime) {
+    return false
+  }
+
+  mime = (mime && mime[1])
   // 转换为byte
   let bytes = window.atob(arr[1])
   // 处理异常,将ascii码小于0的转换为大于0
