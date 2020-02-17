@@ -129,7 +129,7 @@ export default {
         let media = url.includes('video') ? 'video' : 'audio'
         // insertEmbed(index: Number(插入的位置), type: String(标签类型), value: any(参数，将传入到create的方法中去), source: String = 'api')
         quill.insertEmbed(length, media, { url: url }, 'api')
-        quill.setSelection(length + 1) // 光标位置向后移动一位
+        quill.setSelection(length + 2) // 光标位置向后移动两位
       }
     },
     registerVideo () { // 注册quill的自定义标签—————视频标签
