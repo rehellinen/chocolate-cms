@@ -62,13 +62,12 @@ export default {
       imgUrls: [],
       mediaUrls: [],
       // 服务器上传API
-      uploadUrl: config.BASE_URL + '/file',
-      isVideo: true
+      uploadUrl: config.BASE_URL + '/file'
     }
   },
   watch: {
     content (newVal, oldVal) {
-      if (newVal.includes('undefined')) {
+      if (newVal && newVal.includes('undefined')) {
         this.$refs.myQuillEditor.quill.scrollingContainer.innerHTML = oldVal
         this.content = oldVal
       }
@@ -101,9 +100,6 @@ export default {
       // 音频视频url替换
       this.content = this.content.replace(/<video(.*?)>|<audio(.*?)>/g, (video) => {
         return video.replace(/src="(.*?)"/g, (src) => {
-          if (src.includes('http://') || src.includes('https://')) {
-            return src
-          }
           return 'src="' + self.mediaUrls[++i] + '"'
         })
       })
@@ -116,7 +112,7 @@ export default {
         })
       })
       for (let i of Object.keys(this.imgUrls)) {
-        let file = base64ToFile(this.imgUrls[i], 'jpg')
+        let file = base64ToFile(this.imgUrls[i])
         if (!file) {
           continue
         }
@@ -127,9 +123,18 @@ export default {
       }
     },
     async uploadMedia () { // 上传视频和音频
+      this.content.replace(/<audio(.*?)>|<video(.*?)>/g, (media) => {
+        return media.replace(/src="(.*?)"/g, (src) => {
+          this.mediaUrls.push(src.substring(5, src.length - 1))
+        })
+      })
       for (let i of Object.keys(this.mediaUrls)) {
+        let file = base64ToFile(this.mediaUrls[i])
+        if (!file) {
+          continue
+        }
         let formData = new FormData()
-        formData.append('file', this.mediaUrls[i])
+        formData.append('file', file)
         const { path } = await uploadFile(formData, 'image')
         this.mediaUrls[i] = path
       }
@@ -141,16 +146,18 @@ export default {
       mediaButton.title = '视频音频上传'
     },
     loadMedia (param) { // 在富文本中显示视频和音频
-      this.isVideo = param.file.name.match(/\.(mp4|avi|rmvb|rm|flv|3gp)(\?.*)?$/)
-      let url = URL.createObjectURL(param.file)
-      // 获取富文本组件实例
-      let quill = this.$refs.myQuillEditor.quill
-      let length = quill.getSelection().index // 获取光标所在位置
-      let media = this.isVideo ? 'video' : 'audio'
-      // insertEmbed(index: Number(插入的位置), type: String(标签类型), value: any(参数，将传入到create的方法中去), source: String = 'api')
-      quill.insertEmbed(length, media, { url: url }, 'api')
-      quill.setSelection(length + 1) // 光标位置向后移动一位
-      this.mediaUrls.push(param.file)
+      const reader = new FileReader()
+      reader.readAsDataURL(param.file) // 将文件读取为 DataURL,也就是base64编码
+      reader.onload = (ev) => { // 文件读取成功完成时触发
+        let url = ev.target.result // 获得文件读取成功后的DataURL,也就是base64编码
+        // 获取富文本组件实例
+        let quill = this.$refs.myQuillEditor.quill
+        let length = quill.getSelection().index // 获取光标所在位置
+        let media = url.includes('video') ? 'video' : 'audio'
+        // insertEmbed(index: Number(插入的位置), type: String(标签类型), value: any(参数，将传入到create的方法中去), source: String = 'api')
+        quill.insertEmbed(length, media, { url: url }, 'api')
+        quill.setSelection(length + 1) // 光标位置向后移动一位
+      }
     },
     registerVideo () { // 注册quill的自定义标签—————视频标签
       let BlockEmbed = Quill.import('blots/block/embed')
