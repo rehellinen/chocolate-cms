@@ -59,8 +59,7 @@ export default {
           }
         }
       },
-      imgUrls: [],
-      mediaUrls: [],
+      urls: [],
       // 服务器上传API
       uploadUrl: config.BASE_URL + '/file'
     }
@@ -88,55 +87,29 @@ export default {
     async getContent () {
       let self = this
       let i = -1
-      await this.uploadImg()
-      await this.uploadMedia()
-      // 图片url替换
-      this.content = this.content.replace(/<img(.*?)>/g, (img) => {
-        return img.replace(/src="(.*?)"/g, (src) => {
-          return 'src="' + self.imgUrls[++i] + '"'
-        })
-      })
-      i = -1
-      // 音频视频url替换
-      this.content = this.content.replace(/<video(.*?)>|<audio(.*?)>/g, (video) => {
-        return video.replace(/src="(.*?)"/g, (src) => {
-          return 'src="' + self.mediaUrls[++i] + '"'
-        })
-      })
-      return this.content
-    },
-    async uploadImg () {
-      this.content.replace(/<img(.*?)>/g, (img) => {
-        return img.replace(/src="(.*?)"/g, (src) => {
-          this.imgUrls.push(src.substring(5, src.length - 1))
-        })
-      })
-      for (let i of Object.keys(this.imgUrls)) {
-        let file = base64ToFile(this.imgUrls[i])
-        if (!file) {
-          continue
-        }
-        let formData = new FormData()
-        formData.append('file', file)
-        const { path } = await uploadFile(formData, 'image')
-        this.imgUrls[i] = path
-      }
-    },
-    async uploadMedia () { // 上传视频和音频
-      this.content.replace(/<audio(.*?)>|<video(.*?)>/g, (media) => {
+      await this.upload()
+      // 图片、视频和音频url替换
+      return this.content.replace(/<img(.*?)>|<audio(.*?)>|<video(.*?)>/g, (media) => {
         return media.replace(/src="(.*?)"/g, (src) => {
-          this.mediaUrls.push(src.substring(5, src.length - 1))
+          return 'src="' + self.urls[++i] + '"'
         })
       })
-      for (let i of Object.keys(this.mediaUrls)) {
-        let file = base64ToFile(this.mediaUrls[i])
+    },
+    async upload () { // 上传图片、视频和音频
+      this.content.replace(/<img(.*?)>|<audio(.*?)>|<video(.*?)>/g, (media) => {
+        return media.replace(/src="(.*?)"/g, (src) => {
+          this.urls.push(src.substring(5, src.length - 1))
+        })
+      })
+      for (let i of Object.keys(this.urls)) {
+        let file = base64ToFile(this.urls[i])
         if (!file) {
           continue
         }
         let formData = new FormData()
         formData.append('file', file)
         const { path } = await uploadFile(formData, 'image')
-        this.mediaUrls[i] = path
+        this.urls[i] = path
       }
     },
     initMediaButton () { // 初始化"Media"按钮样式
@@ -168,7 +141,6 @@ export default {
           node.setAttribute('controls', true) // 设置标签的controls，否则他将不会显示
           node.setAttribute('width', '450px') // 设置大小
           node.setAttribute('height', '350px') // 设置大小
-          node.setAttribute('id', 'video') // 设置一个id
           return node
         }
       }
@@ -185,7 +157,6 @@ export default {
           node.setAttribute('controls', true) // 设置标签的controls，否则他将不会显示
           node.setAttribute('width', '300px') // 设置大小
           node.setAttribute('height', '100px') // 设置大小
-          node.setAttribute('id', 'audio') // 设置一个id
           return node
         }
       }
