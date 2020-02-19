@@ -27,16 +27,15 @@ module.exports = {
   resolve: {
     alias: {
       '@': r('./src'),
-      sass: r(`./src/assets/sass`),
-      theme: r(`./src/assets/theme`),
       assets: r(`./src/assets`),
-      base: r(`./src/base`),
+      sass: r(`./src/assets/sass`),
       config: r(`./src/config`),
-      libs: r(`./src/libs`),
-      mixins: r(`./src/mixins`),
       model: r(`./src/model`),
       pages: r(`./src/pages`),
-      utils: r(`./src/utils`)
+      libs: r(`./src/libs`),
+      base: r(`./src/libs/base`),
+      mixins: r(`./src/libs/mixins`),
+      utils: r(`./src/libs/utils`)
     },
     modules: [r('node_modules')],
     extensions: ['.vue', '.js', '.json'],
