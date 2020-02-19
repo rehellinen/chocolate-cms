@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
 import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
+import { ExpiredToken, ParamsException } from 'libs/exception'
 
 const REFRESH_URL = 'user/refresh'
 const TOTAL_REFRESH_URL = config.BASE_URL.endsWith('/')
@@ -80,7 +81,7 @@ const processParamsError = ({ status, data }) => {
         })
       }
     }
-    throw new Error(data.message)
+    throw new ParamsException(data.message, data.data)
   }
 }
 
@@ -95,7 +96,7 @@ const processRefreshTokenError = (response) => {
       })
       // TODO: 退出登录
       window.location.href = window.location.origin + '/#/login'
-      throw new Error(data.message)
+      throw new ExpiredToken(data.message)
     }
   }
 }
@@ -119,9 +120,10 @@ const processAccessTokenError = async ({ status, data }, allReqConfig) => {
       }
     } else {
       Vue.prototype.$message({
-        message: '登录状态已过期',
+        message: '登录已过期',
         type: 'error'
       })
+      throw new ExpiredToken(data.message)
     }
   }
 }
@@ -149,7 +151,13 @@ export const request = async (url, method, data, otherConfig = {}) => {
       otherConfig
     })
   } catch (e) {
-    throw e
+    if (e instanceof ParamsException) {
+      // 参数错误的情况
+    } else if (e instanceof ExpiredToken) {
+      // Token过期的情况
+    } else {
+      throw e
+    }
   }
 }
 

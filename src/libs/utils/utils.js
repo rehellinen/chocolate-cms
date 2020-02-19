@@ -101,3 +101,5 @@ export const isFunction = (v) => {
   getToStringTag(v) === '[object GeneratorFunction]' ||
   getToStringTag(v) === '[object Proxy]'
 }
+
+export const isString = (v) => typeof v === 'string'
