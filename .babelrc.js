@@ -1,14 +1,13 @@
 module.exports = {
   presets: [
-    [
-      '@babel/preset-env', {
-        useBuiltIns: 'usage',
-        corejs: 2
-      }
-    ]
+    ['@babel/preset-env', {
+      useBuiltIns: 'usage',
+      corejs: 2
+    }]
   ],
   plugins: [
     '@babel/plugin-transform-runtime',
-    '@babel/plugin-proposal-class-properties'
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
+    ["@babel/plugin-proposal-class-properties", {"loose": true}]
   ]
 }
