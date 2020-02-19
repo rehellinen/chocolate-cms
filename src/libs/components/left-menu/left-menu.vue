@@ -50,7 +50,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getRandChars } from 'utils/utils'
+import { getRandChars } from 'libs/utils/utils'
 
 export default {
   data () {

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { base64ToFile } from 'utils/utils'
+import { base64ToFile } from 'libs/utils/utils'
 import { quillEditor, Quill } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'

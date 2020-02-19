@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { dateFormat } from 'utils/utils'
+import { dateFormat } from 'libs/utils/utils'
 import MySearch from 'base/search/search'
 
 export default {

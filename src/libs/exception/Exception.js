@@ -1,4 +1,4 @@
-import { isString } from 'utils/utils'
+import { isString } from 'libs/utils/utils'
 
 class Exception extends Error {
   constructor (msg, data) {
