@@ -122,6 +122,7 @@ export default {
     },
     editorChange (e) {
       const name = this.$refs.editor[0].$attrs['data-name']
+      console.log(e.content)
       this.formData[name] = e.content
     },
     imageUploaded (e) {
