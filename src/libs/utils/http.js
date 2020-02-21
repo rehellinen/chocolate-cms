@@ -178,12 +178,17 @@ export const del = (url, data, otherConfig) => {
 }
 
 // TODO: file类型也在processConfig中处理
-export const uploadFile = (data, type) => {
+export const uploadFile = (data) => {
   let configs = {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   }
-  let url = 'files/' + type
-  return post(url, data, configs)
+  let url = 'files/image'
+  let formData = new FormData()
+  for (const [key, val] of Object.entries(data)) {
+    formData.append(key, val)
+  }
+
+  return post(url, formData, configs)
 }
