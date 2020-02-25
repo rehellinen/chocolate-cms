@@ -28,6 +28,12 @@
 import config from 'config'
 
 export default {
+  props: {
+    initialVal: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       radioType: 1,
@@ -35,7 +41,7 @@ export default {
       fileName: '',
       customFileUrl: '',
       // 服务器上传API
-      uploadUrl: config.BASE_URL + '/file',
+      uploadUrl: config.BASE_URL + '/files/image',
       // http请求发送的额外头信息
       header: {
         token: ''

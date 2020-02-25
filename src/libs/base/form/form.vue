@@ -10,6 +10,7 @@
         el-input(
           v-if="!conf.type || conf.type === inputType.INPUT"
           v-model="formData[conf.name]"
+          :show-password="conf.hide"
         )
 
         el-switch(

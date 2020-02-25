@@ -5,8 +5,7 @@ export const formMixin = {
     return {
       // 表单的配置
       form: [],
-      // 编辑页面展示的数据
-      formData: {}
+      formData: []
     }
   },
   methods: {

@@ -10,9 +10,7 @@ export const cmsMixin = {
       // 页面类型（首页、添加、编辑）
       type: config.CMS.INDEX,
       // 当前菜单对应的中文名
-      name: '',
-      // 是否在发送请求
-      isPending: false
+      name: ''
     }
   },
   async created () {
@@ -32,12 +30,6 @@ export const cmsMixin = {
     // 设置中文名称
     setName (name) {
       this.name = name
-    },
-
-    // 跳转到编辑页面
-    toEdit (e) {
-      this._changePageType(config.CMS.EDIT)
-      this.formData = this.table[e.index]
     },
 
     // 跳转到首页
@@ -76,7 +68,7 @@ export const cmsMixin = {
           this.isPending = false
           this.formData = {}
           this.toIndex()
-          this._getData()
+          this.getTable()
         },
         showCancel: false
       })
