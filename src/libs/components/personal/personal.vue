@@ -2,16 +2,16 @@
   .personal
     el-dropdown(trigger="click")
       span.el-dropdown-link
-        img.portrait(src="../../../assets/images/user@portrait.jpg")
+        img.portrait(:src="avatar")
       el-dropdown-menu.user-dropdown(slot="dropdown")
         .user
           .image
-            img(src="../../../assets/images/user@portrait.jpg")
+            img(:src="avatar")
             label
               i.el-icon-edit
               input(@change="uploadImage" accept="image/*" type="file" ref="imageInput")
           .desc
-            p.title(@click="editName" v-show="!isEditingName") 诚实
+            p.title(@click="editName" v-show="!isEditingName") {{ username }}
             el-input(
               @blur="nameBlur"
               placeholder="请输入用户名"
@@ -31,20 +31,50 @@
           li(@click="logout")
             i.el-icon-user
             p 退出账户
+    el-dialog(:title="formConf.name" :visible.sync="dialogFormVisible")
+      my-form(
+        :config="formConf.form"
+        :form-data="formData"
+        @submit="toSubmit"
+      )
 </template>
 
 <script>
 import { User } from 'libs/model/User'
+import MyForm from 'libs/base/form/form'
+import { passwordFormConf } from './config'
 
 export default {
+  components: {
+    MyForm
+  },
   data () {
     return {
+      avatar: '/src/assets/images/user@portrait.jpg',
       username: '诚实',
-      isEditingName: false
+      isEditingName: false,
+      dialogFormVisible: false,
+      formData: {},
+      formConf: {
+        name: '',
+        form: []
+      }
     }
   },
+  created () {
+    this.init()
+  },
   methods: {
+    init () {
+      User.getUser().then(res => {
+        this.avatar = res.avatar !== 'no' ? res.avatar : this.avatar
+        this.username = res.name
+      })
+    },
     editPwd () {
+      this.formData = {}
+      this.dialogFormVisible = true
+      this.formConf = passwordFormConf
     },
     lock () {
     },
@@ -54,10 +84,11 @@ export default {
       this.isEditingName = true
       this.$nextTick(() => this.$refs.nameInput.focus())
     },
-    nameBlur () {
+    nameBlur (e) {
       this.isEditingName = false
+      console.log(e.target.value)
     },
-    uploadImage (event) {
+    async uploadImage (event) {
       const file = event.target.files[0]
       // 限制文件大小为2M
       if (file.size > 2 * 1024 * 1024) {
@@ -65,11 +96,26 @@ export default {
         this.clearFile(this.$refs.imageInput)
         return
       }
-      User.editPortrait()
+      await User.editPortrait(file)
+      this.init()
     },
     // 清空input中的file
     clearFile (ele) {
       ele.value = ''
+    },
+    toSubmit (e) {
+      if (e.newPassword !== e.newPassword1) {
+        this.$message.error('两次新密码不一致')
+        return
+      }
+      User.changePw(e.oldPassword, e.newPassword).then(res => {
+        if (res.status === 1) {
+          this.$message.success(res.message)
+          this.dialogFormVisible = false
+        } else {
+          this.$message.error(res.message)
+        }
+      })
     }
   }
 }
