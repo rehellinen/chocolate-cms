@@ -52,8 +52,8 @@ export default [
     icon: 'el-icon-s-operation',
     name: 'auth',
     path: '/auth',
-    component: 'article',
-    order: 0,
+    component: 'authority',
+    order: 1,
     children: [
       {
         show: true,
@@ -62,6 +62,15 @@ export default [
         name: 'auth',
         path: '/auth',
         component: 'authority',
+        order: 0
+      },
+      {
+        show: false,
+        title: '编辑用户',
+        icon: 'el-icon-tickets',
+        name: 'auth-edit',
+        path: '/auth/edit',
+        component: 'form/index',
         order: 0
       },
       {
@@ -76,12 +85,30 @@ export default [
       {
         show: true,
         title: '分组管理',
+        icon: 'el-icon-tickets',
+        name: 'role-manage',
+        path: '/auth/role/manage',
+        component: 'authority/role/manage',
+        order: 0
+      },
+      {
+        show: true,
+        title: '添加分组',
         icon: 'el-icon-circle-plus-outline',
-        name: 'auth-manage',
-        path: '/auth/manage',
-        component: 'authority/manage',
+        name: 'role-add',
+        path: '/auth/role/add',
+        component: 'authority/role/add',
         order: 0
       }
     ]
+  },
+  {
+    show: true,
+    title: '日志管理',
+    icon: 'el-icon-document',
+    name: 'log',
+    path: '/log',
+    component: 'log',
+    order: 2
   }
 ]
