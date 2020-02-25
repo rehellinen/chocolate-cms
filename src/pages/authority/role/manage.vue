@@ -37,8 +37,8 @@
 
 <script>
 import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
-import { manageTableConf, manageFormConf, searchConf } from './config'
-import { Auth as Model } from 'libs/model/Auth'
+import { manageTableConf } from './config'
+import { Role as Model } from 'libs/model/Role'
 
 export default {
   mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
@@ -46,16 +46,25 @@ export default {
     _initCMS () {
       this.setModel(Model)
       this.setName('分组')
-      this.setForm(manageFormConf)
+      this.setForm(manageTableConf)
       this.setTable(manageTableConf)
-      this.setSearch(searchConf)
+      this.setSearch(manageTableConf)
+    },
+    getTable () {
+      this.model.getAllRole().then(res => {
+        this.table = res.data
+        this.loading = false
+      })
+    },
+    toSubmit () {
+      this.$message.success('尝试提交')
     }
   }
 }
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~sass/base"
+  @import "~sass/base.sass"
 
   .table-card
     @include card(25px, 25px)
