@@ -10,14 +10,32 @@
 
 <script>
 import { formMixin, cmsMixin, breadMixin } from 'mixins'
-import { userFormConf } from './config'
+import { userConf } from './config'
+import { User as Model } from 'libs/model/User'
 
 export default {
   mixins: [cmsMixin, formMixin, breadMixin],
+  data () {
+    return {
+      formData: {}
+    }
+  },
   methods: {
     _initCMS () {
+      this.setModel(Model)
       this.setName('添加用户')
-      this.setForm(userFormConf)
+      this.setForm(this.getUserFormConf())
+    },
+    getUserFormConf () {
+      this.model.getAllAuth().then(res => {
+        userConf[4].options = res
+      })
+      return userConf
+    },
+    toSubmit (e) {
+      this.model.addUserInfo(e).then(res => {
+        this.$message.success('添加用户成功')
+      })
     }
   }
 }

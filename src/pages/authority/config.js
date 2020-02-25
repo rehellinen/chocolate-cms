@@ -7,35 +7,43 @@ export const searchConf = [
 
 export const userTableConf = [
   { name: 'name', label: '名称' },
-  { name: 'authority', label: '分组' }
+  { name: 'role.name', label: '分组' }
 ]
 
 export const userFormConf = [
+  { name: 'account', label: '账号' },
   { name: 'name', label: '名称' },
-  { name: 'password', label: '密码' },
-  { name: 'password2', label: '确认密码' },
-  { name: 'authority',
+  { name: 'avatar', label: '头像', type: config.FORM.FILE },
+  { name: 'roleId',
     label: '分组',
     type: config.FORM.SELECT,
     options: [
       {
-        label: 'test1',
-        value: 'test1'
-      },
-      {
-        label: 'test2',
-        value: 'test2'
+        label: 'test',
+        value: 'test'
       }
     ]
   }
 ]
 
-export const manageTableConf = [
-  { name: 'authority', label: '名称' },
-  { name: 'describe', label: '信息' }
+export const userConf = [
+  { name: 'account', label: '账号' },
+  { name: 'name', label: '名称' },
+  { name: 'password', label: '密码', hide: true },
+  { name: 'avatar', label: '头像', type: config.FORM.FILE },
+  { name: 'roleId',
+    label: '分组',
+    type: config.FORM.SELECT,
+    options: [
+      {
+        label: 'test',
+        value: 'test'
+      }
+    ]
+  }
 ]
 
-export const manageFormConf = [
-  { name: 'authority', label: '名称' },
-  { name: 'describe', label: '分组信息' }
+export const passwordFormConf = [
+  { name: 'newPassword', label: '新密码', hide: true },
+  { name: 'newPassword1', label: '确认新密码', hide: true }
 ]
