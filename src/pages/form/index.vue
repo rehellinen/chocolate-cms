@@ -11,13 +11,16 @@
 <script>
 import { formMixin, cmsMixin, breadMixin } from 'mixins'
 import { formConf } from './config'
-import { Article } from 'model/Article'
 
 export default {
   mixins: [cmsMixin, formMixin, breadMixin],
+  data () {
+    return {
+      formData: {}
+    }
+  },
   methods: {
     _initCMS () {
-      this.setModel(new Article())
       this.setName('form表单')
       this.setForm(formConf)
     },
