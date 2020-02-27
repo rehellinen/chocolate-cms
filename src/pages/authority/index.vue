@@ -20,6 +20,7 @@
         :data="table"
         :searchConf="search"
         :loading="loading"
+        :operate="operate"
         @clear="toClear"
         @search="toSearch"
         @edit="toEdit"
@@ -37,22 +38,70 @@
 
 <script>
 import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
-import { userTableConf, userFormConf, searchConf } from './config'
+import { userTableConf, userFormConf, searchConf, passwordFormConf } from './config'
 import { User as Model } from 'libs/model/User'
+import config from 'config/index'
 
 export default {
   mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  data () {
+    return {
+      operate: [{
+        type: 'primary',
+        name: '修改密码',
+        func: this.editPassword
+      }]
+    }
+  },
   methods: {
     _initCMS () {
       this.setModel(Model)
       this.setName('用户')
-      this.setForm(userFormConf)
+      this.setForm(this.getUserFormConf())
       this.setTable(userTableConf)
       this.setSearch(searchConf)
     },
+    getUserFormConf () {
+      this.model.getAllAuth().then(res => {
+        userFormConf[3].options = res
+      })
+      return userFormConf
+    },
     getTable () {
-      this.model.getUser().then(res => {
-        console.log(res)
+      this.model.getAllUser().then(res => {
+        this.table = res.data
+        this.loading = false
+      })
+    },
+    editPassword (index, row) {
+      this.formData = { id: row.id }
+      this.setName('密码')
+      this.setForm(passwordFormConf)
+      this._changePageType(config.CMS.EDIT)
+    },
+    toSubmit (e) {
+      if (this.name === '用户') {
+        this.changeInfo(e)
+      } else {
+        this.changePassword(e)
+      }
+    },
+    changeInfo (e) {
+      this.model.changeUserInfo(e).then(res => {
+        this.$message.success('修改用户信息成功')
+        this.getTable()
+        this.toIndex()
+      })
+    },
+    changePassword (e) {
+      if (e.newPassword !== e.newPassword1) {
+        this.$message.error('两次新密码不一致')
+        return
+      }
+      this.model.changeUserPw(e.id, e.newPassword).then(res => {
+        this.$message.success(res.message)
+        this.getTable()
+        this.toIndex()
       })
     }
   }

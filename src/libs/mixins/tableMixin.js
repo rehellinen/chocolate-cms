@@ -1,3 +1,5 @@
+import config from 'config/index'
+
 export const tableMixin = {
   data () {
     return {
@@ -9,7 +11,9 @@ export const tableMixin = {
       operate: [],
       // 搜索的配置
       search: [],
-      loading: true
+      loading: true,
+      // 是否在发送请求
+      isPending: false
     }
   },
   mounted () {
@@ -68,6 +72,13 @@ export const tableMixin = {
         return
       }
       this.table = searchRes.data
+    },
+
+    // 跳转到编辑页面
+    toEdit (e) {
+      this._initCMS()
+      this._changePageType(config.CMS.EDIT)
+      this.formData = this.table[e.index]
     },
 
     deleteData ({ index }) {

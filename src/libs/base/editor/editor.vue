@@ -106,9 +106,7 @@ export default {
         if (!file) {
           continue
         }
-        let formData = new FormData()
-        formData.append('file', file)
-        const { path } = await uploadFile(formData, 'image')
+        const { path } = await uploadFile({ file: file }, 'image')
         this.urls[i] = path
       }
     },

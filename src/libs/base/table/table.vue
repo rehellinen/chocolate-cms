@@ -51,9 +51,7 @@
           el-button(
             v-if="operate"
             v-for="(item,index) in operate"
-            style="background:linear-gradient(230deg, #759bff, #843cf6);color:white;border:none"
             :type="item.type"
-            plain
             :key="index"
             size="mini"
             @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
@@ -115,7 +113,7 @@ export default {
     },
     loading: {
       type: Boolean,
-      default: null
+      default: true
     },
     tableColumn: {
       // 表头
@@ -147,7 +145,6 @@ export default {
     tableData () {
       let begin = (this.currentIndex - 1) * this.pageConf.pageSize
       let end = begin + this.pageConf.pageSize
-      console.log(this.pageConf)
       end = end > this.data.length ? this.data.length : end
       return this.data.slice(begin, end)
     }
@@ -171,7 +168,7 @@ export default {
         // 处理嵌套字段
         const fields = data.name.split('.')
         for (let field of fields) {
-          val = val[field]
+          val = val[field] || ''
         }
       } else {
         // 一般情况

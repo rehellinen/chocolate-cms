@@ -10,6 +10,7 @@
         el-input(
           v-if="!conf.type || conf.type === inputType.INPUT"
           v-model="formData[conf.name]"
+          :show-password="conf.hide"
         )
 
         el-switch(
@@ -122,7 +123,6 @@ export default {
     },
     editorChange (e) {
       const name = this.$refs.editor[0].$attrs['data-name']
-      console.log(e.content)
       this.formData[name] = e.content
     },
     imageUploaded (e) {

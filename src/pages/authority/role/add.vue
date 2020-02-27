@@ -1,16 +1,16 @@
 <template lang="pug">
-  .form
+  .add
     my-form(
       :title="name"
-      :config="form"
+      :config="form",
       :form-data="formData"
-      @submit="submit"
+      @submit="toSubmit"
     )
 </template>
 
 <script>
 import { formMixin, cmsMixin, breadMixin } from 'mixins'
-import { formConf } from './config'
+import { roleFormConf } from './config'
 
 export default {
   mixins: [cmsMixin, formMixin, breadMixin],
@@ -21,11 +21,8 @@ export default {
   },
   methods: {
     _initCMS () {
-      this.setName('form表单')
-      this.setForm(formConf)
-    },
-    submit () {
-      this.$message.success('提交成功')
+      this.setName('添加分组')
+      this.setForm(roleFormConf)
     }
   }
 }
@@ -34,6 +31,6 @@ export default {
 <style lang="sass" scoped>
   @import "~sass/base"
 
-  .form
+  .add
     @include card(10px, 10px)
 </style>

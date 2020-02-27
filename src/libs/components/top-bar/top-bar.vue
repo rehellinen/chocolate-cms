@@ -9,36 +9,50 @@
     .operation
       message
       personal
-    .history(v-if="showHistory")
-      router-link(
-        v-for="(item, index) in history" :key="item.path"
-        class="tab"
-        :class="{ active: item.path === $route.path }"
-        :to="item.path"
-        tag="div"
-      )
-        span {{item.title}}
-        i.el-icon-close(@click.stop="close(index)")
-        .corner.left
-          .shelter
-        .corner.right
-          .shelter
+    swiper.history(v-if="showHistory" :options="swiperOption")
+      swiper-slide.tab(v-for="(item, index) in history" :key="item.path")
+        router-link(
+          :class="{ active: item.path === $route.path }"
+          :to="item.path"
+          tag="div"
+        )
+          span {{item.title}}
+          i.el-icon-close(@click.stop="close(index)")
+          .corner.left
+            .shelter
+          .corner.right
+            .shelter
 </template>
 
 <script>
 import Personal from '../personal/personal'
 import Message from '../message/message'
 import { mapGetters, mapActions } from 'vuex'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
 export default {
   components: {
     Personal,
-    Message
+    Message,
+    swiper,
+    swiperSlide
   },
   data () {
     return {
       history: [],
-      historyStorageKey: 'history'
+      historyStorageKey: 'history',
+      swiperOption: {
+        slidesPerView: 'auto',
+        initialSlide: 0,
+        effect: 'slide',
+        spaceBetween: 1,
+        preventClicks: false,
+        freeMode: true,
+        mousewheel: {
+          sensitivity: 1.5
+        }
+      }
     }
   },
   computed: {
@@ -142,7 +156,6 @@ export default {
       line-height: 30px
       text-align: center
       position: relative
-      border-radius: 5px 5px 0 0
       flex: none
       .corner
         display: none
@@ -166,9 +179,10 @@ export default {
           margin-left: -8px
           .shelter
             border-bottom-right-radius: 100%
-      &.active
+      .active
         background: $background-color
         color: $minor-font-color
+        border-radius: 5px 5px 0 0
         .corner
           display: block
       i

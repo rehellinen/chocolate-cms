@@ -81,7 +81,7 @@ const processParamsError = ({ status, data }) => {
         })
       }
     }
-    throw new ParamsException(data.message, data.data)
+    throw ParamsException(data.message, data.data)
   }
 }
 
@@ -96,7 +96,7 @@ const processRefreshTokenError = (response) => {
       })
       // TODO: 退出登录
       window.location.href = window.location.origin + '/#/login'
-      throw new ExpiredToken(data.message)
+      throw ExpiredToken(data.message)
     }
   }
 }
@@ -123,7 +123,7 @@ const processAccessTokenError = async ({ status, data }, allReqConfig) => {
         message: '登录已过期',
         type: 'error'
       })
-      throw new ExpiredToken(data.message)
+      throw ExpiredToken(data.message)
     }
   }
 }
@@ -175,13 +175,17 @@ export const del = (url, data, otherConfig) => {
   return request(url, 'delete', data, otherConfig)
 }
 
-// TODO: file类型也在processConfig中处理
-export const uploadFile = (data, type) => {
+export const uploadFile = (data) => {
   let configs = {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   }
-  let url = 'files/' + type
-  return post(url, data, configs)
+  let url = 'files/image'
+  let formData = new FormData()
+  for (const [key, val] of Object.entries(data)) {
+    formData.append(key, val)
+  }
+
+  return post(url, formData, configs)
 }
