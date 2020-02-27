@@ -103,3 +103,8 @@ export const isFunction = (v) => {
 }
 
 export const isString = (v) => typeof v === 'string'
+
+const hasOwnProperty = Object.prototype.hasOwnProperty
+export function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
