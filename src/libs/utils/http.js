@@ -4,6 +4,7 @@ import Vue from 'vue'
 import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
 import { ExpiredToken, ParamsException } from 'libs/exception'
 
+// TODO：给refresh token过期一个特定的status
 const REFRESH_URL = 'user/refresh'
 const TOTAL_REFRESH_URL = config.BASE_URL.endsWith('/')
   ? config.BASE_URL + REFRESH_URL
@@ -31,20 +32,19 @@ const processConfig = (reqConfig) => {
     }
   }
 
-  // 增加权限相关header字段
-  const getAuthHeader = (token) => `Bearer ${token}`
-  if (reqConfig.url === REFRESH_URL) {
-    const refreshToken = getRefreshToken()
-    if (refreshToken !== 'undefined') {
-      reqConfig.headers.Authorization = getAuthHeader(refreshToken)
-    }
-  } else {
-    const accessToken = getAccessToken()
-    if (accessToken !== 'undefined') {
-      reqConfig.headers.Authorization = getAuthHeader(accessToken)
-    }
-  }
+  // 增加权限相关的header字段
+  addAuthHeader(reqConfig)
+
   return reqConfig
+}
+
+const addAuthHeader = (conf) => {
+  const token = conf.url === REFRESH_URL
+    ? getRefreshToken()
+    : getAccessToken()
+  if (token !== 'undefined') {
+    conf.headers.Authorization = `Bearer ${token}`
+  }
 }
 
 const processResponse = async (res, allReqConfig) => {
@@ -141,23 +141,21 @@ export const request = async (url, method, data, otherConfig = {}) => {
       method,
       data
     })
-
     const response = await http(allReqConfig)
-
-    return await processResponse(response, {
+    return processResponse(response, {
       url,
       method,
       data,
       otherConfig
     })
   } catch (e) {
-    if (e instanceof ParamsException) {
-      // 参数错误的情况
-    } else if (e instanceof ExpiredToken) {
-      // Token过期的情况
-    } else {
-      throw e
+    if (e.message === 'Network Error') {
+      Vue.prototype.$message({
+        message: '网络异常，请稍后再试',
+        type: 'error'
+      })
     }
+    throw e
   }
 }
 
