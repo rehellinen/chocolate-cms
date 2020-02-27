@@ -1,37 +1,42 @@
 import { get, post, del, put, uploadFile } from 'libs/utils/http'
-import { BaseModel } from 'libs/model/BaseModel'
+import { BaseModel, rule } from 'libs/model/BaseModel'
 import { saveTokens } from 'libs/utils/token'
 
 export class User extends BaseModel {
-  id
+  scene = {
+    // TODO: 还差order和role未检验
+    get: ['account', 'name', 'avatar', 'role']
+  }
 
+  @rule('require', '名称不能为空')
   name
 
+  @rule('require', '登录账户不能为空')
   account
 
+  @rule('require', '密码不能为空')
   password
 
+  @rule('require', '原密码不能为空')
+  oldPassword
+
+  @rule('require', '新密码不能为空')
+  newPassword
+
+  @rule('require', '头像不能为空')
   avatar
 
+  @rule('require', '权限信息不能为空')
+  role
+
+  @rule('require', '权限组ID不能为空')
+  @rule('isInt', '权限组ID必须为正整数', { min: 1 })
   roleId
 
-  status
 
-  order
-
-
-  constructor (data) {
-    super()
-    this.setData(data, [
-      'id',
-      'name',
-      'account',
-      'password',
-      'avatar',
-      'roleId',
-      'status',
-      'order'
-    ])
+  constructor (data, options) {
+    super(data, options)
+    this.init()
   }
 
   /**
@@ -54,7 +59,7 @@ export class User extends BaseModel {
    */
   static async getUser () {
     const user = await get('user/self')
-    return new User(user)
+    return new User(user, { scene: 'get' })
   }
 
   /**
@@ -77,8 +82,10 @@ export class User extends BaseModel {
   /**
    * admin 获取所有用户信息
    */
-  static getAllUser () {
-    return get('user')
+  static async getAllUser () {
+    const res = await get('user')
+    res.data = res.data.map(item => new User(item, { scene: 'get' }))
+    return res
   }
 
   /**
