@@ -39,7 +39,7 @@
 <script>
 import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
 import { userTableConf, userFormConf, searchConf, passwordFormConf } from './config'
-import { User as Model } from 'libs/model/User'
+import { User as Model, Role } from 'libs/model/User'
 import config from 'config/index'
 
 export default {
@@ -62,8 +62,13 @@ export default {
       this.setSearch(searchConf)
     },
     getUserFormConf () {
-      this.model.getAllAuth().then(res => {
-        userFormConf[3].options = res
+      Role.getAllRole().then(res => {
+        for (let item of res.data) {
+          userFormConf[3].options.push({
+            label: item.name,
+            value: item.id
+          })
+        }
       })
       return userFormConf
     },

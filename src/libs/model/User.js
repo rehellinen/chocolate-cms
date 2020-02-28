@@ -89,21 +89,6 @@ export class User extends BaseModel {
   }
 
   /**
-   * admin 获取所有角色
-   */
-  static async getAllAuth () {
-    const res = await get('role')
-    let options = []
-    for (let item of res.data) {
-      options.push({
-        label: item.name,
-        value: item.id
-      })
-    }
-    return options
-  }
-
-  /**
    * admin 修改某个用户的密码
    */
   static changeUserPw (id, newPw) {
