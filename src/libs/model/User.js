@@ -106,7 +106,6 @@ export class User extends BaseModel {
   /**
    * admin 增加一个用户
    */
-  // TODO: 验证器验证参数
   static addUserInfo (e) {
     const user = new User(e)
     return post('user', user)

@@ -39,7 +39,8 @@
 <script>
 import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
 import { userTableConf, userFormConf, searchConf, passwordFormConf } from './config'
-import { User as Model, Role } from 'libs/model/User'
+import { User as Model } from 'libs/model/User'
+import { Role } from 'libs/model/Role'
 import config from 'config/index'
 
 export default {
