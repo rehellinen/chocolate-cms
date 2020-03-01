@@ -70,11 +70,7 @@ export const getRandChars = (length = 16) => {
   return str
 }
 
-/**
- * 将一个变量转为字符串（null, undefined转为空字符串）
- * @param value
- * @returns {string}
- */
+// 将一个变量转为字符串（null, undefined转为空字符串）
 export const toString = (value) => {
   if (value == null) {
     return ''
@@ -85,16 +81,10 @@ export const toString = (value) => {
   return `${value}`
 }
 
-/**
- * Object.toString的返回值
- * @returns {string}
- */
+// Object.toString的返回值
 export const getToStringTag = (v) => Object.prototype.toString.call(v)
 
-/**
- * 判断是否为函数
- * @returns {boolean}
- */
+// 判断是否为函数
 export const isFunction = (v) => {
   return getToStringTag(v) === '[object Function]' ||
   getToStringTag(v) === '[object AsyncFunction]' ||
@@ -102,9 +92,27 @@ export const isFunction = (v) => {
   getToStringTag(v) === '[object Proxy]'
 }
 
+// 判断是否为字符串
 export const isString = (v) => typeof v === 'string'
 
-const hasOwnProperty = Object.prototype.hasOwnProperty
+// 对象本身上是否存在该key
 export function hasOwn (obj, key) {
-  return hasOwnProperty.call(obj, key)
+  return Object.prototype.hasOwnProperty.call(obj, key)
+}
+
+// 判断是否为对象
+export const isObject = (value) => value !== null && (typeof value === 'object')
+
+// 将this[sourceKey][key]代理到this[key]
+export function proxy (target, sourceKey, key) {
+  Object.defineProperty(target, key, {
+    enumerable: true,
+    configurable: true,
+    get: function proxyGetter () {
+      return this[sourceKey][key]
+    },
+    set: function proxySetter (val) {
+      this[sourceKey][key] = val
+    }
+  })
 }
