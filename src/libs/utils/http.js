@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
 import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
-import { ExpiredToken, ParamsException } from 'libs/exception'
+import { ExpiredToken, ParamsException, NoAuthority } from 'libs/exception'
 
 // TODO：给refresh token过期一个特定的status
 const REFRESH_URL = 'user/refresh'
@@ -53,7 +53,6 @@ const processResponse = async (res, allReqConfig) => {
   const getResponseData = (response) => {
     return otherConfig.getAllResponse ? response.data : response.data.data
   }
-
   // 处理成功的情况
   if (status >= 200 && status < 300) {
     return getResponseData(res)
@@ -81,7 +80,7 @@ const processParamsError = ({ status, data }) => {
         })
       }
     }
-    throw ParamsException(data.message, data.data)
+    throw new ParamsException(data.message, data.data)
   }
 }
 
@@ -96,7 +95,7 @@ const processRefreshTokenError = (response) => {
       })
       // TODO: 退出登录
       window.location.href = window.location.origin + '/#/login'
-      throw ExpiredToken(data.message)
+      throw new ExpiredToken(data.message)
     }
   }
 }
@@ -123,8 +122,10 @@ const processAccessTokenError = async ({ status, data }, allReqConfig) => {
         message: '登录已过期',
         type: 'error'
       })
-      throw ExpiredToken(data.message)
+      throw new ExpiredToken(data.message)
     }
+  } else {
+    throw new NoAuthority(data.message)
   }
 }
 

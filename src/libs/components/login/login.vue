@@ -39,7 +39,10 @@ export default {
         this.$message.success('登陆成功')
         this.$router.push('/')
       } catch (e) {
-        console.log(e)
+        this.$message({
+          message: e.message,
+          type: 'error'
+        })
       }
     },
     ...mapActions(['setUser', 'setAuth'])

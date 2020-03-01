@@ -10,13 +10,16 @@ class ParamsException extends Exception {
 class ExpiredToken extends Exception {
   constructor (config) {
     super(config)
-    this.setDefault({
-      httpCode: 401,
-      status: 20101,
-      message: 'Token已过期'
-    })
+    this.setDefault('Token已过期')
   }
 }
 
-export { ParamsException, ExpiredToken }
+class NoAuthority extends Exception {
+  constructor (config) {
+    super(config)
+    this.setDefault('权限异常')
+  }
+}
+
+export { ParamsException, ExpiredToken, NoAuthority }
 
