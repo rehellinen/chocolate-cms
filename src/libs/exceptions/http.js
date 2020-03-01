@@ -1,4 +1,4 @@
-import { Exception } from 'libs/exception/Exception'
+import { Exception } from 'libs/exceptions/Exception'
 
 class ParamsException extends Exception {
   constructor (msg, data) {

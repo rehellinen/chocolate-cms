@@ -1,10 +1,12 @@
 <template lang="pug">
   div.container
-    my-dialog(:visible="visible"
-    :title="title"
-    :content="content",
-    :cb="cb"
-    @close="closeDialog")
+    my-dialog(
+      :visible="visible"
+      :title="title"
+      :content="content",
+      :cb="cb"
+      @close="closeDialog"
+    )
     el-form(ref="form" :model="form" label-width="80px")
       p.title Chocolate Disco
       el-input(v-model="form.account" placeholder="请输入用户名")

@@ -1,6 +1,6 @@
 import validator from 'validator'
 import { isFunction, toString, isObject, proxy } from '../utils'
-import { NoValidationMethod, ValidationFailed } from 'libs/exception'
+import { NoValidationMethod, ValidationFailed } from 'libs/exceptions'
 
 /**
  * rule装饰器

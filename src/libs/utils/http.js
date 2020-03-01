@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
 import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
-import { ExpiredToken, ParamsException, NoAuthority } from 'libs/exception'
+import { ExpiredToken, ParamsException, NoAuthority } from 'libs/exceptions'
 
 // TODO：给refresh token过期一个特定的status
 const REFRESH_URL = 'user/refresh'
