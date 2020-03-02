@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2018/8/15 15:43
  */
-import { deepTraversalAll } from 'libs/router/utils'
+import { deepTraversalAll } from 'libs/utils'
 
 const getters = {
   menus: (state) => state.menus,

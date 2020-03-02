@@ -1,3 +1,5 @@
+import config, * as routerConfig from 'config/index'
+
 /**
  * 格式化数据
  * @param thisDate Date实例
@@ -115,4 +117,37 @@ export function proxy (target, sourceKey, key) {
       this[sourceKey][key] = val
     }
   })
+}
+
+// 深度遍历所有节点
+export const deepTraversalAll = (config, cb) => {
+  if (Array.isArray(config)) {
+    config.forEach(item => deepTraversalAll(item, cb))
+  } else if (config.children && config.children.length > 0) {
+    cb(config)
+    config.children.forEach(item => deepTraversalAll(item, cb))
+  } else {
+    cb(config)
+  }
+}
+
+// 深度遍历叶子节点
+export const deepTraversalLeaf = (config, cb) => {
+  // 当config为数组 / config有children属性的时候，不加入路由
+  if (Array.isArray(config)) {
+    config.forEach(item => deepTraversalLeaf(item, cb))
+  } else if (config.children && config.children.length > 0) {
+    config.children.forEach(item => deepTraversalLeaf(item, cb))
+  } else {
+    cb(config)
+  }
+}
+
+export const getAllConfig = () => {
+  const allConfig = []
+  config.ROUTER_CONF_FILES.forEach(name => {
+    const config = routerConfig[name]
+    allConfig.push(...config)
+  })
+  return allConfig
 }

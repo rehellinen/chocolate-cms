@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 
 import App from './App'
 import store from './store'
-import { router } from './libs'
+import { router } from './libs/utils/router'
 
 import 'sass/reset.sass'
 import 'assets/theme/element-variables.scss'

@@ -3,7 +3,7 @@
  *  Create By rehellinen
  *  Create On 2018/8/15 15:44
  */
-import { getAllConfig } from 'libs/router/utils'
+import { getAllConfig } from 'libs/utils'
 
 const state = {
   // 最原始的菜单配置
