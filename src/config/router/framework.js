@@ -1,6 +1,6 @@
 // cms框架内置路由
 
-export default [
+export const framework = [
   {
     // 是否在左侧菜单栏显示
     show: true,
@@ -12,8 +12,8 @@ export default [
     name: 'index',
     // vue-router的path配置项
     path: '/',
-    // vue-router的component配置项，路径相对于src/pages定位
-    component: 'index',
+    // vue-router的component配置项，为完整路径
+    component: 'pages/index',
     // vue-router的其他配置项都写在里面
     others: {},
     // 数值越大，越在前面显示
@@ -27,7 +27,14 @@ export default [
     icon: 'el-icon-circle-close',
     name: '404',
     path: '/404',
-    component: 'not-found/not-found',
+    component: 'pages/not-found/not-found',
     order: 0
+  },
+  {
+    show: false,
+    title: '登录',
+    name: 'login',
+    path: '/login',
+    component: 'libs/pages/login/login'
   }
 ]

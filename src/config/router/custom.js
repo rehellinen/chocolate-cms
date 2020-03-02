@@ -1,11 +1,11 @@
-export default [
+export const custom = [
   {
     show: true,
     title: '文章管理',
     icon: 'el-icon-s-operation',
     name: 'article',
     path: '/article',
-    component: 'article',
+    component: 'pages/article',
     order: 0,
     children: [
       {
@@ -14,7 +14,7 @@ export default [
         icon: 'el-icon-tickets',
         name: 'article',
         path: '/article',
-        component: 'article',
+        component: 'pages/article',
         order: 0
       },
       {
@@ -23,7 +23,7 @@ export default [
         icon: 'el-icon-circle-plus-outline',
         name: 'article-add',
         path: '/article/add',
-        component: 'article/add',
+        component: 'pages/article/add',
         order: 0
       }
     ]
@@ -34,7 +34,7 @@ export default [
     icon: 'el-icon-upload',
     name: 'upload',
     path: '/upload-file',
-    component: 'upload-file',
+    component: 'pages/upload-file',
     order: 0
   },
   {
@@ -43,7 +43,7 @@ export default [
     icon: 'el-icon-document',
     name: 'form',
     path: '/form',
-    component: 'form',
+    component: 'pages/form',
     order: 0
   },
   {
@@ -52,7 +52,7 @@ export default [
     icon: 'el-icon-s-operation',
     name: 'auth',
     path: '/auth',
-    component: 'authority',
+    component: 'pages/authority',
     order: 1,
     children: [
       {
@@ -61,7 +61,7 @@ export default [
         icon: 'el-icon-tickets',
         name: 'auth',
         path: '/auth',
-        component: 'authority',
+        component: 'pages/authority',
         order: 0
       },
       {
@@ -70,7 +70,7 @@ export default [
         icon: 'el-icon-tickets',
         name: 'auth-edit',
         path: '/auth/edit',
-        component: 'form/index',
+        component: 'pages/form/index',
         order: 0
       },
       {
@@ -79,7 +79,7 @@ export default [
         icon: 'el-icon-circle-plus-outline',
         name: 'auth-add',
         path: '/auth/add',
-        component: 'authority/add',
+        component: 'pages/authority/add',
         order: 0
       },
       {
@@ -88,7 +88,7 @@ export default [
         icon: 'el-icon-tickets',
         name: 'role-manage',
         path: '/auth/role/manage',
-        component: 'authority/role/manage',
+        component: 'pages/authority/role/manage',
         order: 0
       },
       {
@@ -97,7 +97,7 @@ export default [
         icon: 'el-icon-circle-plus-outline',
         name: 'role-add',
         path: '/auth/role/add',
-        component: 'authority/role/add',
+        component: 'pages/authority/role/add',
         order: 0
       }
     ]
@@ -108,7 +108,7 @@ export default [
     icon: 'el-icon-document',
     name: 'log',
     path: '/log',
-    component: 'log',
+    component: 'pages/log',
     order: 2
   }
 ]

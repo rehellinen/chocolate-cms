@@ -3,6 +3,9 @@
  *  Create By rehellinen
  *  Create On 2019/3/4 11:35
  */
+export { custom } from './router/custom'
+export { framework } from './router/framework'
+
 export default {
   BASE_URL: process.env.NODE_ENV !== 'production'
     ? 'http://127.0.0.1:3000'
