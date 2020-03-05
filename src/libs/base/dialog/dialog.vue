@@ -9,8 +9,8 @@
   )
     span {{content}}
     span(slot="footer" class="dialog-footer")
-      el-button(@click="toConfirm") {{button}}
-      el-button(@click="toCancel" v-if="cancel" type="danger") 取消
+      el-button(@click="toCancel" v-if="cancel") 取消
+      el-button(@click="toConfirm" type="danger") {{button}}
 </template>
 
 <script>
