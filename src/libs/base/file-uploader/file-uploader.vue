@@ -58,6 +58,11 @@ export default {
       return this.fileName.match(/\.(mp4|avi|rmvb|rm|flv|3gp)(\?.*)?$/)
     }
   },
+  watch: {
+    initialVal (newVal, oldVal) {
+      this.setFileUrl(newVal)
+    }
+  },
   methods: {
     setFileUrl (url) {
       this.fileUrl = url
