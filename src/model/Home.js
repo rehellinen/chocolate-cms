@@ -2,7 +2,11 @@ import { get } from 'libs/utils/http'
 
 export class Home {
   // TODO: MOCK
-  static getMock () {
-    return get('mock/home.json')
+  static getCount () {
+    return get('mock/count')
+  }
+
+  static getProgress () {
+    return get('mock/progress')
   }
 }

@@ -36,5 +36,88 @@ export const framework = [
     name: 'login',
     path: '/login',
     component: 'libs/pages/login/login'
+  },
+  {
+    show: true,
+    title: '权限管理',
+    icon: 'el-icon-s-operation',
+    name: 'auth',
+    path: '/auth',
+    component: 'libs/pages/authority',
+    order: 1,
+    children: [
+      {
+        show: true,
+        title: '用户列表',
+        icon: 'el-icon-tickets',
+        name: 'auth',
+        path: '/auth',
+        component: 'libs/pages/authority',
+        order: 0
+      },
+      {
+        show: false,
+        title: '编辑用户',
+        icon: 'el-icon-tickets',
+        name: 'user-edit',
+        path: '/auth/edit',
+        component: 'libs/pages/form/index',
+        order: 0
+      },
+      {
+        show: true,
+        title: '添加用户',
+        icon: 'el-icon-circle-plus-outline',
+        name: 'user-add',
+        path: '/auth/add',
+        component: 'libs/pages/authority/add',
+        order: 0
+      },
+      {
+        show: true,
+        title: '分组管理',
+        icon: 'el-icon-tickets',
+        name: 'role-manage',
+        path: '/auth/role/manage',
+        component: 'libs/pages/authority/role/manage',
+        order: 0
+      },
+      {
+        show: true,
+        title: '添加分组',
+        icon: 'el-icon-circle-plus-outline',
+        name: 'role-add',
+        path: '/auth/role/add',
+        component: 'libs/pages/authority/role/add',
+        order: 0
+      },
+      {
+        show: true,
+        title: '权限管理',
+        icon: 'el-icon-tickets',
+        name: 'auth-manage',
+        path: '/auth/auth/manage',
+        component: 'libs/pages/authority/auth/manage',
+        order: 0
+      },
+      {
+        show: true,
+        title: '添加权限',
+        icon: 'el-icon-circle-plus-outline',
+        name: 'auth-add',
+        path: '/auth/auth/add',
+        component: 'libs/pages/authority/auth/add',
+        order: 0
+      }
+    ]
+  },
+  {
+    show: true,
+    title: '日志管理',
+    icon: 'el-icon-document',
+    name: 'log',
+    path: '/log',
+    component: 'pages/log',
+    order: 2
   }
 ]

@@ -31,9 +31,11 @@ export default {
   methods: {
     _initCMS () {
       this.setModel(Model)
-      this.model.getMock().then(res => {
-        this.data = res.data
-        this.progress = res.progress
+      this.model.getCount().then(res => {
+        this.data = res
+      })
+      this.model.getProgress().then(res => {
+        this.progress = res
       })
     }
   }

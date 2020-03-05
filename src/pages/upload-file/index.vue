@@ -48,8 +48,8 @@ export default {
   methods: {
     _initCMS () {
       this.setModel(Model)
-      this.model.getMock().then(res => {
-        this.data = res.data
+      this.model.getImage().then(res => {
+        this.data = res
       })
     },
     forbidAnimated () {
