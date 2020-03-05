@@ -47,7 +47,7 @@
             :label="name"
             v-model="checkAllGroup"
             :indeterminate="indeterminateGroup.includes(name)"
-            @change="groupCheck($event, items, conf.name)"
+            @change="groupCheck($event, items, conf.name, name)"
           )
           el-checkbox-group(
             v-model="formData[conf.name]"
