@@ -13,7 +13,10 @@ export const tableMixin = {
       search: [],
       loading: true,
       // 是否在发送请求
-      isPending: false
+      isPending: false,
+      pageConf: {
+        pageSize: 5
+      }
     }
   },
   mounted () {
@@ -36,6 +39,14 @@ export const tableMixin = {
     // 配置表格
     setTable (conf) {
       this.tableColumn = conf
+    },
+
+    setPage (conf) {
+      this.pageConf = {
+        page: conf.page,
+        pageSize: conf.pageSize,
+        total: conf.total
+      }
     },
 
     // 配置表单自定义按钮

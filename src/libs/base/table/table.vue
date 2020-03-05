@@ -83,15 +83,14 @@ export default {
     pageConf: {
       // 分页
       type: Object,
-      default: () => {
-        return { 'pageSize': 5 }
-      }
+      default: () => ({
+        pageSize: 5
+      })
     },
     searchConf: {
       // 搜索
       type: Array,
-      default: () => [{
-        label: '123' }]
+      default: () => [{ label: '123' }]
     },
     disableEdit: {
       type: Boolean,
