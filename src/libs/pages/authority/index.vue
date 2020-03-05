@@ -95,13 +95,12 @@ export default {
         this.changePassword(e)
       }
     },
-    changeInfo (e) {
+    async changeInfo (e) {
       try {
-        this.model.changeUserInfo(e).then(res => {
-          this.$message.success('修改用户信息成功')
-          this.getTable()
-          this.toIndex()
-        })
+        await this.model.changeUserInfo(e)
+        this.$message.success('修改用户信息成功')
+        this.getTable()
+        this.toIndex()
       } catch (e) {
         this.$message.error(e.message)
       }

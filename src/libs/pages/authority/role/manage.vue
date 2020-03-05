@@ -103,13 +103,12 @@ export default {
         this.changeAuth(e)
       }
     },
-    changeInfo (e) {
+    async changeInfo (e) {
       try {
-        this.model.changeRoleInfo(e).then(res => {
-          this.$message.success('修改分组信息成功')
-          this.getTable()
-          this.toIndex()
-        })
+        await this.model.changeRoleInfo(e)
+        this.$message.success('修改分组信息成功')
+        this.getTable()
+        this.toIndex()
       } catch (e) {
         this.$message.error(e.message)
       }

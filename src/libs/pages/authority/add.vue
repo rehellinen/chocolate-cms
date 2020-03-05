@@ -39,12 +39,11 @@ export default {
       }
       return userConf
     },
-    toSubmit (e) {
+    async toSubmit (e) {
       try {
-        this.model.addUser(e).then(res => {
-          this.$message.success('添加用户成功')
-          this.toIndex()
-        })
+        await this.model.addUser(e)
+        this.$message.success('添加用户成功')
+        this.toIndex()
       } catch (e) {
         this.$message.error(e.message)
       }

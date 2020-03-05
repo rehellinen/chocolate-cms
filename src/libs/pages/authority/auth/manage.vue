@@ -56,13 +56,12 @@ export default {
         this.loading = false
       })
     },
-    toSubmit (e) {
+    async toSubmit (e) {
       try {
-        this.model.changeAuth(e).then(res => {
-          this.$message.success('修改权限信息成功')
-          this.getTable()
-          this.toIndex()
-        })
+        await this.model.changeAuth(e)
+        this.$message.success('修改权限信息成功')
+        this.getTable()
+        this.toIndex()
       } catch (e) {
         this.$message.error(e.message)
       }

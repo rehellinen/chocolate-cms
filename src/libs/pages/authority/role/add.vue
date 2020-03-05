@@ -25,12 +25,11 @@ export default {
       this.setName('添加分组')
       this.setForm(roleFormConf)
     },
-    toSubmit (e) {
+    async toSubmit (e) {
       try {
-        Role.addRole(e).then(res => {
-          this.$message.success('添加分组成功')
-          this.toIndex()
-        })
+        await Role.addRole(e)
+        this.$message.success('添加分组成功')
+        this.toIndex()
       } catch (e) {
         this.$message.error(e.message)
       }
