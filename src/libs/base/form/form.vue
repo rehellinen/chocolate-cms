@@ -35,7 +35,30 @@
             :label="item.label"
             :value="item.value"
             :key="i"
+          ) {{ item.label }}
+
+        div(
+          v-if="conf.type === inputType.CHECKBOX"
+          v-for="(items, name) in conf.options"
+          :key="name"
+        )
+          el-checkbox.title-box(
+            v-if="conf.group"
+            :label="name"
+            v-model="checkAllGroup"
+            :indeterminate="indeterminateGroup.includes(name)"
+            @change="groupCheck($event, items, conf.name)"
           )
+          el-checkbox-group(
+            v-model="formData[conf.name]"
+            :class="{ 'gray' : conf.group }"
+          )
+            el-checkbox(
+              v-for="(item, i) in items"
+              :label="item.value"
+              :key="i"
+              @change="singleCheck($event, items, conf.name, name)"
+            ) {{ item.label }}
 
         my-editor.editor(
           ref="editor"
@@ -100,7 +123,8 @@ export default {
   data () {
     return {
       inputType: config.FORM,
-      checkIndex: 0
+      checkAllGroup: [],
+      indeterminateGroup: []
     }
   },
   mounted () {
@@ -110,6 +134,9 @@ export default {
       }
       if (conf.type === config.FORM.FILE) {
         this.$refs.image[0].setFileUrl(this.formData[conf.name])
+      }
+      if (conf.type === config.FORM.CHECKBOX) {
+        this.initCheckBox(conf.name, conf.options)
       }
     }
   },
@@ -128,6 +155,83 @@ export default {
     imageUploaded (e) {
       const name = this.$refs.image[0].$attrs['data-name']
       this.formData[name] = e.path
+    },
+    initCheckBox (name, options) {
+      for (let [key, value] of Object.entries(options)) {
+        let i = 0
+        for (let item of value) {
+          if (this.formData[name].indexOf(item.value) > -1) {
+            i++
+          }
+        }
+        if (i === 0) {
+          this.noCheckStatus(key)
+        } else if (i === value.length) {
+          this.checkStatus(key)
+        } else {
+          this.indeterminateStatus(key)
+        }
+      }
+    },
+    groupCheck (checked, items, formKey, name) {
+      if (checked) {
+        for (let item of items) {
+          if (!this.formData[formKey].includes(item.value)) {
+            this.formData[formKey].push(item.value)
+          }
+        }
+        this.checkStatus(name)
+      } else {
+        for (let item of items) {
+          if (this.formData[formKey].includes(item.value)) {
+            this.formData[formKey].splice(this.formData[formKey].indexOf(item.value), 1)
+          }
+        }
+        this.noCheckStatus(name)
+      }
+    },
+    singleCheck (checked, items, formKey, name) {
+      if (checked) {
+        for (let item of items) {
+          if (!this.formData[formKey].includes(item.value)) {
+            this.indeterminateStatus(name)
+            return
+          }
+        }
+        this.checkStatus(name)
+      } else {
+        this.indeterminateStatus(name)
+        for (let item of items) {
+          if (this.formData[formKey].includes(item.value)) {
+            return
+          }
+        }
+        this.noCheckStatus(name)
+      }
+    },
+    noCheckStatus (name) {
+      if (this.checkAllGroup.indexOf(name) > -1) {
+        this.checkAllGroup.splice(this.checkAllGroup.indexOf(name), 1)
+      }
+      if (this.indeterminateGroup.indexOf(name) > -1) {
+        this.indeterminateGroup.splice(this.indeterminateGroup.indexOf(name), 1)
+      }
+    },
+    checkStatus (name) {
+      if (this.checkAllGroup.indexOf(name) === -1) {
+        this.checkAllGroup.push(name)
+      }
+      if (this.indeterminateGroup.indexOf(name) > -1) {
+        this.indeterminateGroup.splice(this.indeterminateGroup.indexOf(name), 1)
+      }
+    },
+    indeterminateStatus (name) {
+      if (this.checkAllGroup.indexOf(name) > -1) {
+        this.checkAllGroup.splice(this.checkAllGroup.indexOf(name), 1)
+      }
+      if (this.indeterminateGroup.indexOf(name) === -1) {
+        this.indeterminateGroup.push(name)
+      }
     }
   }
 }
@@ -150,4 +254,10 @@ export default {
       max-width: 400px
     .el-slider
       max-width: 500px
+    .title-box
+      width: 100%
+    .gray
+      background: $gray
+      padding: 0 10px
+      margin-right: 20px
 </style>

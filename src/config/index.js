@@ -19,6 +19,7 @@ export default {
   FORM: {
     INPUT: Symbol('input'),
     SELECT: Symbol('select'),
+    CHECKBOX: Symbol('checkbox'),
     EDITOR: Symbol('editor'),
     FILE: Symbol('file'),
     DISABLED: Symbol('disabled'),
