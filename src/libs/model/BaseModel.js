@@ -1,47 +1,7 @@
 import validator from 'validator'
 import { hasOwn, isFunction } from '../utils'
-import { NoValidationMethod, ValidationFailed } from 'libs/exception'
-
-/**
- * rule装饰器
- * @param funcName 验证函数名称
- * @param errInfo 错误信息
- * @param params 传入验证函数的其他参数（可以有多个）
- * @returns {Function}
- */
-export const rule = (funcName, errInfo, ...params) => {
-  return (target, key, descriptor) => {
-    const defaultVal = descriptor.initializer && descriptor.initializer.call(this)
-    let rules = target.constructor._rules
-    if (!rules) {
-      target.constructor._rules = rules = {}
-    }
-    if (!rules[key]) {
-      rules[key] = []
-    }
-    if (defaultVal != null || funcName === 'optional') {
-      rules[key]._option = true
-      rules[key]._default = defaultVal
-    }
-    if (funcName !== 'optional') {
-      // 由验证函数名称、错误提示信息、验证函数额外参数构成的数组
-      rules[key].push([funcName, errInfo, params])
-    }
-  }
-}
-
-export function proxy (target, sourceKey, key) {
-  Object.defineProperty(target, key, {
-    enumerable: true,
-    configurable: true,
-    get: function proxyGetter () {
-      return this[sourceKey][key]
-    },
-    set: function proxySetter (val) {
-      this[sourceKey][key] = val
-    }
-  })
-}
+import { NoValidationMethod, ValidationFailed } from 'libs/exceptions'
+import { proxy } from 'libs/utils'
 
 const methods = {
   require (key, value, params) {

@@ -36,6 +36,9 @@ const methods = {
       value = value.trim()
     }
     return value != null && value !== ''
+  },
+  isObject (key, value, params) {
+    return isObject(value)
   }
 }
 
@@ -65,7 +68,6 @@ export class Validator {
     const { scene } = options
     this._rawParams = data
     this._scene = scene
-    this.check()
   }
 
   /**
@@ -109,7 +111,8 @@ export class Validator {
     // TODO: 处理异常
     if (Object.keys(this._errors).length > 0) {
       console.log(this._errors)
-      throw new ValidationFailed('校验不通过', this._errors)
+      // throw new ValidationFailed('校验不通过', this._errors)
+      throw new ValidationFailed(this._errors[Object.keys(this._errors)[0]][0], this._errors)
     }
   }
 

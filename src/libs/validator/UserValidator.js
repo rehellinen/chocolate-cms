@@ -1,10 +1,14 @@
-import { Validator, rule } from 'libs/utils'
+import { Validator, rule } from '../utils/validator'
 
 export class UserValidator extends Validator {
   scene = {
     // TODO: 还差order和role未检验
-    get: ['account', 'name', 'avatar', 'role']
+    get: ['id', 'account', 'name', 'avatar', 'role', 'roleId'],
+    add: ['account', 'name', 'password', 'avatar', 'roleId']
   }
+
+  @rule('require', 'id不能为空')
+  id
 
   @rule('require', '名称不能为空')
   name
@@ -24,11 +28,16 @@ export class UserValidator extends Validator {
   @rule('require', '头像不能为空')
   avatar
 
-  @rule('isArray')
+  @rule('isObject')
   @rule('optional')
-  role = 3
+  role
 
-  @rule('require', '权限组ID不能为空')
-  @rule('isInt', '权限组ID必须为正整数', { min: 1 })
+  @rule('isInt', '分组id必须为正整数', { min: 1 })
+  @rule('require', '分组不能为空')
   roleId
+
+  constructor (data, options = {}) {
+    super(data, options)
+    this.check()
+  }
 }
