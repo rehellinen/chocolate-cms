@@ -26,10 +26,14 @@ export default {
       this.setForm(authFormConf)
     },
     toSubmit (e) {
-      Auth.addAuth(e).then(res => {
-        this.$message.success('添加权限成功')
-        this.toIndex()
-      })
+      try {
+        Auth.addAuth(e).then(res => {
+          this.$message.success('添加权限成功')
+          this.toIndex()
+        })
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     }
   }
 }

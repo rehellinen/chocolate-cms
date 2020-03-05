@@ -26,10 +26,14 @@ export default {
       this.setForm(roleFormConf)
     },
     toSubmit (e) {
-      Role.addRole(e).then(res => {
-        this.$message.success('添加分组成功')
-        this.toIndex()
-      })
+      try {
+        Role.addRole(e).then(res => {
+          this.$message.success('添加分组成功')
+          this.toIndex()
+        })
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     }
   }
 }

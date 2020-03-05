@@ -96,11 +96,15 @@ export default {
       }
     },
     changeInfo (e) {
-      this.model.changeUserInfo(e).then(res => {
-        this.$message.success('修改用户信息成功')
-        this.getTable()
-        this.toIndex()
-      })
+      try {
+        this.model.changeUserInfo(e).then(res => {
+          this.$message.success('修改用户信息成功')
+          this.getTable()
+          this.toIndex()
+        })
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     },
     changePassword (e) {
       if (e.newPassword !== e.newPassword1) {

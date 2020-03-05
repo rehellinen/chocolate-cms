@@ -57,11 +57,15 @@ export default {
       })
     },
     toSubmit (e) {
-      this.model.changeAuth(e).then(res => {
-        this.$message.success('修改权限信息成功')
-        this.getTable()
-        this.toIndex()
-      })
+      try {
+        this.model.changeAuth(e).then(res => {
+          this.$message.success('修改权限信息成功')
+          this.getTable()
+          this.toIndex()
+        })
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     }
   }
 }

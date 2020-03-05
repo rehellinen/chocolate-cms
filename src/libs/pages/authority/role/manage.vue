@@ -104,13 +104,21 @@ export default {
       }
     },
     changeInfo (e) {
-      this.model.changeRoleInfo(e).then(res => {
-        this.$message.success('修改分组信息成功')
-        this.getTable()
-        this.toIndex()
-      })
+      try {
+        this.model.changeRoleInfo(e).then(res => {
+          this.$message.success('修改分组信息成功')
+          this.getTable()
+          this.toIndex()
+        })
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     },
     changeAuth (e) {
+      if (e.auth.length === 0) {
+        this.$message.error('请设置分组权限')
+        return
+      }
       this.model.editRoleAuth(e.id, e.auth).then(res => {
         this.$message.success('修改分组权限成功')
         this.getTable()
