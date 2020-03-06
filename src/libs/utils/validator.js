@@ -1,5 +1,6 @@
 import validator from 'validator'
-import { isFunction, toString, isObject, proxy } from '../utils'
+import Vue from 'vue'
+import { isFunction, toString, isObject, proxy, macroTask } from '../utils'
 import { NoValidationMethod, ValidationFailed } from 'libs/exceptions'
 
 /**
@@ -65,9 +66,10 @@ export class Validator {
   _value = ''
 
   constructor (data, options = {}) {
-    const { scene } = options
+    const { scene, errorHandler } = options
     this._rawParams = data
     this._scene = scene
+    this._errorHandler = errorHandler
   }
 
   /**
@@ -108,11 +110,25 @@ export class Validator {
 
       proxy(this, '_checkedParams', key)
     }
-    // TODO: 处理异常
-    if (Object.keys(this._errors).length > 0) {
-      console.log(this._errors)
-      // throw new ValidationFailed('校验不通过', this._errors)
-      throw new ValidationFailed(this._errors[Object.keys(this._errors)[0]][0], this._errors)
+
+    const errEntries = Object.entries(this._errors)
+    if (errEntries.length > 0) {
+      if (this._errorHandler && isFunction(this._errorHandler)) {
+        // 用户自行处理异常
+        this._errorHandler(this._errors)
+      } else {
+        for (let [key, errs] of errEntries) {
+          for (let err of errs) {
+            macroTask(() => {
+              Vue.prototype.$notify({
+                message: process.env.NODE_ENV === 'production' ? err : `${key} - ${err}`,
+                type: 'error'
+              })
+            })
+          }
+        }
+        throw new ValidationFailed('校验不通过', this._errors)
+      }
     }
   }
 

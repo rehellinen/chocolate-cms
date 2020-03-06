@@ -3,7 +3,6 @@ import config from 'config'
 import Vue from 'vue'
 import { getAccessToken, getRefreshToken, saveAccessToken } from 'libs/utils/token'
 import { ParamsException, NoAuthority } from 'libs/exceptions'
-import { isProduction } from 'libs/utils/utils'
 
 // TODO：给refresh token过期一个特定的status
 const REFRESH_URL = 'user/refresh'
@@ -75,7 +74,9 @@ const processParamsError = (res, throwErr = false) => {
       for (let msg of val) {
         setTimeout(() => {
           Vue.prototype.$notify({
-            message: isProduction ? msg : `${key} - ${msg}`,
+            message: process.env.NODE_ENV === 'production'
+              ? msg
+              : `${key} - ${msg}`,
             type: 'error'
           })
         }, 0)

@@ -105,6 +105,11 @@ export function hasOwn (obj, key) {
 // 判断是否为对象
 export const isObject = (value) => value !== null && (typeof value === 'object')
 
+// 判断是否为原生方法
+export function isNative (value) {
+  return typeof value === 'function' && /native code/.test(value.toString())
+}
+
 // 将this[sourceKey][key]代理到this[key]
 export function proxy (target, sourceKey, key) {
   Object.defineProperty(target, key, {
@@ -143,6 +148,7 @@ export const deepTraversalLeaf = (config, cb) => {
   }
 }
 
+// 获取所有的路由配置
 export const getAllConfig = () => {
   const allConfig = []
   config.ROUTER_CONF_FILES.forEach(name => {
@@ -150,4 +156,9 @@ export const getAllConfig = () => {
     allConfig.push(...config)
   })
   return allConfig
+}
+
+// 将传入函数当成宏任务
+export const macroTask = task => {
+  setTimeout(task, 0)
 }
