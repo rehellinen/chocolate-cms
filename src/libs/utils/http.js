@@ -1,14 +1,12 @@
 import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
-import { getAccessToken, getRefreshToken, saveTokens } from 'libs/utils/token'
-import { ExpiredToken, ParamsException, NoAuthority } from 'libs/exceptions'
+import { getAccessToken, getRefreshToken, saveAccessToken } from 'libs/utils/token'
+import { ParamsException, NoAuthority } from 'libs/exceptions'
+import { isProduction } from 'libs/utils/utils'
 
 // TODO：给refresh token过期一个特定的status
 const REFRESH_URL = 'user/refresh'
-const TOTAL_REFRESH_URL = config.BASE_URL.endsWith('/')
-  ? config.BASE_URL + REFRESH_URL
-  : `${config.BASE_URL}/${REFRESH_URL}`
 
 const processConfig = (reqConfig) => {
   // 默认使用get请求
@@ -58,74 +56,80 @@ const processResponse = async (res, allReqConfig) => {
     return getResponseData(res)
   }
   // 处理参数错误
-  processParamsError(res)
+  processParamsError(res, otherConfig.throwErr)
   // 处理refresh token过期
   processRefreshTokenError(res)
   // 处理access token过期
   const newRes = await processAccessTokenError(res, allReqConfig)
-  return getResponseData(newRes || res)
+  return newRes || getResponseData(res)
 }
 
-const processParamsError = ({ status, data }) => {
+const processParamsError = (res, throwErr = false) => {
+  const { status, data } = res
   // 处理参数错误的情况
   if (status === 400) {
+    if (throwErr) {
+      throw new ParamsException(data.message, res)
+    }
     for (const [key, val] of Object.entries(data.data)) {
       for (let msg of val) {
-        if (process.env.NODE_ENV !== 'production') {
-          msg = `${key} - ${msg}`
-        }
-        Vue.prototype.$message({
-          message: msg,
-          type: 'error'
-        })
+        setTimeout(() => {
+          Vue.prototype.$notify({
+            message: isProduction ? msg : `${key} - ${msg}`,
+            type: 'error'
+          })
+        }, 0)
       }
     }
-    throw new ParamsException(data.message, data.data)
   }
 }
 
 const processRefreshTokenError = (response) => {
-  const { status, data } = response
+  const { data } = response
+  const { status } = data
+  const TOTAL_REFRESH_URL = config.BASE_URL.endsWith('/')
+    ? config.BASE_URL + REFRESH_URL
+    : `${config.BASE_URL}/${REFRESH_URL}`
   if (response.config.url === TOTAL_REFRESH_URL) {
     // 令牌类型错误 / Token过期
-    if (status === 20101 || status === 20102) {
-      Vue.prototype.$message({
+    if (status === 20100 || status === 20200) {
+      Vue.prototype.$notify({
         message: data.message,
         type: 'error'
       })
       // TODO: 退出登录
       window.location.href = window.location.origin + '/#/login'
-      throw new ExpiredToken(data.message)
     }
   }
 }
 
-const processAccessTokenError = async ({ status, data }, allReqConfig) => {
-  // 令牌类型错误 / Token过期
-  if (status === 20101 || status === 20102) {
+const processAccessTokenError = async (response, allReqConfig) => {
+  const { data } = response
+  const { status } = data
+  if (status === 20100 || status === 20200) {
+    // 令牌类型错误 / Token过期的情况
     const reFetch = allReqConfig.otherConfig.reFetch !== false
     if (reFetch) {
       // 刷新access_token
-      const res = await post(REFRESH_URL)
-      saveTokens(res.data.accessToken, res.data.refreshToken)
+      const data = await post(REFRESH_URL)
+      saveAccessToken(data.accessToken)
       // 重发请求
-      if (reFetch) {
-        allReqConfig.otherConfig.refetch = false
-        return request(allReqConfig.url,
-          allReqConfig.method,
-          allReqConfig.data,
-          allReqConfig.otherConfig
-        )
-      }
-    } else {
-      Vue.prototype.$message({
-        message: '登录已过期',
-        type: 'error'
-      })
-      throw new ExpiredToken(data.message)
+      allReqConfig.otherConfig.refetch = false
+      return request(allReqConfig.url,
+        allReqConfig.method,
+        allReqConfig.data,
+        allReqConfig.otherConfig
+      )
     }
-  } else {
-    throw new NoAuthority(data.message)
+  } else if (status === 20300 || status === 20400) {
+    // 认证失败或者权限不足的情况
+    if (allReqConfig.otherConfig.throwErr) {
+      throw new NoAuthority(data.message, response)
+    }
+    Vue.prototype.$notify({
+      message: data.message,
+      type: 'error'
+    })
   }
 }
 
@@ -151,7 +155,7 @@ export const request = async (url, method, data, otherConfig = {}) => {
     })
   } catch (e) {
     if (e.message === 'Network Error') {
-      Vue.prototype.$message({
+      Vue.prototype.$notify({
         message: '网络异常，请稍后再试',
         type: 'error'
       })
