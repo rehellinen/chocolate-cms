@@ -7,19 +7,12 @@ class ParamsException extends Exception {
   }
 }
 
-class ExpiredToken extends Exception {
-  constructor (config) {
-    super(config)
-    this.setDefault('Token已过期')
-  }
-}
-
 class NoAuthority extends Exception {
-  constructor (config) {
-    super(config)
+  constructor (msg, data) {
+    super(msg, data)
     this.setDefault('权限异常')
   }
 }
 
-export { ParamsException, ExpiredToken, NoAuthority }
+export { ParamsException, NoAuthority }
 
