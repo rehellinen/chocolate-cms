@@ -8,10 +8,19 @@ import ElementUI from 'element-ui'
 
 import App from './App'
 import store from './store'
-import { router } from './libs/utils/router'
+import { router } from 'libs/utils/router'
+import { Exception } from 'libs/exceptions'
 
 import 'sass/reset.sass'
 import 'assets/theme/element-variables.scss'
+
+Vue.config.errorHandler = function (err, vm, info) {
+  if (err instanceof Exception) {
+    console.error(err.message)
+  } else {
+    throw err
+  }
+}
 
 Vue.use(ElementUI)
 
