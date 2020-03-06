@@ -3,7 +3,6 @@
  *  Create By rehellinen
  *  Create On 2018/11/5 11:37
  */
-const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -130,10 +129,6 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
-    new VueLoaderPlugin(),
-    // define global variables
-    new webpack.DefinePlugin({
-      PRODUCTION: JSON.stringify(isProduction)
-    })
+    new VueLoaderPlugin()
   ]
 }
