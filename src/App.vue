@@ -13,7 +13,7 @@
       el-container
         el-header(height="80px")
           top-bar
-        el-main
+        el-main(:style="isPhone ? 'padding: 20px 10px' : ''")
           transition(name="router-view" mode="out-in")
             router-view
       // 手机端侧边栏遮罩
@@ -46,8 +46,8 @@ export default {
   computed: {
     asideWidth () {
       return !this.isPhone && this.isMenuCollapse
-        ? '64px'
-        : '215px'
+        ? '65px'
+        : '190px'
     },
     ...mapGetters(['isMenuCollapse', 'isPhone'])
   },
