@@ -5,6 +5,7 @@
  */
 import Vue from 'vue'
 import ElementUI from 'element-ui'
+import ChocComponents from 'base/index'
 
 import App from './App'
 import store from './store'
@@ -23,6 +24,15 @@ Vue.config.errorHandler = function (err, vm, info) {
 }
 
 Vue.use(ElementUI)
+Vue.use(ChocComponents)
+
+const errorHandler = (error, vm) => {
+  if (error instanceof Exception) {
+    console.log('自定义异常，不处理')
+  }
+}
+
+Vue.config.errorHandler = errorHandler
 
 /* eslint-disable no-new */
 new Vue({
