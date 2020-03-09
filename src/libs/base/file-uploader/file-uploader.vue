@@ -1,45 +1,94 @@
 <template lang="pug">
-  div.upload
-    el-upload(
-      :action="uploadUrl"
-      name="file"
-      list-type="picture"
-      :headers="header"
-      :show-file-list="false"
-      :on-success="uploadSuccess",
-      :on-error="uploadError"
-      v-if="radioType === 1"
-    )
-      el-button(size="small" type="primary") 点击上传
-    el-input(
-      v-model="customFileUrl"
-      v-if="radioType === 2"
-      @blur="setCustom"
-    )
-    img(v-if="isPhoto && fileUrl" :src="fileUrl")
-    video(v-if="isVideo && fileUrl" width="500" height="300" controls)
-      source(:src="fileUrl")
-    div
-      el-radio(v-model="radioType" :label="1") 上传文件
-      el-radio(v-model="radioType" :label="2") 输入地址
+div.file-uploader
+  el-upload(
+    :action="uploadUrl"
+    name="file"
+    :list-type="limit === 1 ? 'text' : 'picture-card'"
+    :show-file-list="limit !== 1"
+    :file-list="limit !== 1 ? fileList : []"
+    :disabled="disabled || exceed"
+    :limit="limit"
+    :multiple="multiple"
+    :accept="accept"
+    :on-success="handleSuccess"
+    :on-exceed="handleExceed"
+    :on-error="uploadError"
+    :class="{'disabled': disabled || exceed, 'avatar-uploader' : fileList.length === 1}")
+    img(v-if="limit === 1 && fileList.length !== 0" :src="fileList[0].url" class="avatar")
+    i(v-if="limit === 1 && fileList.length === 0" class="el-icon-plus avatar-uploader-icon")
+    i(v-if="!limit || limit !== 1" class="el-icon-plus")
+    div(v-if="!limit || limit !== 1" slot="file" slot-scope="{file}" style="height: 100%; width: 100%")
+      img(class="el-upload-list__item-thumbnail" :src="file.url" alt="")
+      span(class="el-upload-list__item-actions")
+        span(
+          v-if="sortable"
+          class="el-upload-list__item-preview"
+          @click="handleUp(file)"
+          )
+          i(class="el-icon-back")
+        span(
+          class="el-upload-list__item-preview"
+          @click="handlePreview(file)"
+        )
+          i(class="el-icon-zoom-in")
+        span(
+          v-if="!disabled"
+          @click="handleRemove(file)"
+          class="el-upload-list__item-delete"
+        )
+          i(class="el-icon-delete")
+        span(
+          v-if="sortable"
+          class="el-upload-list__item-preview"
+          @click="handleDown(file)"
+          )
+          i(class="el-icon-right")
+  el-dialog(:visible.sync="dialogVisible")
+    img(width="100%" :src="dialogImageUrl" alt="")
 </template>
 
 <script>
-import config from 'config'
+import config from 'config/index'
 
 export default {
+  name: 'ChocFileUploader',
   props: {
-    initialVal: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    limit: {
+      type: Number,
+      default: null
+    },
+    data: {
+      type: Array,
+      default: () => []
+    },
+    sortable: {
+      type: Boolean,
+      default: false
+    },
+    animatedCheck: {
+      type: Boolean,
+      default: false
+    },
+    accept: {
       type: String,
       default: null
     }
   },
   data () {
     return {
-      radioType: 1,
-      fileUrl: '',
-      fileName: '',
-      customFileUrl: '',
+      dialogImageUrl: '',
+      dialogVisible: false,
+      fileList: [],
+      fileUrl: [],
+      exceed: false,
       // 服务器上传API
       uploadUrl: config.BASE_URL + '/files/image',
       // http请求发送的额外头信息
@@ -48,35 +97,91 @@ export default {
       }
     }
   },
-  computed: {
-    isPhoto () {
-      if (!this.fileName) return false
-      return this.fileName.match(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-    },
-    isVideo () {
-      if (!this.fileName) return false
-      return this.fileName.match(/\.(mp4|avi|rmvb|rm|flv|3gp)(\?.*)?$/)
-    }
-  },
   watch: {
-    initialVal (newVal, oldVal) {
-      this.setFileUrl(newVal)
+    data: {
+      immediate: true,
+      handler () {
+        this.fileList = this.data
+        this.checkLimit()
+      }
     }
   },
   methods: {
-    setFileUrl (url) {
-      this.fileUrl = url
-      this.fileName = url
+    getUrl () {
+      this.fileUrl = []
+      for (let item of this.fileList) {
+        this.fileUrl.push(item.url)
+      }
+      return this.limit === 1 ? (this.fileUrl[0] || '') : this.fileUrl
     },
-    uploadSuccess (response, file, fileList) {
-      this.fileUrl = file.url
-      this.fileName = file.name
-      this.$emit('uploaded', response.data)
+    checkLimit () {
+      if (this.limit && this.limit !== 1 && this.fileList.length >= this.limit) {
+        this.exceed = true
+        if (this.fileList.length > this.limit) {
+          this.fileList.splice(this.limit, this.fileList.length)
+        }
+      } else {
+        this.exceed = false
+      }
     },
-    setCustom () {
-      this.fileUrl = this.customFileUrl
-      this.fileName = this.customFileUrl
-      this.$emit('uploaded', { path: this.customFileUrl })
+    handleRemove (file) {
+      let index = this.fileList.indexOf(file)
+      if (index !== -1) {
+        this.fileList.splice(index, index + 1)
+      }
+      this.exceed = false
+      this.checkLimit()
+    },
+    handlePreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
+    handleExceed (file, fileList) {
+      if (this.limit !== 1) this.exceed = true
+    },
+    handleSuccess (response, file, fileList) {
+      this.fileList = fileList
+      if (this.limit === 1) {
+        this.fileList[0].url = response.data.path
+      }
+      if (this.limit && this.limit !== 1 && this.fileList.length === this.limit) {
+        this.exceed = true
+      }
+      if (this.animatedCheck && file.name.substring(file.name.lastIndexOf('.'), file.name.length).toLowerCase() === '.gif') {
+        this.fileList.splice(this.fileList.length - 1, this.fileList.length)
+        this.handleForbidAnimated()
+      }
+    },
+    handleUp (file) {
+      let index = this.fileList.indexOf(file)
+      if (index === 0) {
+        return
+      }
+      let newFileList = this.fileList
+      let changeFile = newFileList[index - 1]
+      newFileList[index - 1] = file
+      newFileList[index] = changeFile
+      this.fileList = []
+      for (let x of newFileList) {
+        this.fileList.push(x)
+      }
+    },
+    handleDown (file) {
+      let index = this.fileList.indexOf(file)
+      if (index === this.fileList.length - 1) {
+        return
+      }
+      let newFileList = this.fileList
+      let changeFile = newFileList[index + 1]
+      newFileList[index + 1] = file
+      newFileList[index] = changeFile
+      this.fileList = []
+      for (let x of newFileList) {
+        this.fileList.push(x)
+      }
+    },
+    handleForbidAnimated () {
+      this.$emit('forbidAnimated')
     },
     uploadError (err, file, fileList) {
       console.log(err)
@@ -86,37 +191,33 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~sass/base"
-  .success
-    display: flex
-    align-items: center
-    i
-      margin-right: 10px
-  .upload
-    position: relative
-    display: flex
-    flex-direction: column
-    img
-      max-width: 200px
-      margin-top: 10px
-    input
-      position: absolute
-      left: 0
-      top: 0
-      opacity: 0
-      -ms-filter: 'alpha(opacity=0)'
-      height: 40px
-    .upload-button
-      border-radius: 5px
-      background-color: $theme-color
-      color: white
-      padding: 5px 0
-      margin-top: 5px
-      font-size: 10px
-      width: 80px
-      letter-spacing: 1px
-      height: 15px
-      display: flex
-      justify-content: center
-      align-items: center
+  .disabled
+    /deep/ .el-upload
+      cursor: not-allowed
+    /deep/ .el-upload--picture-card:hover, .el-upload:focus
+      border: 1px dashed #c0ccda
+  .avatar-uploader
+    /deep/ .el-upload
+      border: 1px dashed #d9d9d9
+      border-radius: 6px
+      cursor: pointer
+      position: relative
+      overflow: hidden
+  .avatar-uploader .el-upload:hover
+    border-color: #409EFF
+  .avatar-uploader-icon
+    background-color: #fbfdff
+    border: 1px dashed #c0ccda
+    border-radius: 6px
+    font-size: 28px
+    color: #8c939d
+    width: 148px
+    height: 148px
+    line-height: 148px
+    text-align: center
+  .avatar
+    width: 148px
+    height: 148px
+    display: block
 </style>
+

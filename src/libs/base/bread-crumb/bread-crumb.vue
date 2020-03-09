@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: 'ChocBread',
   props: {
     data: {
       type: Array,

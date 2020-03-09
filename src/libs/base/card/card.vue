@@ -1,7 +1,7 @@
 <template lang="pug">
-el-row(:gutter="20" style="margin-bottom: 30px")
+el-row(:gutter="20" style="margin-bottom: 20px")
   el-col(:md="6" :sm="12" v-for="(item, index) in data" :key="index")
-    .card(:style="{background: cardConf[index].color, color: 'white'}")
+    .card(:style="{background: cardConf[index].color, color: 'white', margin: '5px 0'}")
       .card-title {{ item.title }}
       .card-content
         .text-content
@@ -14,6 +14,7 @@ el-row(:gutter="20" style="margin-bottom: 30px")
 
 <script>
 export default {
+  name: 'ChocCard',
   props: {
     data: {
       type: Array,

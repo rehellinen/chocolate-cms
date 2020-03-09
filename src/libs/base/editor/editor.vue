@@ -26,6 +26,7 @@ import { uploadFile } from 'libs/utils/http'
 import config from 'config/index'
 
 export default {
+  name: 'ChocEditor',
   components: {
     quillEditor
   },

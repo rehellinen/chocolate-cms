@@ -1,11 +1,12 @@
 <template lang="pug">
   div.form-container
     p.title {{title}}
-    el-form(ref="data" :model="formData" label-width="100px")
+    el-form(ref="data" :model="formData" :rules="rules" label-width="100px")
       el-form-item(
         v-for="(conf, index) in config"
         :label="conf.label + '：'"
         :key="index"
+        :prop="conf.name"
       )
         el-input(
           v-if="!conf.type || conf.type === inputType.INPUT"
@@ -60,19 +61,24 @@
               @change="singleCheck($event, items, conf.name, name)"
             ) {{ item.label }}
 
-        my-editor.editor(
+        choc-editor.editor(
           ref="editor"
-          v-if="conf.type === inputType.EDITOR",
+          v-if="conf.type === inputType.EDITOR"
           :data-name="conf.name"
           @change="editorChange"
         )
 
-        my-file-uploader(
+        choc-file-uploader(
           ref="image"
-          v-if="conf.type === inputType.FILE",
+          v-if="conf.type === inputType.FILE"
           :data-name="conf.name"
-          :initialVal="formData[conf.name]"
-          @uploaded="imageUploaded"
+          :data="formData[conf.name]"
+          :disabled="conf.disabled || false"
+          :multiple="conf.multiple || false"
+          :sortable="conf.sortable || false"
+          :animatedCheck="conf.animatedCheck || false"
+          :limit="conf.limit || null"
+          :accept="conf.accept || null"
         )
 
         el-input(
@@ -94,14 +100,9 @@
 
 <script>
 import config from 'config'
-import MyEditor from 'base/editor/editor'
-import MyFileUploader from 'base/file-uploader/file-uploader'
 
 export default {
-  components: {
-    MyEditor,
-    MyFileUploader
-  },
+  name: 'ChocForm',
   props: {
     config: {
       type: Array,
@@ -118,6 +119,10 @@ export default {
     formData: {
       type: Object,
       default: () => ({})
+    },
+    rules: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -127,13 +132,17 @@ export default {
       indeterminateGroup: []
     }
   },
-  mounted () {
+  created () {
     for (let conf of this.config) {
       if (conf.type === config.FORM.EDITOR) {
         this.$refs.editor[0].setContent(this.formData[conf.name])
       }
       if (conf.type === config.FORM.FILE) {
-        this.$refs.image[0].setFileUrl(this.formData[conf.name])
+        this.formData[conf.name] = Array.isArray(this.formData[conf.name])
+          ? this.formData[conf.name]
+          : this.formData[conf.name]
+            ? [{ 'url': this.formData[conf.name] }]
+            : []
       }
       if (conf.type === config.FORM.CHECKBOX) {
         this.initCheckBox(conf.name, conf.options)
@@ -146,15 +155,34 @@ export default {
         const name = this.$refs.editor[0].$attrs['data-name']
         this.formData[name] = await this.$refs.editor[0].getContent()
       }
-      this.$emit('submit', this.formData)
+      if (this.$refs.image) {
+        const name = this.$refs.image[0].$attrs['data-name']
+        this.formData[name] = this.$refs.image[0].getUrl()
+      }
+      this.$refs['data'].validate((valid) => {
+        if (valid) {
+          this.$emit('submit', { ...this.formData })
+          this.setUrl()
+        } else {
+          this.setUrl()
+          return false
+        }
+      })
+    },
+    setUrl () {
+      for (let conf of this.config) {
+        if (conf.type === config.FORM.FILE) {
+          this.formData[conf.name] = Array.isArray(this.formData[conf.name])
+            ? this.formData[conf.name]
+            : this.formData[conf.name]
+              ? [{ 'url': this.formData[conf.name] }]
+              : []
+        }
+      }
     },
     editorChange (e) {
       const name = this.$refs.editor[0].$attrs['data-name']
       this.formData[name] = e.content
-    },
-    imageUploaded (e) {
-      const name = this.$refs.image[0].$attrs['data-name']
-      this.formData[name] = e.path
     },
     initCheckBox (name, options) {
       for (let [key, value] of Object.entries(options)) {

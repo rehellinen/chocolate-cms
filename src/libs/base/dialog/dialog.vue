@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: 'ChocDialog',
   props: {
     visible: {
       type: Boolean,
@@ -43,11 +44,22 @@ export default {
   },
   methods: {
     toConfirm () {
+      this.closeDialog()
       this.$emit('confirm')
       this.cb && this.cb()
     },
     toCancel () {
+      this.closeDialog()
       this.$emit('cancel')
+    },
+    showCancel () {
+      this.cancel = true
+    },
+    hideCancel () {
+      this.cancel = false
+    },
+    closeDialog () {
+      this.visible = false
     }
   }
 }

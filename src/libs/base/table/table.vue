@@ -1,6 +1,6 @@
 <template lang="pug">
   div.progress-bar
-    my-search(
+    choc-search(
       v-if="searchConf.length > 0"
       :searchConf="searchConf"
       @search="toSearch"
@@ -33,6 +33,17 @@
         template(slot-scope="scope")
           p {{tableValue(item, scope)}}
 
+      el-table-column(label="自定义" fixed="right")
+        template(slot-scope="scope")
+          el-button(
+            v-if="operate"
+            v-for="(item,index) in operate"
+            :type="item.type"
+            :key="index"
+            size="mini"
+            @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
+          ) {{item.name}}
+
       // 编辑与删除操作
       el-table-column(label="操作" fixed="right")
         template(slot-scope="scope")
@@ -48,14 +59,6 @@
             v-if="!disableDelete"
             @click.native.prevent="toDelete(scope.$index)"
           ) 删除
-          el-button(
-            v-if="operate"
-            v-for="(item,index) in operate"
-            :type="item.type"
-            :key="index"
-            size="mini"
-            @click.native.prevent.stop="buttonMethods(item.func, scope.$index, scope.row)"
-            ) {{item.name}}
     el-pagination(
       layout="prev, pager, next, jumper"
       :current-page="pageConf.page"
@@ -68,12 +71,9 @@
 
 <script>
 import { dateFormat } from 'libs/utils/utils'
-import MySearch from 'base/search/search'
 
 export default {
-  components: {
-    MySearch
-  },
+  name: 'ChocTable',
   props: {
     data: {
       // 表格数据

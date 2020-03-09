@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  name: 'ChocSearch',
   props: {
     searchConf: {
       type: Array,

@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: 'ChocProgressBar',
   props: {
     data: { // 进度条数据
       type: Array,
