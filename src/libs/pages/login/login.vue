@@ -15,12 +15,10 @@
 </template>
 
 <script>
-import { dialogMixin } from 'mixins'
 import { User } from 'libs/model/User'
 import { mapActions } from 'vuex'
 
 export default {
-  mixins: [dialogMixin],
   data () {
     return {
       form: {

@@ -1,20 +1,18 @@
 <template lang="pug">
   div
-    my-dialog(:visible="visible"
+    choc-dialog(:visible="visible"
       :title="title"
       :content="content"
       :cb="cb",
-      :cancel="cancel",
-      @confirm="toConfirm"
-      @cancel="toCancel"
+      :cancel="cancel"
     )
 
-    my-bread(
+    choc-bread(
       @table="toIndex"
       :data="bread"
     )
     div(:class="type === allTypes.INDEX ? 'table-card' : 'form-card'")
-      my-table(
+      choc-table(
         v-if="type === allTypes.INDEX"
         :tableColumn="tableColumn"
         :data="table"
@@ -26,22 +24,28 @@
         @delete="deleteData"
       )
 
-      my-form(
+      choc-form(
         :title="'编辑' + name",
         :config="form"
         :form-data="formData"
+        :rules="rules"
         @submit="toSubmit"
         v-else
       )
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
-import { manageTableConf } from './config'
+import { manageTableConf, authRules } from './config'
 import { Auth as Model } from 'libs/model/Auth'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
+  data () {
+    return {
+      rules: authRules
+    }
+  },
   methods: {
     _initCMS () {
       this.setModel(Model)
@@ -57,14 +61,10 @@ export default {
       })
     },
     async toSubmit (e) {
-      try {
-        await this.model.changeAuth(e)
-        this.$message.success('修改权限信息成功')
-        this.getTable()
-        this.toIndex()
-      } catch (e) {
-        this.$message.error(e.message)
-      }
+      await this.model.changeAuth(e)
+      this.$message.success('修改权限信息成功')
+      this.getTable()
+      this.toIndex()
     }
   }
 }

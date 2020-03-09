@@ -1,23 +1,25 @@
 <template lang="pug">
   .add
-    my-form(
+    choc-form(
       :title="name"
       :config="form",
       :form-data="formData"
+      :rules="rules"
       @submit="toSubmit"
     )
 </template>
 
 <script>
-import { formMixin, cmsMixin, breadMixin } from 'mixins'
-import { roleFormConf } from './config'
+import { roleFormConf, roleRules } from './config'
 import { Role } from 'libs/model/Role'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   data () {
     return {
-      formData: {}
+      formData: {},
+      rules: roleRules
     }
   },
   methods: {
@@ -26,13 +28,9 @@ export default {
       this.setForm(roleFormConf)
     },
     async toSubmit (e) {
-      try {
-        await Role.addRole(e)
-        this.$message.success('添加分组成功')
-        this.toIndex()
-      } catch (e) {
-        this.$message.error(e.message)
-      }
+      await Role.addRole(e)
+      this.$message.success('添加分组成功')
+      this.toIndex()
     }
   }
 }

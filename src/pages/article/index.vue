@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    my-dialog(:visible="visible"
+    choc-dialog(:visible="visible"
       :title="title"
       :content="content"
       :cb="cb",
@@ -9,12 +9,12 @@
       @cancel="toCancel"
     )
 
-    my-bread(
+    choc-bread(
       @table="toIndex"
       :data="bread"
     )
     div(:class="type === allTypes.INDEX ? 'table-card' : 'form-card'")
-      my-table(
+      choc-table(
         v-if="type === allTypes.INDEX"
         :tableColumn="tableColumn"
         :data="table"
@@ -27,7 +27,7 @@
         @delete="deleteData"
       )
 
-      my-form(
+      choc-form(
         :title="'编辑' + name",
         :config="form"
         :form-data="formData"
@@ -37,12 +37,12 @@
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
 import { tableConf, formConf, searchConf } from './config'
 import { Article as Model } from 'model/Article'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   data () {
     return {
       pageConf: {

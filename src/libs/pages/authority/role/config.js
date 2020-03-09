@@ -26,3 +26,8 @@ export const authFormConf = [
     }
   }
 ]
+
+export const roleRules = {
+  name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+  desc: [{ required: true, message: '请输入描述', trigger: 'blur' }]
+}

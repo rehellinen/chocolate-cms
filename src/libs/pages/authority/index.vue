@@ -1,20 +1,18 @@
 <template lang="pug">
   div
-    my-dialog(:visible="visible"
+    choc-dialog(:visible="visible"
       :title="title"
       :content="content"
-      :cb="cb",
-      :cancel="cancel",
-      @confirm="toConfirm"
-      @cancel="toCancel"
+      :cb="cb"
+      :cancel="cancel"
     )
 
-    my-bread(
+    choc-bread(
       @table="toIndex"
       :data="bread"
     )
     div(:class="type === allTypes.INDEX ? 'table-card' : 'form-card'")
-      my-table(
+      choc-table(
         v-if="type === allTypes.INDEX"
         :tableColumn="tableColumn"
         :data="table"
@@ -28,31 +26,33 @@
         @delete="deleteData"
       )
 
-      my-form(
+      choc-form(
         :title="'编辑' + name",
         :config="form"
         :form-data="formData"
+        :rules="rules"
         @submit="toSubmit"
         v-else
       )
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
-import { userTableConf, userFormConf, searchConf, passwordFormConf } from './config'
+import { userTableConf, userFormConf, searchConf, passwordFormConf, UserRules, passwordRules } from './config'
 import { User as Model } from 'libs/model/User'
 import { Role } from 'libs/model/Role'
 import config from 'config/index'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   data () {
     return {
       operate: [{
         type: 'primary',
         name: '修改密码',
         func: this.editPassword
-      }]
+      }],
+      rules: UserRules
     }
   },
   methods: {
@@ -75,17 +75,17 @@ export default {
       }
       return userFormConf
     },
-    getTable () {
-      this.model.getAllUser().then(res => {
-        this.table = res.data
-        this.setPage(res)
-        this.loading = false
-      })
+    async getTable () {
+      const res = await this.model.getAllUser()
+      this.table = res.data
+      this.setPage(res)
+      this.loading = false
     },
     editPassword (index, row) {
       this.formData = { id: row.id }
       this.setName('密码')
       this.setForm(passwordFormConf)
+      this.rules = passwordRules
       this._changePageType(config.CMS.EDIT)
     },
     toSubmit (e) {
@@ -96,14 +96,10 @@ export default {
       }
     },
     async changeInfo (e) {
-      try {
-        await this.model.changeUserInfo(e)
-        this.$message.success('修改用户信息成功')
-        this.getTable()
-        this.toIndex()
-      } catch (e) {
-        this.$message.error(e.message)
-      }
+      await this.model.changeUserInfo(e)
+      this.$message.success('修改用户信息成功')
+      this.getTable()
+      this.toIndex()
     },
     changePassword (e) {
       if (e.newPassword !== e.newPassword1) {

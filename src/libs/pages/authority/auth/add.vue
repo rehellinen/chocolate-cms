@@ -1,23 +1,25 @@
 <template lang="pug">
   .add
-    my-form(
+    choc-form(
       :title="name"
       :config="form",
       :form-data="formData"
+      :rules="rules"
       @submit="toSubmit"
     )
 </template>
 
 <script>
-import { formMixin, cmsMixin, breadMixin } from 'mixins'
-import { authFormConf } from './config'
+import { authFormConf, authRules } from './config'
 import { Auth } from 'libs/model/Auth'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   data () {
     return {
-      formData: {}
+      formData: {},
+      rules: authRules
     }
   },
   methods: {
@@ -26,13 +28,9 @@ export default {
       this.setForm(authFormConf)
     },
     async toSubmit (e) {
-      try {
-        await Auth.addAuth(e)
-        this.$message.success('添加权限成功')
-        this.toIndex()
-      } catch (e) {
-        this.$message.error(e.message)
-      }
+      await Auth.addAuth(e)
+      this.$message.success('添加权限成功')
+      this.toIndex()
     }
   }
 }

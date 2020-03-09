@@ -1,29 +1,27 @@
 <template lang="pug">
   div
-    card(:data="data" :cardConf="cardConf")
+    choc-card(:data="data" :cardConf="cardConf")
     el-row(:gutter="20")
       el-col(:md="12" :sm="24")
-        progress-bar.card(:data="progress")
+        choc-progress-bar.card(:data="progress")
       el-col(:md="12" :sm="24")
-        progress-bar.card(:data="progress" type="circle")
+        choc-progress-bar.card(:data="progress" type="circle")
 </template>
 
 <script>
-import { cmsMixin } from 'mixins'
-import Card from 'base/card/card'
-import ProgressBar from 'base/progress-bar/progress-bar'
 import { Home as Model } from 'model/Home'
-import { cardConf } from './config'
+import { cmsMixin } from 'mixins'
 
 export default {
-  components: {
-    Card,
-    ProgressBar
-  },
   mixins: [cmsMixin],
   data () {
     return {
-      cardConf: cardConf,
+      cardConf: [
+        { color: 'linear-gradient(230deg, #759bff, #843cf6)', icon: 'el-icon-goods' },
+        { color: 'linear-gradient(230deg, #fc5286, #fbaaa2)', icon: 'el-icon-star-off' },
+        { color: 'linear-gradient(230deg, #ffc480, #ff763b)', icon: 'el-icon-user' },
+        { color: 'linear-gradient(230deg, #0e4cfd, #6a8eff)', icon: 'el-icon-bell' }
+      ],
       data: [],
       progress: []
     }
@@ -47,4 +45,6 @@ export default {
 
   .card
     @include card(15px, 10px)
+  .el-col
+    margin-bottom: 10px
 </style>

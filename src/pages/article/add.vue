@@ -1,6 +1,6 @@
 <template lang="pug">
   .add
-    my-form(
+    choc-form(
       :title="name"
       :config="form",
       :form-data="formData"
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import { formMixin, cmsMixin, breadMixin } from 'mixins'
 import { formConf } from './config'
 import { Article } from 'model/Article'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   methods: {
     _initCMS () {
       this.setModel(new Article())

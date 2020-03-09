@@ -1,20 +1,18 @@
 <template lang="pug">
   div
-    my-dialog(:visible="visible"
+    choc-dialog(:visible="visible"
       :title="title"
       :content="content"
       :cb="cb",
-      :cancel="cancel",
-      @confirm="toConfirm"
-      @cancel="toCancel"
+      :cancel="cancel"
     )
 
-    my-bread(
+    choc-bread(
       @table="toIndex"
       :data="bread"
     )
     div(:class="type === allTypes.INDEX ? 'table-card' : 'form-card'")
-      my-table(
+      choc-table(
         v-if="type === allTypes.INDEX"
         :tableColumn="tableColumn"
         :data="table"
@@ -27,31 +25,33 @@
         @delete="deleteData"
       )
 
-      my-form(
+      choc-form(
         :title="'编辑' + name"
         :form-data="formData"
         :config="form"
+        :rules="rules"
         @submit="toSubmit"
         v-else
       )
 </template>
 
 <script>
-import { cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin } from 'mixins'
-import { manageTableConf, authFormConf } from './config'
+import { manageTableConf, authFormConf, roleRules } from './config'
 import { Role as Model } from 'libs/model/Role'
 import { Auth } from 'libs/model/Auth'
 import config from 'config/index'
+import { cmsMixin } from 'mixins'
 
 export default {
-  mixins: [cmsMixin, dialogMixin, tableMixin, formMixin, breadMixin],
+  mixins: [cmsMixin],
   data () {
     return {
       operate: [{
         type: 'primary',
         name: '编辑权限',
         func: this.editAuth
-      }]
+      }],
+      rules: roleRules
     }
   },
   methods: {
@@ -104,14 +104,10 @@ export default {
       }
     },
     async changeInfo (e) {
-      try {
-        await this.model.changeRoleInfo(e)
-        this.$message.success('修改分组信息成功')
-        this.getTable()
-        this.toIndex()
-      } catch (e) {
-        this.$message.error(e.message)
-      }
+      await this.model.changeRoleInfo(e)
+      this.$message.success('修改分组信息成功')
+      this.getTable()
+      this.toIndex()
     },
     changeAuth (e) {
       if (e.auth.length === 0) {
