@@ -1,5 +1,4 @@
 import { del, get, post, put } from 'libs/utils/http'
-import { AuthValidator } from 'libs/validator/AuthValidator'
 
 export class Auth {
   /**
@@ -7,7 +6,7 @@ export class Auth {
    */
   static async getUserAuth () {
     const auth = await get('/auth/self', { scene: 'get' })
-    return new AuthValidator(auth)
+    return auth
   }
 
   /**
@@ -23,8 +22,7 @@ export class Auth {
    * @param form 表单数据
    */
   static async changeAuth (form) {
-    const auth = new AuthValidator(form, { scene: 'edit' })
-    return put('auth/' + form.id, auth)
+    return put('auth/' + form.id, form)
   }
 
   /**
@@ -32,8 +30,7 @@ export class Auth {
    * @param form 表单数据
    */
   static async addAuth (form) {
-    const auth = new AuthValidator(form, { scene: 'edit' })
-    return post('auth', auth)
+    return post('auth', form)
   }
 
   /**

@@ -1,5 +1,4 @@
 import { del, get, put, post } from 'libs/utils/http'
-import { RoleValidator } from 'libs/validator/RoleValidator'
 
 export class Role {
   /**
@@ -27,16 +26,14 @@ export class Role {
    * admin 修改某个角色的信息
    */
   static changeRoleInfo (e) {
-    const role = new RoleValidator(e, { scene: 'edit' })
-    return put('role/' + e.id, role)
+    return put('role/' + e.id, e)
   }
 
   /**
    * admin 增加一个角色
    */
   static addRole (e) {
-    const role = new RoleValidator(e, { scene: 'edit' })
-    return post('role', role)
+    return post('role', e)
   }
 
   /**

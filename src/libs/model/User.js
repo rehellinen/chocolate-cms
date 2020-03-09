@@ -1,6 +1,5 @@
 import { get, post, del, put, uploadFile } from 'libs/utils/http'
 import { saveTokens } from 'libs/utils/token'
-import { UserValidator } from 'libs/validator/UserValidator'
 
 export class User {
   /**
@@ -22,8 +21,7 @@ export class User {
    * 获取已登录的账户信息
    */
   static async getUser () {
-    const user = await get('user/self')
-    return new UserValidator(user, { scene: 'get' })
+    return get('user/self')
   }
 
   /**
@@ -47,9 +45,7 @@ export class User {
    * admin 获取所有用户信息
    */
   static async getAllUser () {
-    const res = await get('user')
-    res.data = res.data.map(item => new UserValidator(item, { scene: 'get' }))
-    return res
+    return get('user')
   }
 
   /**
@@ -63,16 +59,14 @@ export class User {
    * admin 修改某个用户的信息
    */
   static changeUserInfo (e) {
-    const user = new UserValidator(e, { scene: 'get' })
-    return put('user/' + user.id, user)
+    return put('user/' + e.id, e)
   }
 
   /**
    * admin 增加一个用户
    */
   static addUser (e) {
-    const user = new UserValidator(e, { scene: 'add' })
-    return post('user', user)
+    return post('user', e)
   }
 
   /**
