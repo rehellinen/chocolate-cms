@@ -33,7 +33,7 @@ module.exports = {
       pages: r(`./src/pages`),
       libs: r(`./src/libs`),
       base: r(`./src/libs/base`),
-      mixins: r(`./src/libs/mixins`)
+      mixins: r(`./src/libs/mixins/cmsMixin`)
     },
     modules: [r('node_modules')],
     extensions: ['.vue', '.js', '.json'],

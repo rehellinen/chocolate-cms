@@ -33,7 +33,7 @@ export const custom = [
     title: '上传组件',
     icon: 'el-icon-upload',
     name: 'upload',
-    path: '/upload-file',
+    path: '/file-uploader',
     component: 'pages/upload-file',
     order: 0
   },
