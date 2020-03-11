@@ -124,6 +124,34 @@ export function proxy (target, sourceKey, key) {
   })
 }
 
+// 通过a[x.y]获取a[x][y]
+export function nestedValue (target, key) {
+  Object.defineProperty(target, key, {
+    enumerable: true,
+    configurable: true,
+    get: () => {
+      let val = target
+      const fields = key.split('.')
+      for (let field of fields) {
+        val = val[field] || ''
+      }
+      return val
+    },
+    set: (val) => {
+      const setVal = (ob, k, v) => {
+        if (k.length > 1) {
+          let newK = k[0]
+          k.splice(0, 1)
+          setVal(ob[newK], k, v)
+        } else {
+          ob[k[0]] = v
+        }
+      }
+      setVal(target, key.split('.'), val)
+    }
+  })
+}
+
 // 深度遍历所有节点
 export const deepTraversalAll = (config, cb) => {
   if (Array.isArray(config)) {

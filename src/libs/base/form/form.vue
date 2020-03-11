@@ -100,6 +100,7 @@
 
 <script>
 import config from 'config'
+import { nestedValue } from 'libs/utils'
 
 export default {
   name: 'ChocForm',
@@ -146,6 +147,9 @@ export default {
       }
       if (conf.type === config.FORM.CHECKBOX) {
         this.initCheckBox(conf.name, conf.options)
+      }
+      if (conf.name.includes('.')) {
+        nestedValue(this.formData, conf.name)
       }
     }
   },

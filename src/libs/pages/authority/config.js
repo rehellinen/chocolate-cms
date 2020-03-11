@@ -14,7 +14,7 @@ export const userFormConf = [
   { name: 'account', label: '账号' },
   { name: 'name', label: '名称' },
   { name: 'avatar', label: '头像', type: config.FORM.FILE, limit: 1, accept: 'image/*' },
-  { name: 'roleId',
+  { name: 'role.id',
     label: '分组',
     type: config.FORM.SELECT,
     options: [
@@ -31,7 +31,7 @@ export const userConf = [
   { name: 'name', label: '名称' },
   { name: 'password', label: '密码', hide: true },
   { name: 'avatar', label: '头像', type: config.FORM.FILE, limit: 1, accept: 'image/*' },
-  { name: 'roleId',
+  { name: 'role.id',
     label: '分组',
     type: config.FORM.SELECT,
     options: [
@@ -45,7 +45,7 @@ export const userConf = [
 
 export const passwordFormConf = [
   { name: 'newPassword', label: '新密码', hide: true },
-  { name: 'newPassword1', label: '确认新密码', hide: true }
+  { name: 'newPassword1', label: '确认密码', hide: true }
 ]
 
 export const UserRules = {
@@ -60,9 +60,9 @@ export const passwordRules = {
   newPassword: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   newPassword1: [
     {
+      required: true,
       validator: (rule, value, callback) => {
-        console.log(rule)
-        if (value === '') {
+        if (!value || value === '') {
           callback(new Error('请再次输入密码'))
         } else if (value !== '') {
           callback(new Error('两次输入密码不一致!'))

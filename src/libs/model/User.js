@@ -59,6 +59,7 @@ export class User {
    * admin 修改某个用户的信息
    */
   static changeUserInfo (e) {
+    e.roleId = e['role.id']
     return put('user/' + e.id, e)
   }
 
@@ -66,6 +67,7 @@ export class User {
    * admin 增加一个用户
    */
   static addUser (e) {
+    e.roleId = e['role.id']
     return post('user', e)
   }
 
