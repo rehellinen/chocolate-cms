@@ -128,30 +128,30 @@ export default {
     box-sizing: border-box
     height: 40px
     width: 40px
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.10)
-    border: 3px solid #fff
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.10)
+    border: 3px solid white
     border-radius: 50%
   .user-dropdown
-    width: 300px
-    height: 190px
+    width: 320px
+    height: 210px
     padding: 0
     margin: 0 !important
+    border: 0
     border-radius: 5px
     overflow: hidden
     /deep/ .popper__arrow
       display: none
     .user
-      height: 100px
+      height: 110px
       display: flex
       align-items: center
-      background: url("../../../assets/images/user@bg.jpg")
+      background: $theme-color
       .image
         img
           vertical-align: bottom
           width: 60px
           height: 60px
-          margin: 0 15px
-          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15)
+          margin: 0 20px
           border: 3px solid #fff
           border-radius: 50%
         label
@@ -200,7 +200,7 @@ export default {
           border-radius: 15px
           background-color: rgba(0, 0, 0, 0.1)
     .actions
-      height: 90px
+      height: 100px
       display: flex
       justify-content: space-around
       align-items: center
