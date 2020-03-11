@@ -43,7 +43,7 @@ div.file-uploader
           @click="handleDown(file)"
           )
           i(class="el-icon-right")
-  el-dialog(:visible.sync="dialogVisible")
+  el-dialog.preview(:visible.sync="dialogVisible")
     img(width="100%" :src="dialogImageUrl" alt="")
 </template>
 
@@ -219,5 +219,7 @@ export default {
     width: 148px
     height: 148px
     display: block
+  .preview /deep/ .el-dialog__header
+    border: none !important
 </style>
 

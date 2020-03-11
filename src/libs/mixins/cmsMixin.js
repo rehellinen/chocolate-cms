@@ -1,4 +1,5 @@
 import config from 'config'
+import { Dialog } from 'libs/plugins/dialog'
 
 export const cmsMixin = {
   data () {
@@ -12,13 +13,8 @@ export const cmsMixin = {
       // 面包屑导航栏数据
       bread: [],
       // 表单的配置
-      visible: false,
-      title: '',
-      content: '',
-      cb: () => {},
-      cancel: false,
       form: [],
-      formData: [],
+      formData: {},
       // 展示的数据
       table: [],
       // 表格的配置
@@ -190,14 +186,6 @@ export const cmsMixin = {
       this.bread.pop()
     },
 
-    openDialog ({ title, content, cb, showCancel = !!cb }) {
-      showCancel ? this.showCancel() : this.hideCancel()
-      this.visible = true
-      this.title = title
-      this.content = content
-      this.cb = cb
-    },
-
     /**
      * 获取http请求结果之后，弹出dialog来显示信息
      * @param request http请求
@@ -210,7 +198,7 @@ export const cmsMixin = {
       }
       this.isPending = true
       const res = await request()
-      this.openDialog({
+      Dialog({
         title: '提示',
         content: res.message,
         cb: () => {
@@ -231,7 +219,7 @@ export const cmsMixin = {
      * @private
      */
     async _requestWithQuery ({ content, request }) {
-      this.openDialog({
+      Dialog({
         title: '提示',
         content: content,
         cb: async () => {

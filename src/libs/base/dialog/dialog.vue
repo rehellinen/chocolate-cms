@@ -9,7 +9,7 @@
   )
     span {{content}}
     span(slot="footer" class="dialog-footer")
-      el-button(@click="toCancel" v-if="cancel") 取消
+      el-button(@click="toCancel" v-if="showCancel") 取消
       el-button(@click="toConfirm" type="danger") {{button}}
 </template>
 
@@ -19,7 +19,7 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false
+      default: true
     },
     title: {
       type: String,
@@ -33,7 +33,7 @@ export default {
       type: String,
       default: '确定'
     },
-    cancel: {
+    showCancel: {
       type: Boolean,
       default: false
     },
@@ -52,12 +52,6 @@ export default {
       this.closeDialog()
       this.$emit('cancel')
     },
-    showCancel () {
-      this.cancel = true
-    },
-    hideCancel () {
-      this.cancel = false
-    },
     closeDialog () {
       this.visible = false
     }
@@ -66,5 +60,4 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-
 </style>

@@ -1,12 +1,5 @@
 <template lang="pug">
   div
-    choc-dialog(:visible="visible"
-      :title="title"
-      :content="content"
-      :cb="cb"
-      :cancel="cancel"
-    )
-
     choc-bread(
       @table="toIndex"
       :data="bread"

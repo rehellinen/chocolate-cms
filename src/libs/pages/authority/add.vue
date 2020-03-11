@@ -19,7 +19,6 @@ export default {
   mixins: [cmsMixin],
   data () {
     return {
-      formData: {},
       rules: UserRules
     }
   },

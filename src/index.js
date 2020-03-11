@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import ChocComponents from 'base/index'
+import ChocDialog from 'libs/plugins/dialog'
 
 import App from './App'
 import store from './store'
@@ -25,6 +26,7 @@ Vue.config.errorHandler = function (err, vm, info) {
 
 Vue.use(ElementUI)
 Vue.use(ChocComponents)
+Vue.use(ChocDialog)
 
 const errorHandler = (error, vm) => {
   if (error instanceof Exception) {
