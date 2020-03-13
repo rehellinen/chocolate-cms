@@ -124,7 +124,7 @@ export function proxy (target, sourceKey, key) {
   })
 }
 
-// 通过a[x.y]获取a[x][y]
+// 通过a['x.y']获取a[x][y]
 export function nestedValue (target, key) {
   Object.defineProperty(target, key, {
     enumerable: true,
