@@ -1,5 +1,4 @@
 import config from 'config'
-import { Dialog } from 'libs/plugins/dialog'
 
 export const cmsMixin = {
   data () {
@@ -198,7 +197,7 @@ export const cmsMixin = {
       }
       this.isPending = true
       const res = await request()
-      Dialog({
+      this.$dialog({
         title: '提示',
         content: res.message,
         cb: () => {
@@ -219,7 +218,7 @@ export const cmsMixin = {
      * @private
      */
     async _requestWithQuery ({ content, request }) {
-      Dialog({
+      this.$dialog({
         title: '提示',
         content: content,
         cb: async () => {

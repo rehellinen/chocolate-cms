@@ -1,44 +1,23 @@
-import Vue from 'vue'
 import ChocDialog from 'base/dialog/dialog'
 
-export const Dialog = (opts = {}) => {
+export const install = (Vue, opts = {}) => {
   const DialogConstructor = Vue.extend(ChocDialog)
-  let instance = null
-  // eslint-disable-next-line func-names
-  DialogConstructor.prototype.close = () => {
-    this.visible = false
-  }
+  let instance = new DialogConstructor()
 
-  const getInstance = () => {
-    if (!instance) {
-      instance = new DialogConstructor()
+  Vue.prototype.$dialog = (opts) => {
+    let myInstance = instance
+    if (!myInstance._isMounted) {
+      myInstance.$mount(document.createElement('div'))
     }
-    return instance
-  }
 
-  const elem = document.createElement('div')
-  if (!instance) {
-    let myInstance = getInstance()
-    Vue.prototype.$DialogConstructor = myInstance
-    myInstance.$mount(elem)
+    myInstance.visible = true
     myInstance.title = opts.title || ''
     myInstance.content = opts.content || ''
     myInstance.button = opts.button || '确定'
     myInstance.showCancel = opts.showCancel || true
     myInstance.cb = opts.cb
     document.body.appendChild(myInstance.$el)
-    myInstance.$on('close', () => {
-      myInstance.close()
-      document.body.removeChild(myInstance.$el)
-      myInstance.$destroy()
-      myInstance = null
-      instance = null
-    })
   }
-}
-
-const install = (Vue, options = {}) => {
-  Vue.prototype.$dialog = Dialog
 }
 
 export default install
