@@ -95,10 +95,6 @@ export default {
       this.toIndex()
     },
     changePassword (e) {
-      if (e.newPassword !== e.newPassword1) {
-        this.$message.error('两次新密码不一致')
-        return
-      }
       this.model.changeUserPw(e.id, e.newPassword).then(res => {
         this.$message.success(res.message)
         this.getTable()

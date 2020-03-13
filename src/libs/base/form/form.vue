@@ -152,6 +152,12 @@ export default {
         nestedValue(this.formData, conf.name)
       }
     }
+    for (let value of Object.values(this.rules)) {
+      if (value[0].confirm) {
+        let item = value[0].confirm
+        value[0].validator = this.confirmAgain(item.name, item.desc)
+      }
+    }
   },
   methods: {
     async onSubmit () {
@@ -263,6 +269,17 @@ export default {
       }
       if (this.indeterminateGroup.indexOf(name) === -1) {
         this.indeterminateGroup.push(name)
+      }
+    },
+    confirmAgain (key, desc) {
+      return (rule, value, callback) => {
+        if (!value) {
+          callback(new Error('请输入' + desc))
+        } else if (value !== this.formData[key]) {
+          callback(new Error('两次输入' + desc + '不一致!'))
+        } else {
+          callback()
+        }
       }
     }
   }

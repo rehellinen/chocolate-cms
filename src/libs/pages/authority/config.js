@@ -61,14 +61,9 @@ export const passwordRules = {
   newPassword1: [
     {
       required: true,
-      validator: (rule, value, callback) => {
-        if (!value || value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== '') {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
+      confirm: {
+        name: 'newPassword',
+        desc: '密码'
       },
       trigger: 'blur'
     }]
