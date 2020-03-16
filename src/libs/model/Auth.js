@@ -2,14 +2,6 @@ import { del, get, post, put } from 'libs/utils/http'
 
 export class Auth {
   /**
-   * 获取当前用户拥有的权限
-   */
-  static async getUserAuth () {
-    const auth = await get('/auth/self', { scene: 'get' })
-    return auth
-  }
-
-  /**
    * 获取所有权限
    */
   static async getAllAuth () {
