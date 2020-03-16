@@ -61,15 +61,14 @@ export default {
       }
     }
   },
-  created () {
-    this.init()
+  async created () {
+    await this.init()
   },
   methods: {
-    init () {
-      User.getUser().then(res => {
-        this.avatar = res.avatar !== 'no' ? res.avatar : this.avatar
-        this.username = res.name
-      })
+    async init () {
+      const res = await User.getUser()
+      this.avatar = res.avatar !== 'no' ? res.avatar : this.avatar
+      this.username = res.name
     },
     editPwd () {
       this.formData = {}
