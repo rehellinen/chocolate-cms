@@ -55,12 +55,11 @@ export default {
       this.setTable(manageTableConf)
       this.setSearch(manageTableConf)
     },
-    getTable () {
-      this.model.getAllRole().then(res => {
-        this.setPage(res)
-        this.table = res.data
-        this.loading = false
-      })
+    async getTable () {
+      const res = this.model.getAllRole()
+      this.setPage(res)
+      this.table = res.data
+      this.loading = false
     },
     async editAuth (index, row) {
       this.formData = { id: row.id, auth: [] }
@@ -102,16 +101,15 @@ export default {
       this.getTable()
       this.toIndex()
     },
-    changeAuth (e) {
+    async changeAuth (e) {
       if (e.auth.length === 0) {
         this.$message.error('请设置分组权限')
         return
       }
-      this.model.editRoleAuth(e.id, e.auth).then(res => {
-        this.$message.success('修改分组权限成功')
-        this.getTable()
-        this.toIndex()
-      })
+      await this.model.editRoleAuth(e.id, e.auth)
+      this.$message.success('修改分组权限成功')
+      this.getTable()
+      this.toIndex()
     }
   }
 }

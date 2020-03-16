@@ -94,12 +94,11 @@ export default {
       this.getTable()
       this.toIndex()
     },
-    changePassword (e) {
-      this.model.changeUserPw(e.id, e.newPassword).then(res => {
-        this.$message.success(res.message)
-        this.getTable()
-        this.toIndex()
-      })
+    async changePassword (e) {
+      const res = await this.model.changeUserPw(e.id, e.newPassword)
+      this.$message.success(res.message)
+      this.getTable()
+      this.toIndex()
     }
   }
 }

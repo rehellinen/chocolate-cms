@@ -47,11 +47,9 @@ export default {
       this.setTable(manageTableConf)
       this.setSearch(manageTableConf)
     },
-    getTable () {
-      this.model.getAllAuth().then(res => {
-        this.table = res
-        this.loading = false
-      })
+    async getTable () {
+      this.table = await this.model.getAllAuth()
+      this.loading = false
     },
     async toSubmit (e) {
       await this.model.changeAuth(e)
