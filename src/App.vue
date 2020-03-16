@@ -1,6 +1,6 @@
 <template lang="pug">
   el-container.wrapper
-    template(v-if="isLoginPage")
+    template(v-if="hideMenuAndTop")
       el-main
         transition(name="router-view" mode="out-in")
           router-view
@@ -40,7 +40,7 @@ export default {
   },
   data () {
     return {
-      isLoginPage: false
+      hideMenuAndTop: true
     }
   },
   computed: {
@@ -49,25 +49,31 @@ export default {
         ? '65px'
         : '190px'
     },
-    ...mapGetters(['isMenuCollapse', 'isPhone'])
+    ...mapGetters(['isMenuCollapse', 'isPhone', 'isLogined'])
   },
   watch: {
-    $route () {
-      this.updateLayout()
-      if (this.isPhone && !this.isMenuCollapse) {
-        this.changeMenuCollapseStatus()
+    $route: {
+      immediate: true,
+      handler () {
+        this.hideMenuAndTop = this.$route.path === '/login'
+        console.log(this.isLogined)
+        if (this.$route.path === '/login' ||
+          (this.$route.path === '/404' && !this.isLogined)) {
+          this.hideMenuAndTop = true
+        } else {
+          this.hideMenuAndTop = false
+        }
+        if (this.isPhone && !this.isMenuCollapse) {
+          this.changeMenuCollapseStatus()
+        }
       }
     }
   },
   created () {
-    this.updateLayout()
     this.setSize()
     this.setEvent()
   },
   methods: {
-    updateLayout () {
-      this.isLoginPage = this.$route.path === '/login'
-    },
     setEvent () {
       window.addEventListener('resize', (event) => this.setSize())
     },

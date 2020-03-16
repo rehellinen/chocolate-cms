@@ -16,25 +16,17 @@ import { Exception } from 'libs/exceptions'
 import 'sass/reset.sass'
 import 'assets/theme/element-variables.scss'
 
-Vue.config.errorHandler = function (err, vm, info) {
-  if (err instanceof Exception) {
-    console.error(err.message)
-  } else {
-    throw err
-  }
-}
-
 Vue.use(ElementUI)
 Vue.use(ChocComponents)
 Vue.use(ChocDialog)
 
-const errorHandler = (error, vm) => {
+Vue.config.errorHandler = (error, vm) => {
   if (error instanceof Exception) {
-    console.log('自定义异常，不处理')
+    console.log(`自定义异常：${error.message}`)
+  } else {
+    throw error
   }
 }
-
-Vue.config.errorHandler = errorHandler
 
 /* eslint-disable no-new */
 new Vue({

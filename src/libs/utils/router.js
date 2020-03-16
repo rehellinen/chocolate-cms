@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { deepTraversalLeaf, getAllConfig } from 'libs/utils'
+import store from '../../store'
 
 Vue.use(Router)
 // TODO: 移动权限、日志页面到libs下面；路由配置支持redirect
@@ -9,15 +10,20 @@ const processConfig = () => {
 
   const routers = []
   const addRouter = (config) => {
-    routers.push({
+    let routerConfig = {
       name: config.name,
       path: config.path,
       component: () => import(`../../${config.component}`),
       meta: {
         title: config.title,
-        icon: config.icon
+        icon: config.icon,
+        auth: config.auth
       }
-    })
+    }
+    if (config.others) {
+      routerConfig = Object.assign(routerConfig, config.others)
+    }
+    routers.push(routerConfig)
   }
   deepTraversalLeaf(allConfig, addRouter)
   return routers
@@ -34,8 +40,35 @@ export const router = new Router({
 
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title
+  if (to.path === '/login') {
+    next()
+    return
   }
-  next()
+  let hasAuth = false
+  const { auth, user, isLogined } = store.getters
+  // 超级管理员拥有所有权限
+  if (user && user.isAdmin) {
+    hasAuth = true
+  }
+
+  if (!to.meta.auth) {
+    hasAuth = true
+  } else {
+    if (auth.some(auth => to.meta.auth.includes(auth.name))) {
+      hasAuth = true
+    }
+  }
+  if (hasAuth) {
+    if (to.meta.title) {
+      document.title = to.meta.title
+    }
+    next()
+  } else {
+    Vue.prototype.$notify({
+      title: '无权限访问此页面'
+    })
+    if (!isLogined) {
+      next({ path: '/login' })
+    }
+  }
 })

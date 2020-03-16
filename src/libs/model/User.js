@@ -3,6 +3,14 @@ import { saveTokens } from 'libs/utils/token'
 
 export class User {
   /**
+   * 获取当前用户拥有的权限
+   */
+  static async getUserAuth () {
+    const auth = await get('/user/self/auth', {}, { throwErr: true })
+    return auth
+  }
+
+  /**
    * 登录
    * @param account 账号
    * @param password 密码
@@ -12,7 +20,9 @@ export class User {
       account,
       password
     }
-    const res = await post('/user/login', data)
+    const res = await post('/user/login', data, {
+      throwErr: true
+    })
     saveTokens(res.accessToken, res.refreshToken)
     return res
   }

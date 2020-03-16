@@ -19,7 +19,9 @@ export const framework = [
     // 数值越大，越在前面显示
     order: 9999,
     // 子菜单
-    children: []
+    children: [],
+    // 设置权限，super_admin表示超级管理员特有权限
+    auth: ['super_admin']
   },
   {
     show: true,
@@ -53,7 +55,8 @@ export const framework = [
         name: 'auth',
         path: '/auth',
         component: 'libs/pages/authority',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: false,
@@ -62,7 +65,8 @@ export const framework = [
         name: 'user-edit',
         path: '/auth/edit',
         component: 'libs/pages/form/index',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: true,
@@ -71,7 +75,8 @@ export const framework = [
         name: 'user-add',
         path: '/auth/add',
         component: 'libs/pages/authority/add',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: true,
@@ -80,7 +85,8 @@ export const framework = [
         name: 'role-manage',
         path: '/auth/role/manage',
         component: 'libs/pages/authority/role/manage',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: true,
@@ -89,7 +95,8 @@ export const framework = [
         name: 'role-add',
         path: '/auth/role/add',
         component: 'libs/pages/authority/role/add',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: true,
@@ -98,7 +105,8 @@ export const framework = [
         name: 'auth-manage',
         path: '/auth/auth/manage',
         component: 'libs/pages/authority/auth/manage',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       },
       {
         show: true,
@@ -107,7 +115,8 @@ export const framework = [
         name: 'auth-add',
         path: '/auth/auth/add',
         component: 'libs/pages/authority/auth/add',
-        order: 0
+        order: 0,
+        auth: ['super_admin']
       }
     ]
   },
@@ -118,6 +127,7 @@ export const framework = [
     name: 'log',
     path: '/log',
     component: 'pages/log',
-    order: 2
+    order: 2,
+    auth: ['super_admin']
   }
 ]

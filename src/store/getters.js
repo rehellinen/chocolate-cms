@@ -46,6 +46,14 @@ const getters = {
   },
   getMenuByPath: (state, getter) => (path) => {
     return getter.plainMenus.find(item => item.path === path)
+  },
+  user: state => state.user,
+  auth: state => state.auth,
+  isLogined: state => {
+    console.log(state.user)
+    return state.user
+      ? Object.keys(state.user).length !== 0
+      : false
   }
 }
 

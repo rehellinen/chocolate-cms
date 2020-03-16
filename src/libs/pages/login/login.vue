@@ -8,8 +8,9 @@
 </template>
 
 <script>
-import { User } from 'libs/model/User'
+import { User } from 'libs/model'
 import { mapActions } from 'vuex'
+import { Exception, ParamsException } from 'libs/exceptions'
 
 export default {
   data () {
@@ -26,16 +27,18 @@ export default {
       try {
         await User.getToken(account, pwd)
         const user = await User.getUser()
-        // const auth = await User.getAuth()
+        const auth = await User.getUserAuth()
         this.setUser(user)
-        // this.setAuth(auth)
+        this.setAuth(auth)
         this.$message.success('登陆成功')
         this.$router.push('/')
       } catch (e) {
-        this.$message({
-          message: e.message,
-          type: 'error'
-        })
+        if (e instanceof Exception && !(e instanceof ParamsException)) {
+          this.$message({
+            message: e.message,
+            type: 'error'
+          })
+        }
       }
     },
     ...mapActions(['setUser', 'setAuth'])
