@@ -67,9 +67,6 @@ const processParamsError = (res, throwErr = false) => {
   const { status, data } = res
   // 处理参数错误的情况
   if (status === 400) {
-    if (throwErr) {
-      throw new ParamsException(data.message, res)
-    }
     for (const [key, val] of Object.entries(data.data)) {
       for (let msg of val) {
         setTimeout(() => {
@@ -81,6 +78,9 @@ const processParamsError = (res, throwErr = false) => {
           })
         }, 0)
       }
+    }
+    if (throwErr) {
+      throw new ParamsException(data.message, res)
     }
   }
 }
@@ -100,6 +100,7 @@ const processRefreshTokenError = (response) => {
       })
       // TODO: 退出登录
       window.location.href = window.location.origin + '/#/login'
+      throw new NoAuthority('refresh token已过期')
     }
   }
 }
