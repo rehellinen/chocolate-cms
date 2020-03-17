@@ -49,20 +49,13 @@ export default {
         ? '65px'
         : '190px'
     },
-    ...mapGetters(['isMenuCollapse', 'isPhone', 'isLogined'])
+    ...mapGetters(['isMenuCollapse', 'isPhone', 'isLogin'])
   },
   watch: {
     $route: {
       immediate: true,
       handler () {
-        this.hideMenuAndTop = this.$route.path === '/login'
-        console.log(this.isLogined)
-        if (this.$route.path === '/login' ||
-          (this.$route.path === '/404' && !this.isLogined)) {
-          this.hideMenuAndTop = true
-        } else {
-          this.hideMenuAndTop = false
-        }
+        this.hideMenuAndTop = !this.isLogin
         if (this.isPhone && !this.isMenuCollapse) {
           this.changeMenuCollapseStatus()
         }
