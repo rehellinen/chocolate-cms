@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { User } from 'libs/model/User'
 import MyForm from 'libs/base/form/form'
 import { passwordFormConf } from './config'
@@ -77,8 +78,6 @@ export default {
     },
     lock () {
     },
-    logout () {
-    },
     editName () {
       this.isEditingName = true
       this.$nextTick(() => this.$refs.nameInput.focus())
@@ -115,7 +114,8 @@ export default {
           this.$message.error(res.message)
         }
       })
-    }
+    },
+    ...mapActions(['logout'])
   }
 }
 </script>
