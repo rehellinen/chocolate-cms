@@ -1,6 +1,7 @@
 import axios from 'axios'
 import config from 'config'
 import Vue from 'vue'
+import store from '@/store'
 import { getAccessToken, getRefreshToken, saveAccessToken } from 'libs/utils/token'
 import { ParamsException, NoAuthority } from 'libs/exceptions'
 
@@ -39,7 +40,7 @@ const addAuthHeader = (conf) => {
   const token = conf.url === REFRESH_URL
     ? getRefreshToken()
     : getAccessToken()
-  if (token !== 'undefined') {
+  if (token) {
     conf.headers.Authorization = `Bearer ${token}`
   }
 }
@@ -98,8 +99,7 @@ const processRefreshTokenError = (response) => {
         message: data.message,
         type: 'error'
       })
-      // TODO: 退出登录
-      window.location.href = window.location.origin + '/#/login'
+      store.dispatch('logout')
       throw new NoAuthority('refresh token已过期')
     }
   }
