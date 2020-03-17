@@ -50,6 +50,7 @@ export default {
       .el-button
         padding: 10px 20px
         background-color: $primary
+        border: none
         &:hover
           background-color: $blue
       .copyright
