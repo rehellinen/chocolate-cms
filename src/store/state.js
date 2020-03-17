@@ -12,8 +12,6 @@ const state = {
   isMenuCollapse: false,
   // 是否为手机
   isPhone: false,
-  // 是否登录
-  isLogin: false,
   // 当前登录的用户信息
   user: {},
   // 当前用户拥有的权限

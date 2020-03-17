@@ -18,10 +18,6 @@ export const mutations = {
     state.isPhone = status
   },
 
-  [types.SET_LOGIN] (state, login) {
-    state.isLogin = login
-  },
-
   [types.SET_USER] (state, user) {
     state.user = user
   },

@@ -1,4 +1,5 @@
 import { types } from './mutation-types'
+import { removeToken } from 'libs/utils'
 
 const actions = {
   changeMenuCollapseStatus ({ commit, state }) {
@@ -10,12 +11,18 @@ const actions = {
   },
 
   setUser ({ commit }, user) {
-    commit(types.SET_LOGIN, true)
     commit(types.SET_USER, user)
   },
 
   setAuth ({ commit }, auth) {
     commit(types.SET_AUTH, auth)
+  },
+
+  logout ({ commit }) {
+    window.location.href = window.location.origin + '/#/login'
+    removeToken()
+    commit(types.SET_USER, {})
+    commit(types.SET_AUTH, [])
   }
 }
 
