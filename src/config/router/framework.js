@@ -29,7 +29,7 @@ export const framework = [
     icon: 'el-icon-circle-close',
     name: '404',
     path: '/404',
-    component: 'pages/not-found/not-found',
+    component: 'libs/pages/not-found/not-found',
     order: 0
   },
   {
