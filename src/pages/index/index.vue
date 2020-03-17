@@ -27,14 +27,10 @@ export default {
     }
   },
   methods: {
-    _initCMS () {
+    async _initCMS () {
       this.setModel(Model)
-      this.model.getCount().then(res => {
-        this.data = res
-      })
-      this.model.getProgress().then(res => {
-        this.progress = res
-      })
+      this.data = await this.model.getCount()
+      this.progress = await this.model.getProgress()
     }
   }
 }
