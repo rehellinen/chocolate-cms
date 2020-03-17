@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
     return
   }
   let hasAuth = false
-  const { auth, user, isLogined } = store.getters
+  const { auth, user, isLogin } = store.getters
   // 超级管理员拥有所有权限
   if (user && user.isAdmin) {
     hasAuth = true
@@ -64,11 +64,15 @@ router.beforeEach((to, from, next) => {
     }
     next()
   } else {
-    Vue.prototype.$notify({
-      title: '无权限访问此页面'
-    })
-    if (!isLogined) {
+    if (!isLogin) {
       next({ path: '/login' })
+      Vue.prototype.$notify({
+        title: '请登录'
+      })
+    } else {
+      Vue.prototype.$notify({
+        title: '无权限访问此页面'
+      })
     }
   }
 })
