@@ -1,5 +1,5 @@
 <template lang="pug">
-  .not-found
+  .not-found(:class="{ 'is-login': !isLogin }")
     .card.el-col-22.el-col-xs-24
       p.title 404
       .desc
@@ -11,7 +11,13 @@
 </template>
 
 <script>
-export default {}
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters(['isLogin'])
+  }
+}
 </script>
 
 <style lang="sass" scoped>
@@ -20,6 +26,9 @@ export default {}
     width: 100%
     display: flex
     justify-content: center
+    &.is-login
+      height: 100%
+      align-items: center
     .card
       @include card(50px, 0)
       text-align: center
