@@ -11,7 +11,8 @@
               i.el-icon-edit
               input(@change="uploadImage" accept="image/*" type="file" ref="imageInput")
           .desc
-            p.title(@click="editName" v-show="!isEditingName") {{ username }}
+            p.title(v-show="!isEditingName") {{ username }}
+              i.el-icon-edit(@click="editName")
             el-input(
               @blur="nameBlur"
               placeholder="请输入用户名"
@@ -20,7 +21,7 @@
               v-model="username"
               v-show="isEditingName"
             )
-            span.auth 超级管理员
+            p.auth {{ user.role.name }}
         ul.actions
           li(@click="editPwd")
             i.el-icon-edit
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { User } from 'libs/model/User'
 import MyForm from 'libs/base/form/form'
 import { passwordFormConf } from './config'
@@ -61,6 +62,9 @@ export default {
         form: []
       }
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   async created () {
     await this.init()
@@ -160,8 +164,8 @@ export default {
           width: 60px
           height: 60px
           position: absolute
-          left: 18px
-          top: 20px
+          left: 23px
+          top: 25px
           display: flex
           justify-content: center
           align-items: center
@@ -182,20 +186,25 @@ export default {
           font-weight: bold
           letter-spacing: 1px
           height: 25px
-          margin-bottom: 3px
+          .el-icon-edit
+            font-size: $normal-font-size
+            margin-left: 10px
+            cursor: pointer
         .el-input
           height: 25px
           line-height: 25px
-          margin-bottom: 3px
           /deep/ .el-input__inner
             height: 25px
             padding: 0 5px
             &:hover, &:focus
               border-color: #DCDFE6
         .auth
-          font-size: $smaller-font-size
+          display: inline-block
+          text-align: center
+          font-size: $smallest-font-size
           border: 1px solid $gray
-          padding: 1px 7px
+          padding: 1px 15px
+          margin-top: 5px
           border-radius: 15px
           background-color: rgba(0, 0, 0, 0.1)
     .actions
