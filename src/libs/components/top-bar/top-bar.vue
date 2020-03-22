@@ -79,10 +79,6 @@ export default {
     }
   },
   created () {
-    // 关闭窗口时保存history
-    window.addEventListener('beforeunload', () => {
-      this.saveTab()
-    })
     this.init()
   },
   methods: {
@@ -92,6 +88,10 @@ export default {
       this.saveTab()
     },
     init () {
+      // 关闭窗口时保存history
+      window.addEventListener('beforeunload', () => {
+        this.saveTab()
+      })
       if (this.history.length === 0) {
         const storage = localStorage.getItem(this.historyStorageKey)
         if (storage) {
