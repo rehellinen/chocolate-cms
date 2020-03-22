@@ -3,7 +3,7 @@
     .progress-items(v-for="(item, index) in data" :key="index")
       .title {{item.title}}
       el-progress(
-      :percentage="50"
+      :percentage="item.percentage || 50"
       :type="type"
       :stroke-width="12"
       :class="'el-progress-'+ item.color"
