@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    choc-card(:data="data" :cardConf="cardConf")
+    choc-card(:data="card" :cardConf="cardConf")
     el-row(:gutter="20")
       el-col(:md="12" :sm="24")
         choc-progress-bar.card(:data="progress")
@@ -22,14 +22,14 @@ export default {
         { color: 'linear-gradient(230deg, #ffc480, #ff763b)', icon: 'el-icon-user' },
         { color: 'linear-gradient(230deg, #0e4cfd, #6a8eff)', icon: 'el-icon-bell' }
       ],
-      data: [],
+      card: [],
       progress: []
     }
   },
   methods: {
     async _initCMS () {
       this.setModel(Model)
-      this.data = await this.model.getCount()
+      this.card = await this.model.getCount()
       this.progress = await this.model.getProgress()
     }
   }
