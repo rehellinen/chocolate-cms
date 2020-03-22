@@ -85,6 +85,8 @@ export default {
     opacity: 0
 
   .left-menu
+    &::-webkit-scrollbar
+      display: none
     height: 100%
     background-color: white
     overflow-x: hidden
@@ -117,6 +119,10 @@ export default {
     background: linear-gradient(230deg, rgb(244, 121, 133), #843cf6)
     border-bottom: 1px solid $border-one
     cursor: pointer
+    position: sticky
+    top: 0
+    left: 0
+    z-index: 10
     p
       color: white
       font-weight: bold
