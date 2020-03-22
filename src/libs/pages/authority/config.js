@@ -56,6 +56,7 @@ export const UserRules = {
   roleId: [{ required: true, message: '请选择分组', trigger: 'blur' }]
 }
 
+// TODO：支持自定义函数
 export const passwordRules = {
   newPassword: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   newPassword1: [
