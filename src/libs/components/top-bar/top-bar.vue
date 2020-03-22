@@ -9,6 +9,8 @@
     .operation
       message
       personal
+      .close-all(@click="closeAll")
+        i.el-icon-circle-close
     swiper.history(v-if="showHistory" :options="swiperOption")
       swiper-slide.tab(v-for="(item, index) in history" :key="item.path")
         router-link(
@@ -79,16 +81,22 @@ export default {
   created () {
     // 关闭窗口时保存history
     window.addEventListener('beforeunload', () => {
-      localStorage.setItem(this.historyStorageKey, JSON.stringify(this.history))
+      this.saveTab()
     })
     this.init()
   },
   methods: {
+    closeAll () {
+      const item = this.history.find(route => this.$route.path === route.path)
+      this.history = [item]
+      this.saveTab()
+    },
     init () {
       if (this.history.length === 0) {
-        this.history = JSON.parse(
-          localStorage.getItem(this.historyStorageKey)
-        ) || []
+        const storage = localStorage.getItem(this.historyStorageKey)
+        if (storage) {
+          this.history = JSON.parse(storage)
+        }
       }
     },
     // 关闭其中一个Tab
@@ -103,6 +111,9 @@ export default {
         }
       }
       this.history.splice(index, 1)
+    },
+    saveTab () {
+      localStorage.setItem(this.historyStorageKey, JSON.stringify(this.history))
     },
     ...mapActions(['changeMenuCollapseStatus'])
   }
@@ -189,5 +200,23 @@ export default {
         position: absolute
         top: 3px
         right: 3px
+  .close-all
+    box-sizing: border-box
+    display: flex
+    justify-content: center
+    align-items: center
+    position: absolute
+    margin-top: 31px
+    margin-left: 73px
+    z-index: 100
+    height: 30px
+    width: 30px
+    background-color: white
+    border-left: 1px solid rgba(0, 0, 0, 0.10)
+    cursor: pointer
+    i
+      font-size: $big-font-size
+      color: $minor-font-color
+      margin-top: 1px
   .de
 </style>
