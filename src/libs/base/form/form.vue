@@ -133,7 +133,7 @@ export default {
       indeterminateGroup: []
     }
   },
-  created () {
+  mounted () {
     for (let conf of this.config) {
       if (conf.type === config.FORM.EDITOR) {
         this.$refs.editor[0].setContent(this.formData[conf.name])
