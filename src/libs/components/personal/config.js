@@ -6,3 +6,21 @@ export const passwordFormConf = {
     { name: 'newPassword1', label: '确认新密码', hide: true }
   ]
 }
+
+export const lockedFormConf = {
+  name: '锁定',
+  form: [
+    { name: 'password', label: '锁定密码', hide: true }
+  ]
+}
+
+export const unlockedFormConf = {
+  name: '解锁',
+  form: [
+    { name: 'password', label: '解锁密码', hide: true }
+  ]
+}
+
+export const passwordRules = {
+  password: [{ required: true, message: '请输入六位密码', trigger: 'blur', min: 6, max: 6 }]
+}

@@ -44,8 +44,17 @@ router.beforeEach((to, from, next) => {
     next()
     return
   }
+  const { auth, user, isLogin, isLocked } = store.getters
+  // 判断页面是否锁定
+  if (isLocked) {
+    Vue.prototype.$notify({
+      title: '页面已锁定，请先解锁'
+    })
+    return
+  }
+
+  // 判断用户是否拥有权限
   let hasAuth = false
-  const { auth, user, isLogin } = store.getters
   // 超级管理员拥有所有权限
   if (user && user.isAdmin) {
     hasAuth = true

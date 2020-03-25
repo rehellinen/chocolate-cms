@@ -15,7 +15,9 @@ const state = {
   // 当前登录的用户信息
   user: {},
   // 当前用户拥有的权限
-  auth: []
+  auth: [],
+  // 当前的锁定状态
+  isLocked: false
 }
 
 export { state }

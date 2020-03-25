@@ -28,7 +28,7 @@
             p 修改密码
           li(@click="lock")
             i.el-icon-lock
-            p 锁定
+            p {{ isLocked ? '解锁' : '锁定' }}
           li(@click="logout")
             i.el-icon-user
             p 退出账户
@@ -36,6 +36,7 @@
       my-form(
         :config="formConf.form"
         :form-data="formData"
+        :rules="rules"
         @submit="toSubmit"
       )
 </template>
@@ -44,7 +45,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { User } from 'libs/model/User'
 import MyForm from 'libs/base/form/form'
-import { passwordFormConf } from './config'
+import { passwordFormConf, lockedFormConf, unlockedFormConf, passwordRules } from './config'
 
 export default {
   components: {
@@ -60,11 +61,13 @@ export default {
       formConf: {
         name: '',
         form: []
-      }
+      },
+      lockedPassword: '',
+      rules: []
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'isLocked'])
   },
   async created () {
     await this.init()
@@ -79,8 +82,17 @@ export default {
       this.formData = {}
       this.dialogFormVisible = true
       this.formConf = passwordFormConf
+      this.rules = []
     },
     lock () {
+      this.formData = {}
+      this.dialogFormVisible = true
+      this.rules = passwordRules
+      if (this.isLocked) {
+        this.formConf = unlockedFormConf
+      } else {
+        this.formConf = lockedFormConf
+      }
     },
     editName () {
       this.isEditingName = true
@@ -106,6 +118,11 @@ export default {
       ele.value = ''
     },
     toSubmit (e) {
+      if (this.formConf.name === '修改密码') this.changePw(e)
+      else if (this.formConf.name === '锁定') this.lockedPage(e)
+      else if (this.formConf.name === '解锁') this.unlockedPage(e)
+    },
+    changePw (e) {
       if (e.newPassword !== e.newPassword1) {
         this.$message.error('两次新密码不一致')
         return
@@ -119,7 +136,23 @@ export default {
         }
       })
     },
-    ...mapActions(['logout'])
+    lockedPage (e) {
+      this.lockedPassword = e.password
+      this.setLocked(true)
+      this.dialogFormVisible = false
+      this.$message.success('锁定成功')
+    },
+    unlockedPage (e) {
+      if (this.lockedPassword === e.password) {
+        this.password = ''
+        this.setLocked(false)
+        this.dialogFormVisible = false
+        this.$message.success('解锁成功')
+      } else {
+        this.$message.error('解锁密码错误')
+      }
+    },
+    ...mapActions(['logout', 'setLocked'])
   }
 }
 </script>

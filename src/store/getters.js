@@ -53,7 +53,8 @@ const getters = {
     return state.user
       ? Object.keys(state.user).length !== 0
       : false
-  }
+  },
+  isLocked: state => state.isLocked
 }
 
 export { getters }
