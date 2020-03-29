@@ -2,47 +2,31 @@
   div.container
     el-form(ref="form" :model="form" label-width="80px")
       p.title Chocolate Disco
-      el-input(v-model="form.account" placeholder="请输入用户名")
-      el-input(v-model="form.pwd" placeholder="请输入密码" show-password)
-      el-button(@click="login") 登录
+      el-input(v-model="form.pwd" placeholder="请输入锁定密码解锁" show-password)
+      el-button(@click="unlocked") 解锁
 </template>
 
 <script>
-import { User } from 'libs/model'
-import { mapActions } from 'vuex'
-import { Exception, ParamsException } from 'libs/exceptions'
 
 export default {
   data () {
     return {
       form: {
-        account: '',
         pwd: ''
       }
     }
   },
   methods: {
-    async login (e) {
-      const { account, pwd } = this.form
-      try {
-        await User.getToken(account, pwd)
-        const user = await User.getUser()
-        const auth = await User.getUserAuth()
-        this.setUser(user)
-        this.setAuth(auth)
+    unlocked () {
+      let password = window.atob(localStorage.getItem('lockedPwd'))
+      if (password === this.form.pwd) {
         localStorage.setItem('lockedPwd', '')
-        this.$message.success('登陆成功')
         this.$router.push('/')
-      } catch (e) {
-        if (e instanceof Exception && !(e instanceof ParamsException)) {
-          this.$message({
-            message: e.message,
-            type: 'error'
-          })
-        }
+        this.$message.success('解锁成功')
+      } else {
+        this.$message.error('解锁密码错误')
       }
-    },
-    ...mapActions(['setUser', 'setAuth'])
+    }
   }
 }
 </script>

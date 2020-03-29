@@ -1,4 +1,4 @@
 export * from './exceptions'
-export * from './mixins/cmsMixin'
+export * from './mixins'
 export * from './model'
 export * from './utils'

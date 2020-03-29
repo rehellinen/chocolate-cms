@@ -44,15 +44,27 @@ router.beforeEach((to, from, next) => {
     next()
     return
   }
-  const { auth, user, isLogin, isLocked } = store.getters
+  const isLocked = localStorage.getItem('lockedPwd') !== ''
+  if (to.path === '/lock') {
+    if (isLocked) {
+      next()
+    } else {
+      Vue.prototype.$notify({
+        title: '无权访问锁定页面'
+      })
+    }
+    return
+  }
   // 判断页面是否锁定
   if (isLocked) {
+    next({ path: '/lock' })
     Vue.prototype.$notify({
       title: '页面已锁定，请先解锁'
     })
     return
   }
 
+  const { auth, user, isLogin } = store.getters
   // 判断用户是否拥有权限
   let hasAuth = false
   // 超级管理员拥有所有权限

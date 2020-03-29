@@ -40,6 +40,13 @@ export const framework = [
     component: 'libs/pages/login/login'
   },
   {
+    show: false,
+    title: '锁定',
+    name: 'lock',
+    path: '/lock',
+    component: 'libs/pages/lock/lock'
+  },
+  {
     show: true,
     title: '权限管理',
     icon: 'el-icon-s-operation',

@@ -55,7 +55,8 @@ export default {
     $route: {
       immediate: true,
       handler () {
-        this.hideMenuAndTop = !this.isLogin
+        let hideMenuAndTopPage = ['login', 'lock']
+        this.hideMenuAndTop = hideMenuAndTopPage.includes(this.$route.name)
         if (this.isPhone && !this.isMenuCollapse) {
           this.changeMenuCollapseStatus()
         }

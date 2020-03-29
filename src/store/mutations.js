@@ -24,9 +24,5 @@ export const mutations = {
 
   [types.SET_AUTH] (state, auth) {
     state.auth = auth
-  },
-
-  [types.SET_LOCKED] (state, locked) {
-    state.isLocked = locked
   }
 }
