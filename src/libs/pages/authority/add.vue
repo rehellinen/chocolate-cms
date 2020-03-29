@@ -19,7 +19,12 @@ export default {
   mixins: [cmsMixin],
   data () {
     return {
-      rules: UserRules
+      rules: UserRules,
+      formData: {
+        role: {
+          id: ''
+        }
+      }
     }
   },
   methods: {

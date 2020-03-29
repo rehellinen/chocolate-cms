@@ -56,7 +56,7 @@ export default {
       this.setSearch(manageTableConf)
     },
     async getTable () {
-      const res = this.model.getAllRole()
+      const res = await this.model.getAllRole()
       this.setPage(res)
       this.table = res.data
       this.loading = false

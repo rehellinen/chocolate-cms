@@ -6,7 +6,7 @@
         v-for="(conf, index) in config"
         :label="conf.label + '：'"
         :key="index"
-        :prop="conf.name"
+        :prop="conf.name.toString()"
       )
         el-input(
           v-if="!conf.type || conf.type === inputType.INPUT"

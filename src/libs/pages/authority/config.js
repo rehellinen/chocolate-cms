@@ -53,7 +53,7 @@ export const UserRules = {
   name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   avatar: [{ required: true, message: '请选择头像', trigger: 'blur' }],
-  roleId: [{ required: true, message: '请选择分组', trigger: 'blur' }]
+  'role.id': [{ required: true, message: '请选择分组', trigger: 'blur' }]
 }
 
 // TODO：支持自定义函数
