@@ -1,18 +1,24 @@
 /* eslint-disable */
 <template lang="pug">
   .log
-    search(:searchConf="users")
+    search(:searchConf="users" @search="toSearch")
     transition(name="fade")
       .search(v-if="keyword")
         .search-tip
-          p 搜索“
+          p 搜索"
           span.search-keyword {{ keyword }}
-          p ”，找到
-          span.search-num {{ totalCount  }}
+          p "，找到
+          span.search-num {{ totalCount }}
           p 条日志信息
         button.search-back(@click="backInit") 返回全部日志
     .content
-
+      article(v-loading="loading")
+        section(v-for="log in logs" :key="log.id")
+          p.brief {{ log }}
+    el-divider
+    .more
+      span(v-show="!finished") 查看更多
+      span.no(v-show="finished") {{  totalCount === 0 ? '暂无数据' : '没有更多数据了' }}
 </template>
 
 <script>
@@ -25,129 +31,33 @@ export default {
   },
   data () {
     return {
-      log: null,
       value: '',
-      logs: [],
+      logs: ['user 2020.10.10-14:51 登录', 'user 2020.10.10-14:53 登录', 'user 2020.10.10-14.55 登录'],
       users: [],
       searchUser: '',
-      more: false,
       loading: false,
-      finished: false,
-      isSearch: false,
-      error: false,
-      searchKeyword: '',
-      searchDate: [],
-      keyword: null,
-      totalCount: 0
+      finished: true,
+      keyword: 'user',
+      more: false
     }
   },
   computed: {
-    ...mapGetters(['auths', 'user'])
-  },
-  watch: {
-    // 用户搜索
-    searchUser (user) {
-      this.keyword = user
-      if (this.searchKeyword) {
-        this.keyword = `${user} ${this.searchKeyword}`
-      }
-      if (this.searchDate.length) {
-        this.keyword = `${user} ${this.searchKeyword} ${this.searchDate}`
-      }
-      this.searchPage()
+    totalCount () {
+      return this.logs.length
     },
-    // 关键字搜索
-    searchKeyword (newVal) {
-      if (newVal) {
-        this.keyword = newVal
-        if (this.searchUser) {
-          this.keyword = `${this.searchUser} ${newVal}`
-        }
-        if (this.searchDate.length) {
-          this.keyword = `${this.searchUser} ${newVal} ${this.searchDate}`
-        }
-      } else {
-        this.keyword = ''
-        if (this.searchUser) {
-          this.keyword = `${this.searchUser}`
-        }
-        if (this.searchDate.length) {
-          this.keyword = `${this.searchUser} ${this.searchDate}`
-        }
-        this.$refs.searchKeyword.clear()
-      }
-      this.searchPage()
-    },
-    // 日期搜索
-    searchDate (newDate) {
-      if (newDate && newDate.length) {
-        this.keyword = `${newDate[0]}至${newDate[1]}`
-        if (this.searchUser) {
-          this.keyword = `${this.searchUser} ${newDate[0]}至${newDate[1]}`
-        }
-        if (this.searchKeyword) {
-          this.keyword = `${this.searchUser} ${this.searchKeyword} ${newDate[0]}至${newDate[1]}`
-        }
-      } else {
-        this.keyword = ''
-        this.isSearch = false
-        if (this.searchUser) {
-          this.keyword = `${this.searchUser}`
-        }
-        if (this.searchKeyword) {
-          this.keyword = `${this.searchUser} ${this.searchKeyword}`
-        }
-        this.$refs.searchDate.clear()
-      }
-      this.searchPage()
-    }
-  },
-  async created () {
-    this.loading = true
-    await this.initPage()
-    this.loading = false
+    ...mapGetters(['auth', 'user'])
   },
   methods: {
-    // 下拉框
-    handleCommand (user) {
-      this.searchUser = user[0] // eslint-disable-line
-    },
-    // 页面初始化
-    async initPage () {
-    },
-    // 条件检索
-    async searchPage () {
-      this.totalCount = 0
-      this.logs = []
-      this.loading = true
-      this.finished = false
-    },
-    // 下一页
-    async nextPage () {
-      this.more = true
-      this.more = false
-    },
-    searchByUser (user) {
-      this.searchUser = user
-    },
-    onQueryChange (query) {
-      // 处理带空格的情况
-      this.searchKeyword = query.trim()
-    },
-    handleDateChange (date) {
-      this.searchDate = date
+    // 下拉搜索框
+    toSearch (e) {
+      this.searchUser = e.field
+      this.keyword = e.searchStr
     },
     // 清空检索
     async backInit () {
       this.searchUser = ''
-      this.searchKeyword = ''
-      this.searchDate = []
       this.keyword = ''
       this.logs = []
-      this.isSearch = false
-      this.loading = true
-      await this.initPage()
-      this.loading = false
     }
   }
 }
@@ -157,4 +67,53 @@ export default {
   @import "~sass/base"
   .log
     @include card(25px, 25px)
+    .search
+      height: 52px
+      width: 100%
+      background: $background-color
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      margin: 20px 0
+      border-radius: 4px
+      .search-tip
+        display: flex
+        flex-direction: row
+        margin-left: 40px
+        height: 52px
+        line-height: 52px
+        color: #354058
+        font-size: 14px
+        .search-keyword
+          color: $theme-color
+      .search-back
+        margin: 8px 20px
+        height: 32px
+        background: $theme-color
+        border: none
+        border-radius: 4px
+        color: #fff
+        padding: 0 13px
+        font-size: 14px
+        cursor: pointer
+    .content
+      padding: 0 20px
+      article
+        .brief
+          position: relative
+          height: 25px
+          line-height: 25px
+          &:before
+            content: ''
+            width: 4px
+            height: 4px
+            background: black
+            position: absolute
+            left: -10px
+            top: 50%
+    .more
+      font-size: 14px
+      display: flex
+      justify-content: center
+      color: #909399
 </style>

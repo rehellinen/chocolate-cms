@@ -51,6 +51,8 @@ export default {
       })
     },
     toClear () {
+      this.field = ''
+      this.searchStr = ''
       this.$emit('clear')
     }
   }
