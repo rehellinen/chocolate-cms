@@ -4,13 +4,18 @@
     :visible.sync="visible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
-    :show-close="false"
-    width="30%"
+    :show-close="showClose"
+    :width="width"
   )
-    span {{content}}
-    span(slot="footer" class="dialog-footer")
-      el-button(@click="toCancel" v-if="showCancel") 取消
-      el-button(@click="toConfirm" type="danger") {{button}}
+    slot
+      span {{content}}
+    span(
+      v-if="showFooter"
+      slot="footer"
+      class="dialog-footer"
+    )
+      el-button(@click="toCancel" v-if="showCancel" size="small") 取消
+      el-button(@click="toConfirm" type="danger" size="small") {{button}}
 </template>
 
 <script>
@@ -33,9 +38,21 @@ export default {
       type: String,
       default: '确定'
     },
+    showFooter: {
+      type: Boolean,
+      default: true
+    },
     showCancel: {
       type: Boolean,
       default: false
+    },
+    showClose: {
+      type: Boolean,
+      default: false
+    },
+    width: {
+      type: String,
+      default: '30%'
     },
     cb: {
       type: Function,
@@ -60,4 +77,24 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
+  @import "~sass/base"
+
+  /deep/ .el-dialog
+    border-radius: $border-radius
+    overflow: hidden
+    min-width: 250px
+  /deep/ .el-dialog__header
+    padding: 15px 20px 10px 20px
+    background-color: $theme-color
+    .el-dialog__close
+      color: white
+      &:hover
+        color: black
+    .el-dialog__title
+      font-size: 18px
+      color: white
+  /deep/ .el-dialog__body
+    padding: 15px 20px
+  /deep/ .el-dialog__footer
+    padding: 10px 20px 15px 20px
 </style>
