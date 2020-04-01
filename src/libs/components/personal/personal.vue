@@ -32,7 +32,13 @@
           li(@click="logout")
             i.el-icon-user
             p 退出账户
-    el-dialog(:title="formConf.name" :visible.sync="dialogFormVisible")
+    choc-dialog(
+      :title="formConf.name"
+      :visible.sync="dialogFormVisible"
+      :showFooter="false"
+      :showClose="true"
+      width="45%"
+    )
       my-form(
         :config="formConf.form"
         :form-data="formData"
@@ -144,6 +150,9 @@ export default {
 
 <style lang="sass" scoped>
   @import "~sass/base"
+
+  .edit-pwd
+    width: 300px
 
   .portrait
     box-sizing: border-box

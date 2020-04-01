@@ -6,23 +6,23 @@
           i.el-icon-bell
       el-dropdown-menu.messages(slot="dropdown")
         .notify
-          span 2 New Notifications
+          span 3 新通知
           el-badge(:value="5" :max="99")
         .single
           el-button(type="primary" icon="el-icon-bell" circle)
           .text
-            .title Events near you
-            .desc Within next 5 days
+            .title 未完成
+            .desc 敬请期待
         .single
           el-button(type="primary" icon="el-icon-bell" circle)
           .text
-            .title Events near you
-            .desc Within next 5 days
+            .title 未完成
+            .desc 敬请期待
         .single
           el-button(type="primary" icon="el-icon-bell" circle)
           .text
-            .title Events near you
-            .desc Within next 5 days
+            .title 未完成
+            .desc 敬请期待
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {}
     .el-icon-bell
       font-size: 18px
       font-weight: bold
-      color: $grey
+      color: $normal-font-color
   .pointer
     cursor: pointer
 
