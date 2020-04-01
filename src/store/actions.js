@@ -18,10 +18,6 @@ const actions = {
     commit(types.SET_AUTH, auth)
   },
 
-  setLocked ({ commit }, locked) {
-    commit(types.SET_LOCKED, locked)
-  },
-
   logout ({ commit }) {
     window.location.href = window.location.origin + '/#/login'
     removeToken()
