@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
     next()
     return
   }
-  const isLocked = localStorage.getItem('lockedPwd') !== ''
+  const isLocked = localStorage.getItem('lockedPwd') && localStorage.getItem('lockedPwd') !== ''
   if (to.path === '/lock') {
     if (isLocked) {
       next()
