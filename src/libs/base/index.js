@@ -1,5 +1,6 @@
 import bread from './bread-crumb/bread-crumb'
 import card from './card/card'
+import dialog from './dialog/dialog'
 import editor from './editor/editor'
 import fileUploader from './file-uploader/file-uploader'
 import form from './form/form'
@@ -10,6 +11,7 @@ import table from './table/table'
 const chocComponents = [
   bread,
   card,
+  dialog,
   editor,
   fileUploader,
   form,
