@@ -1,11 +1,12 @@
 <template lang="pug">
   el-dialog(
     :title="title"
-    :visible.sync="visible"
+    :visible="visibility"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="showClose"
     :width="width"
+    @close="toCancel"
   )
     slot
       span {{content}}
@@ -24,7 +25,7 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: true
+      default: false
     },
     title: {
       type: String,
@@ -59,18 +60,27 @@ export default {
       default: () => () => {}
     }
   },
+  data () {
+    return {
+      visibility: false
+    }
+  },
+  watch: {
+    visible (newVal, oldVal) {
+      this.visibility = this.visible
+    }
+  },
   methods: {
     toConfirm () {
       this.closeDialog()
-      this.$emit('confirm')
       this.cb && this.cb()
     },
     toCancel () {
       this.closeDialog()
-      this.$emit('cancel')
     },
     closeDialog () {
-      this.visible = false
+      this.visibility = false
+      this.$emit('update:visible', false)
     }
   }
 }

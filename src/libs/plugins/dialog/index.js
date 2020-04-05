@@ -10,7 +10,7 @@ export const install = (Vue, opts = {}) => {
       myInstance.$mount(document.createElement('div'))
     }
 
-    myInstance.visible = true
+    myInstance.visibility = true
     myInstance.title = opts.title || ''
     myInstance.content = opts.content || ''
     myInstance.button = opts.button || '确定'
