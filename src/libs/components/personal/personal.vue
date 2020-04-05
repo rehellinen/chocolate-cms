@@ -87,13 +87,19 @@ export default {
       this.formData = {}
       this.dialogFormVisible = true
       this.formConf = passwordFormConf
-      this.rules = []
+      this.rules = {}
     },
     lock () {
       this.formData = {}
-      this.dialogFormVisible = true
-      this.rules = passwordRules
-      this.formConf = lockedFormConf
+      localStorage.setItem('locked_' + this.user.id, '1')
+      if (!localStorage.getItem('lockedPwd_' + this.user.id) || localStorage.getItem('lockedPwd_' + this.user.id) === '') {
+        this.dialogFormVisible = true
+        this.rules = passwordRules
+        this.formConf = lockedFormConf
+      } else {
+        this.$message.success('锁定成功')
+        this.$router.push('/lock')
+      }
     },
     editName () {
       this.isEditingName = true
@@ -101,7 +107,7 @@ export default {
     },
     nameBlur (e) {
       this.isEditingName = false
-      console.log(e.target.value)
+      User.changeName(e.target.value)
     },
     async uploadImage (event) {
       const file = event.target.files[0]
@@ -138,7 +144,7 @@ export default {
     },
     lockedPage (e) {
       let password = window.btoa(e.password)
-      localStorage.setItem('lockedPwd', password)
+      localStorage.setItem('lockedPwd_' + this.user.id, password)
       this.dialogFormVisible = false
       this.$message.success('锁定成功')
       this.$router.push('/lock')

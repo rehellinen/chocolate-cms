@@ -40,11 +40,12 @@ export const router = new Router({
 
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
+  const { auth, user, isLogin } = store.getters
   if (to.path === '/login') {
     next()
     return
   }
-  const isLocked = localStorage.getItem('lockedPwd') && localStorage.getItem('lockedPwd') !== ''
+  const isLocked = localStorage.getItem('locked_' + user.id) === '1'
   if (to.path === '/lock') {
     if (isLocked) {
       next()
@@ -64,7 +65,6 @@ router.beforeEach((to, from, next) => {
     return
   }
 
-  const { auth, user, isLogin } = store.getters
   // 判断用户是否拥有权限
   let hasAuth = false
   // 超级管理员拥有所有权限

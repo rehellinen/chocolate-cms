@@ -42,6 +42,13 @@ export class User {
   }
 
   /**
+   * 修改当前用户名称
+   */
+  static async changeName (name) {
+    return put('user/self/name', { name: name })
+  }
+
+  /**
    * 修改当前用户头像
    */
   static async editPortrait (file) {

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -16,11 +17,14 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   methods: {
     unlocked () {
-      let password = window.atob(localStorage.getItem('lockedPwd'))
+      let password = window.atob(localStorage.getItem('lockedPwd_' + this.user.id))
       if (password === this.form.pwd) {
-        localStorage.setItem('lockedPwd', '')
+        localStorage.setItem('locked_' + this.user.id, '0')
         this.$router.push('/')
         this.$message.success('解锁成功')
       } else {

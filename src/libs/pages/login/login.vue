@@ -30,7 +30,7 @@ export default {
         const auth = await User.getUserAuth()
         this.setUser(user)
         this.setAuth(auth)
-        localStorage.setItem('lockedPwd', '')
+        localStorage.setItem('locked_' + user.id, '0')
         this.$message.success('登陆成功')
         this.$router.push('/')
       } catch (e) {
