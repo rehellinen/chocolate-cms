@@ -6,25 +6,28 @@
         v-for="(conf, index) in config"
         :label="conf.label + '：'"
         :key="index"
-        :prop="conf.name.toString()"
+        :prop="conf.name"
       )
         el-input(
           v-if="!conf.type || conf.type === inputType.INPUT"
           v-model="formData[conf.name]"
           :show-password="conf.hide"
+          :disabled="conf.disabled"
         )
 
         el-switch(
           v-if="conf.type === inputType.SWITCH"
-          v-model="conf.value"
-          active-color="#66b1ff"
+          v-model="formData[conf.name]"
+          :active-color="conf.color || '#F47983'"
           inactive-color="#ccc"
+          :disabled="conf.disabled"
         )
 
         el-slider(
           v-if="conf.type === inputType.SLIDER"
-          v-model="conf.value"
-          :show-tooltip="conf.tooltip || true"
+          v-model="formData[conf.name]"
+          :show-tooltip="conf.tooltip || false"
+          :disabled="conf.disabled"
         )
 
         el-select(
@@ -81,12 +84,6 @@
           :accept="conf.accept || null"
         )
 
-        el-input(
-          v-if="conf.type === inputType.DISABLED"
-          v-model="formData[conf.name]"
-          disabled
-        )
-
         el-date-picker(
           v-if="conf.type === inputType.DATE"
           v-model="formData[conf.name]"
@@ -94,7 +91,7 @@
           placeholder="请选择日期和时间"
           value-format="timestamp"
         )
-      el-form-item
+      el-form-item(v-if="ifSubmit")
         el-button(@click="onSubmit") {{buttonText}}
 </template>
 
@@ -116,6 +113,10 @@ export default {
     buttonText: {
       type: String,
       default: '提交'
+    },
+    ifSubmit: {
+      type: Boolean,
+      default: true
     },
     formData: {
       type: Object,
@@ -198,7 +199,7 @@ export default {
       for (let [key, value] of Object.entries(options)) {
         let i = 0
         for (let item of value) {
-          if (this.formData[name].indexOf(item.value) > -1) {
+          if (this.formData[name] && this.formData[name].indexOf(item.value) > -1) {
             i++
           }
         }

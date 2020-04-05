@@ -1,5 +1,14 @@
 import config from 'config'
 
+export const inputConf = [
+  { name: 'input', label: '标题' },
+  { name: 'disabled', label: '禁用', type: config.FORM.DISABLED }
+]
+
+export const switchConf = [
+  { name: 'switch', label: '开关', type: config.FORM.SWITCH }
+]
+
 export const formConf = [
   { name: 'input', label: '标题' },
   { name: 'disabled', label: '禁用', type: config.FORM.DISABLED },

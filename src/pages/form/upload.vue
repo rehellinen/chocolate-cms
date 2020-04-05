@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~sass/base"
+  @import "~sass/base.sass"
 
   .upload-file
     @include card(20px, 25px)

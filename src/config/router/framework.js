@@ -130,7 +130,7 @@ export const framework = [
   {
     show: true,
     title: '日志管理',
-    icon: 'el-icon-document',
+    icon: 'el-icon-notebook-2',
     name: 'log',
     path: '/log',
     component: 'pages/log',
