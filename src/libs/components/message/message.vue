@@ -5,9 +5,8 @@
         el-badge.pointer(:value="5" :max="99")
           i.el-icon-bell
       el-dropdown-menu.messages(slot="dropdown")
-        .notify
-          span 3 新通知
-          el-badge(:value="5" :max="99")
+        .message__header
+          span.message__title 3 新通知
         .single
           el-button(type="primary" icon="el-icon-bell" circle)
           .text
@@ -44,20 +43,23 @@ export default {}
 
   .messages
     padding: 0
+    border: 0
+    border-radius: $border-radius
+    overflow: hidden
 
     /deep/ .popper__arrow
       display: none
 
-    .notify
-      background: $gray
+    .message__header
+      background: $theme-color
       height: 50px
       display: flex
       align-items: center
       justify-content: space-between
       padding: 0 10px 0 20px
-      span
+      .message__title
         font-size: $normal-font-size
-        color: $dark
+        color: white
 
     .single
       display: flex
