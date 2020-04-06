@@ -14,6 +14,20 @@ export const lockedFormConf = {
   ]
 }
 
-export const passwordRules = {
+export const lockPasswordRules = {
   password: [{ required: true, message: '请输入六位密码', trigger: 'blur', min: 6, max: 6 }]
+}
+
+export const passwordRules = {
+  oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+  newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+  newPassword1: [
+    {
+      required: true,
+      confirm: {
+        name: 'newPassword',
+        desc: '密码'
+      },
+      trigger: 'blur'
+    }]
 }

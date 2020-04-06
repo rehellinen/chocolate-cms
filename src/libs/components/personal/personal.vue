@@ -51,7 +51,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { User } from 'libs/model/User'
 import MyForm from 'libs/base/form/form'
-import { passwordFormConf, lockedFormConf, passwordRules } from './config'
+import { passwordFormConf, lockedFormConf, passwordRules, lockPasswordRules } from './config'
 
 export default {
   components: {
@@ -68,7 +68,7 @@ export default {
         name: '',
         form: []
       },
-      rules: []
+      rules: {}
     }
   },
   computed: {
@@ -87,16 +87,16 @@ export default {
       this.formData = {}
       this.dialogFormVisible = true
       this.formConf = passwordFormConf
-      this.rules = {}
+      this.rules = passwordRules
     },
     lock () {
       this.formData = {}
-      localStorage.setItem('locked_' + this.user.id, '1')
       if (!localStorage.getItem('lockedPwd_' + this.user.id) || localStorage.getItem('lockedPwd_' + this.user.id) === '') {
         this.dialogFormVisible = true
-        this.rules = passwordRules
+        this.rules = lockPasswordRules
         this.formConf = lockedFormConf
       } else {
+        localStorage.setItem('locked_' + this.user.id, '1')
         this.$message.success('锁定成功')
         this.$router.push('/lock')
       }
@@ -137,14 +137,13 @@ export default {
         if (res.status === 1) {
           this.$message.success(res.message)
           this.dialogFormVisible = false
-        } else {
-          this.$message.error(res.message)
         }
       })
     },
     lockedPage (e) {
       let password = window.btoa(e.password)
       localStorage.setItem('lockedPwd_' + this.user.id, password)
+      localStorage.setItem('locked_' + this.user.id, '1')
       this.dialogFormVisible = false
       this.$message.success('锁定成功')
       this.$router.push('/lock')
