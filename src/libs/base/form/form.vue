@@ -1,6 +1,6 @@
 <template lang="pug">
   div.form-container
-    p.title {{title}}
+    p.title(v-if="title") {{title}}
     el-form(ref="data" :model="formData" :rules="rules" label-width="100px")
       el-form-item(
         v-for="(conf, index) in config"
@@ -91,7 +91,7 @@
           placeholder="请选择日期和时间"
           value-format="timestamp"
         )
-      el-form-item(v-if="ifSubmit")
+      el-form-item.confirm-button(v-if="ifSubmit")
         el-button(@click="onSubmit") {{buttonText}}
 </template>
 
@@ -293,9 +293,14 @@ export default {
   .form-container
     .title
       color: $main-font-color
-      font-size: $vast-font-size
+      /*text-align: center*/
+      font-size: $biggest-font-size
       font-weight: bold
-      margin: 20px 0 20px 80px
+      letter-spacing: 2px
+      margin-bottom: 30px
+      padding-left: 100px
+      padding-bottom: 10px
+      border-bottom: 1px solid $border-two
     .editor
       max-width: 500px
     .el-date-picker
@@ -306,6 +311,8 @@ export default {
       max-width: 500px
     .title-box
       width: 100%
+    .confirm-button
+      margin-bottom: 10px
     .gray
       background: $gray
       padding: 0 10px
