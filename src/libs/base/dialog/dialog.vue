@@ -1,7 +1,7 @@
 <template lang="pug">
   el-dialog(
     :title="title"
-    :visible="visibility"
+    :visible="visible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="showClose"
@@ -60,16 +60,6 @@ export default {
       default: () => () => {}
     }
   },
-  data () {
-    return {
-      visibility: false
-    }
-  },
-  watch: {
-    visible (newVal, oldVal) {
-      this.visibility = this.visible
-    }
-  },
   methods: {
     toConfirm () {
       this.closeDialog()
@@ -79,7 +69,6 @@ export default {
       this.closeDialog()
     },
     closeDialog () {
-      this.visibility = false
       this.$emit('update:visible', false)
     }
   }
@@ -96,6 +85,7 @@ export default {
   /deep/ .el-dialog__header
     padding: 15px 20px 10px 20px
     background-color: $theme-color
+    border-bottom: 0 !important
     .el-dialog__close
       color: white
       &:hover
