@@ -9,14 +9,16 @@ export const install = (Vue, opts = {}) => {
     if (!myInstance._isMounted) {
       myInstance.$mount(document.createElement('div'))
     }
-
-    myInstance.visibility = true
+    myInstance.visible = true
     myInstance.title = opts.title || ''
     myInstance.content = opts.content || ''
     myInstance.button = opts.button || '确定'
     myInstance.showCancel = opts.showCancel || true
     myInstance.cb = opts.cb
     document.body.appendChild(myInstance.$el)
+    myInstance.$on('update:visible', function () {
+      myInstance.visible = false
+    })
   }
 }
 
