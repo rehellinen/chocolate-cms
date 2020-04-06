@@ -71,7 +71,7 @@ const processParamsError = (res, throwErr = false) => {
     for (const [key, val] of Object.entries(data.data)) {
       for (let msg of val) {
         setTimeout(() => {
-          Vue.prototype.$notify({
+          Vue.prototype.$message({
             message: process.env.NODE_ENV === 'production'
               ? msg
               : `${key} - ${msg}`,
@@ -95,7 +95,7 @@ const processRefreshTokenError = (response) => {
   if (response.config.url === TOTAL_REFRESH_URL) {
     // 令牌类型错误 / Token过期
     if (status === 20100 || status === 20200) {
-      Vue.prototype.$notify({
+      Vue.prototype.$message({
         message: data.message,
         type: 'error'
       })
@@ -128,7 +128,7 @@ const processAccessTokenError = async (response, allReqConfig) => {
     if (allReqConfig.otherConfig.throwErr) {
       throw new NoAuthority(data.message, response)
     }
-    Vue.prototype.$notify({
+    Vue.prototype.$message({
       message: data.message,
       type: 'error'
     })
@@ -157,7 +157,7 @@ export const request = async (url, method, data, otherConfig = {}) => {
     })
   } catch (e) {
     if (e.message === 'Network Error') {
-      Vue.prototype.$notify({
+      Vue.prototype.$message({
         message: '网络异常，请稍后再试',
         type: 'error'
       })

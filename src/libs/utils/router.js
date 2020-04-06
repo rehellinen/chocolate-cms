@@ -50,8 +50,9 @@ router.beforeEach((to, from, next) => {
     if (isLocked) {
       next()
     } else {
-      Vue.prototype.$notify({
-        title: '无权访问锁定页面'
+      Vue.prototype.$message({
+        message: '无权访问锁定页面',
+        type: 'error'
       })
     }
     return
@@ -59,8 +60,9 @@ router.beforeEach((to, from, next) => {
   // 判断页面是否锁定
   if (isLocked) {
     next({ path: '/lock' })
-    Vue.prototype.$notify({
-      title: '页面已锁定，请先解锁'
+    Vue.prototype.$message({
+      message: '页面已锁定，请先解锁',
+      type: 'error'
     })
     return
   }
@@ -87,12 +89,14 @@ router.beforeEach((to, from, next) => {
   } else {
     if (!isLogin) {
       next({ path: '/login' })
-      Vue.prototype.$notify({
-        title: '请登录'
+      Vue.prototype.$message({
+        message: '请登录',
+        type: 'error'
       })
     } else {
-      Vue.prototype.$notify({
-        title: '无权限访问此页面'
+      Vue.prototype.$message({
+        message: '无权限访问此页面',
+        type: 'error'
       })
     }
   }
