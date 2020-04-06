@@ -21,7 +21,7 @@
               v-model="username"
               v-show="isEditingName"
             )
-            p.auth {{ user.role.name }}
+            p.auth {{ user.role && user.role.name }}
         ul.actions
           li(@click="editPwd")
             i.el-icon-edit
@@ -72,16 +72,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'isLocked'])
+    ...mapGetters(['user', 'isLocked', 'isLogin'])
   },
   async created () {
     await this.init()
   },
   methods: {
     async init () {
-      const res = await User.getUser()
-      this.avatar = res.avatar !== 'no' ? res.avatar : this.avatar
-      this.username = res.name
+      if (this.isLogin) {
+        const res = await User.getUser()
+        this.avatar = res.avatar !== 'no' ? res.avatar : this.avatar
+        this.username = res.name
+      }
     },
     editPwd () {
       this.formData = {}
@@ -105,9 +107,20 @@ export default {
       this.isEditingName = true
       this.$nextTick(() => this.$refs.nameInput.focus())
     },
-    nameBlur (e) {
+    async nameBlur (e) {
       this.isEditingName = false
-      User.changeName(e.target.value)
+      try {
+        await User.changeName(e.target.value)
+        this.$message({
+          message: '修改名称成功',
+          type: 'success'
+        })
+      } catch (e) {
+        this.$message({
+          message: `修改失败 - ${e.message}`,
+          type: 'error'
+        })
+      }
     },
     async uploadImage (event) {
       const file = event.target.files[0]
@@ -173,7 +186,7 @@ export default {
     padding: 0
     margin: 0 !important
     border: 0
-    border-radius: 5px
+    border-radius: $border-radius
     overflow: hidden
     /deep/ .popper__arrow
       display: none
