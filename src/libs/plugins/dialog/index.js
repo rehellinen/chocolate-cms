@@ -13,7 +13,7 @@ export const install = (Vue, opts = {}) => {
     myInstance.title = opts.title || ''
     myInstance.content = opts.content || ''
     myInstance.button = opts.button || '确定'
-    myInstance.showCancel = opts.showCancel || true
+    myInstance.showCancel = opts.showCancel
     myInstance.cb = opts.cb
     document.body.appendChild(myInstance.$el)
     myInstance.$on('update:visible', function () {
