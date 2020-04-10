@@ -2,11 +2,11 @@
 el-row(:gutter="20" style="margin-bottom: 20px")
   el-col(:md="6" :sm="12" v-for="(item, index) in data" :key="index")
     .card(:style="{background: cardConf[index].color, color: 'white', margin: '5px 0'}")
-      .card-title {{ item.title }}
-      .card-content
-        .text-content
-          .num {{ item.num }}
-          .text {{ item.text }}
+      .card__title {{ item.title }}
+      .card__content
+        .text
+          .text__num {{ item.num }}
+          .text__content {{ item.text }}
         img(:src="item.url" v-if="!item.icon" :style="{width: item.width, height: item.height || item.width}")
         .icon-item
           i(:class="cardConf[index].icon")
@@ -36,19 +36,19 @@ export default {
     flex-grow: 1
     flex-shrink: 1
     flex-basis: auto
-    .card-title
+    .card__title
       font-size: $big-font-size
       font-weight: bold
-    .card-content
+    .card__content
       display: flex
       flex-direction: row
       align-items: center
       justify-content: space-between
-      .text-content
+      .text
         display: flex
         flex-direction: column
         margin-right: 20px
-        .num
+        .text__num
           font-size: 30px
           margin-bottom: 10px
       .icon-item

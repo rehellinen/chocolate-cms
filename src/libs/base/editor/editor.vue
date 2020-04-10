@@ -13,7 +13,7 @@
         :show-file-list="false"
         accept="video/*,audio/*"
       )
-        el-button.uploadBtn(size="small" type="primary") 上传
+        el-button.upload__Btn(size="small" type="primary") 上传
 </template>
 
 <script>
