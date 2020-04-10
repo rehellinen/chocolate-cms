@@ -134,33 +134,41 @@ export default {
       indeterminateGroup: []
     }
   },
-  mounted () {
-    for (let conf of this.config) {
-      if (conf.type === config.FORM.EDITOR) {
-        this.$refs.editor[0].setContent(this.formData[conf.name])
-      }
-      if (conf.type === config.FORM.FILE) {
-        this.formData[conf.name] = Array.isArray(this.formData[conf.name])
-          ? this.formData[conf.name]
-          : this.formData[conf.name]
-            ? [{ 'url': this.formData[conf.name] }]
-            : []
-      }
-      if (conf.type === config.FORM.CHECKBOX) {
-        this.initCheckBox(conf.name, conf.options)
-      }
-      if (conf.name.includes('.')) {
-        nestedValue(this.formData, conf.name)
-      }
-    }
-    for (let value of Object.values(this.rules)) {
-      if (value[0].confirm) {
-        let item = value[0].confirm
-        value[0].validator = this.confirmAgain(item.name, item.desc)
-      }
+  watch: {
+    formData () {
+      this.init()
     }
   },
+  mounted () {
+    this.init()
+  },
   methods: {
+    init () {
+      for (let conf of this.config) {
+        if (conf.type === config.FORM.EDITOR) {
+          this.$refs.editor[0].setContent(this.formData[conf.name])
+        }
+        if (conf.type === config.FORM.FILE) {
+          this.formData[conf.name] = Array.isArray(this.formData[conf.name])
+            ? this.formData[conf.name]
+            : this.formData[conf.name]
+              ? [{ 'url': this.formData[conf.name] }]
+              : []
+        }
+        if (conf.type === config.FORM.CHECKBOX) {
+          this.initCheckBox(conf.name, conf.options)
+        }
+        if (conf.name.includes('.')) {
+          nestedValue(this.formData, conf.name)
+        }
+      }
+      for (let value of Object.values(this.rules)) {
+        if (value[0].confirm) {
+          let item = value[0].confirm
+          value[0].validator = this.confirmAgain(item.name, item.desc)
+        }
+      }
+    },
     async onSubmit () {
       if (this.$refs.editor) {
         const name = this.$refs.editor[0].$attrs['data-name']
