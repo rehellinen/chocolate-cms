@@ -1,12 +1,14 @@
+import config from 'config/index'
+
 export const searchConf = [
   { field: 'title', label: '标题' },
   { field: 'subtitle', label: '副标题' }
 ]
 
 export const formConf = [
-  { name: 'title', label: '标题', required: true },
-  { name: 'subtitle', label: '副标题', required: true },
-  { name: 'detail', label: '详情', required: true }
+  { name: 'title', label: '标题' },
+  { name: 'subtitle', label: '副标题' },
+  { name: 'detail', label: '详情', type: config.FORM.EDITOR }
 ]
 
 export const tableConf = [
