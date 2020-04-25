@@ -33,10 +33,10 @@
         template(slot-scope="scope")
           p {{tableValue(item, scope)}}
 
-      el-table-column(v-if="operate" label="自定义" fixed="right")
+      el-table-column(v-if="operate" :label="operate.label || '自定义'" fixed="right")
         template(slot-scope="scope")
           el-button(
-            v-for="(item,index) in operate"
+            v-for="(item,index) in operate.data"
             :type="item.type"
             :key="index"
             size="mini"
@@ -130,7 +130,7 @@ export default {
     },
     operate: {
       // 自定义按键及绑定方法
-      type: Array,
+      type: Object,
       default: null
     }
   },

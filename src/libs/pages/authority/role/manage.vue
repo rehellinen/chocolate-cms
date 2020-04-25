@@ -39,11 +39,15 @@ export default {
   mixins: [cmsMixin],
   data () {
     return {
-      operate: [{
-        type: 'primary',
-        name: '编辑权限',
-        func: this.editAuth
-      }],
+      operate: {
+        label: '编辑权限',
+        data: [{
+          type: 'primary',
+          name: '权限',
+
+          func: this.editAuth
+        }]
+      },
       rules: roleRules
     }
   },
